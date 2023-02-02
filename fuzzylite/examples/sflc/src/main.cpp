@@ -10,31 +10,62 @@ int main(int argc, char **argv)
     engine->setDescription("");
 
 
-    InputVariable* Ambient = new InputVariable;
-    Ambient->setName("Ambient");
-    Ambient->setDescription("");
-    Ambient->setEnabled(true);
-    Ambient->setRange(0.000, 1.000);
-    Ambient->setLockValueInRange(false);
-    Ambient->addTerm(new Triangle("DARK", 0.000, 0.150, 0.250));
-    Ambient->addTerm(new Triangle("MEDIUM", 0.250, 0.500, 0.750));
-    Ambient->addTerm(new Triangle("BRIGHT", 0.7500, 0.950, 1.000));
-    engine->addInputVariable(Ambient);
 
-    OutputVariable* Power = new OutputVariable;
-    Power->setName("Power");
-    Power->setDescription("");
-    Power->setEnabled(true);
-    Power->setRange(0.000, 1.000);
-    Power->setLockValueInRange(false);
-    Power->setAggregation(new Maximum);
-    Power->setDefuzzifier(new Centroid(200));
-    Power->setDefaultValue(fl::nan);
-    Power->setLockPreviousValue(false);
-    Power->addTerm(new Triangle("LOW", 0.000, 0.150, 0.2500));
-    Power->addTerm(new Triangle("MEDIUM", 0.250, 0.500, 0.750));
-    Power->addTerm(new Triangle("HIGH", 0.7500, 0.850, 1.000));
-    engine->addOutputVariable(Power);
+    InputVariable* Uao_gtg = new InputVariable;
+    Uao_gtg->setName("Uao_gtg");
+    Uao_gtg->setDescription("");
+    Uao_gtg->setEnabled(true);
+    Uao_gtg->setRange(-3.8,3.8);
+    Uao_gtg->setLockValueInRange(false);
+    Uao_gtg->addTerm(new Triangle("NL", -3.8, -3.3, -2.8));
+    Uao_gtg->addTerm(new Triangle("NM", 0.250, 0.500, 0.750));
+    Uao_gtg->addTerm(new Triangle("N", 0.7500, 0.950, 1.000));
+    Uao_gtg->addTerm(new Triangle("NS", 0.000, 0.150, 0.250));
+    Uao_gtg->addTerm(new Triangle("ZN", 0.250, 0.500, 0.750));
+    Uao_gtg->addTerm(new Triangle("Z", -0.1, 0, 0.1)); //----------
+    Uao_gtg->addTerm(new Triangle("ZP", 0.000, 0.150, 0.250));
+    Uao_gtg->addTerm(new Triangle("PS", 0.250, 0.500, 0.750));
+    Uao_gtg->addTerm(new Triangle("P", 0.7500, 0.950, 1.000));
+    Uao_gtg->addTerm(new Triangle("PM", 0.000, 0.150, 0.250));
+    Uao_gtg->addTerm(new Triangle("PL", 3.8, 3.3, 3.8));
+
+    engine->addInputVariable(Uao_gtg);
+
+
+
+
+    OutputVariable* linear_velocity = new OutputVariable;
+    linear_velocity->setName("linear_velocity");
+    linear_velocity->setDescription("");
+    linear_velocity->setEnabled(true);
+    linear_velocity->setRange(0.000, 1.000);
+    linear_velocity->setLockValueInRange(false);
+    linear_velocity->setAggregation(new Maximum);
+    linear_velocity->setDefuzzifier(new Centroid(10));
+    linear_velocity->setDefaultValue(fl::nan);
+    linear_velocity->setLockPreviousValue(false);
+    linear_velocity->addTerm(new Triangle("LOW", 0.000, 0.150, 0.2500));
+    linear_velocity->addTerm(new Triangle("MEDIUM", 0.250, 0.500, 0.750));
+    linear_velocity->addTerm(new Triangle("HIGH", 0.7500, 0.850, 1.000));
+    engine->addOutputVariable(linear_velocity);
+
+    OutputVariable* angular_velocity = new OutputVariable;
+    angular_velocity->setName("angular_velocity");
+    angular_velocity->setDescription("");
+    angular_velocity->setEnabled(true);
+    angular_velocity->setRange(0.000, 1.000);
+    angular_velocity->setLockValueInRange(false);
+    angular_velocity->setAggregation(new Maximum);
+    angular_velocity->setDefuzzifier(new Centroid(10));
+    angular_velocity->setDefaultValue(fl::nan);
+    angular_velocity->setLockPreviousValue(false);
+    angular_velocity->addTerm(new Triangle("LOW", 0.000, 0.150, 0.2500));
+    angular_velocity->addTerm(new Triangle("MEDIUM", 0.250, 0.500, 0.750));
+    angular_velocity->addTerm(new Triangle("HIGH", 0.7500, 0.850, 1.000));
+    engine->addOutputVariable(angular_velocity);
+
+
+
 
     RuleBlock* ruleBlock = new RuleBlock;
     ruleBlock->setName("");
@@ -44,18 +75,40 @@ int main(int argc, char **argv)
     ruleBlock->setDisjunction(fl::null);
     ruleBlock->setImplication(new Minimum);
     ruleBlock->setActivation(new General);
-    ruleBlock->addRule(Rule::parse("if Ambient is DARK then Power is HIGH", engine));
-    ruleBlock->addRule(Rule::parse("if Ambient is MEDIUM then Power is MEDIUM", engine));
-    ruleBlock->addRule(Rule::parse("if Ambient is BRIGHT then Power is LOW", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+
+
+
+    //ruleBlock->addRule(Rule::parse("if Uao_gtg is DARK then linear_velocity is HIGH and angular_velocity is HIGH", engine));
+    //ruleBlock->addRule(Rule::parse("if Uao_gtg is MEDIUM then linear_velocity is MEDIUM", engine));
+    //ruleBlock->addRule(Rule::parse("if Uao_gtg is BRIGHT then linear_velocity is LOW", engine));
     engine->addRuleBlock(ruleBlock);
 
-    scalar location = 0.1;
-    Ambient->setValue(location);
+
+
+
+    scalar location = -3.79;
+    Uao_gtg->setValue(location);
     engine->process();
 
-    FL_LOG( "input = " << Op::str(location) << " => " << "output = " << Op::str(Power->getValue()) );
+    FL_LOG( "input = " << Op::str(location) << " => " << "output = " << Op::str(linear_velocity->getValue()) << ", " << Op::str(angular_velocity->getValue()));
+
+
+
+
+
     
-/**
+   /** 
     InputVariable *Uao_gtg = new InputVariable;
     Uao_gtg->setName("Uao_gtg");
     Uao_gtg->setDescription("");
@@ -78,9 +131,9 @@ int main(int argc, char **argv)
     angular_velocity->setDefuzzifier(new Centroid(200)); //setDefuzzifier(new WeightedAverage("Automatic"));
     angular_velocity->setDefaultValue(fl::nan);
     angular_velocity->setLockPreviousValue(false);
-    angular_velocity->addTerm(new Triangle("S2", 5, 5.5, 6));
-    angular_velocity->addTerm(new Triangle("M2", 6, 6.5, 7));
-    angular_velocity->addTerm(new Triangle("L2", 7, 7.5, 8));
+    angular_velocity->addTerm(new Triangle("S2", 5.000, 5.500, 6.000));
+    angular_velocity->addTerm(new Triangle("M2", 6.000, 6.500, 7.000));
+    angular_velocity->addTerm(new Triangle("L2", 7.000, 7.5000, 8.000));
     engine->addOutputVariable(angular_velocity);
 
     OutputVariable *linear_velocity = new OutputVariable;
@@ -93,9 +146,9 @@ int main(int argc, char **argv)
     linear_velocity->setDefuzzifier(new Centroid(200)); //setDefuzzifier(new WeightedAverage("Automatic"));
     linear_velocity->setDefaultValue(fl::nan);
     linear_velocity->setLockPreviousValue(false);
-    linear_velocity->addTerm(new Triangle("S3", 9, 9.5, 10));
-    linear_velocity->addTerm(new Triangle("M3", 10, 10.5, 11));
-    linear_velocity->addTerm(new Triangle("L3", 11, 11.5, 12));
+    linear_velocity->addTerm(new Triangle("S3", 9.000, 9.500, 10.000));
+    linear_velocity->addTerm(new Triangle("M3", 10.000, 10.500, 11.000));
+    linear_velocity->addTerm(new Triangle("L3", 11.000, 11.500, 12.000));
     engine->addOutputVariable(linear_velocity);
 
     RuleBlock *mamdani = new RuleBlock;
@@ -104,14 +157,14 @@ int main(int argc, char **argv)
     mamdani->setEnabled(true);
     mamdani->setConjunction(fl::null);
     mamdani->setDisjunction(fl::null);
-    mamdani->setImplication(new AlgebraicProduct);
+    mamdani->setImplication(new Minimum);
     mamdani->setActivation(new General);
     mamdani->addRule(Rule::parse("if Uao_gtg is S then angular_velocity is S2 and linear_velocity is S3", engine));
     mamdani->addRule(Rule::parse("if Uao_gtg is M then angular_velocity is M2 and linear_velocity is M3", engine));
     mamdani->addRule(Rule::parse("if Uao_gtg is L then angular_velocity is L2 and linear_velocity is L3", engine));
     engine->addRuleBlock(mamdani);
 
-    scalar location = 3.15;
+    scalar location = 1.1;
     Uao_gtg->setValue(location);
     engine->process();
 
