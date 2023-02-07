@@ -21,7 +21,7 @@
 #include <memory>
 #include <utility>
 
-#include "nav2_regulated_pure_pursuit_controller2/regulated_pure_pursuit_controller2.hpp"
+#include "nav2_same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 #include "nav2_core/exceptions.hpp"
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
@@ -35,10 +35,10 @@ using nav2_util::declare_parameter_if_not_declared;
 using nav2_util::geometry_utils::euclidean_distance;
 using namespace nav2_costmap_2d;  // NOLINT
 
-namespace nav2_regulated_pure_pursuit_controller2
+namespace nav2_same_fuzzy_logic_controller
 {
 
-void RegulatedPurePursuitController2::configure(
+void SameFuzzyLogicController::configure(
   const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
   std::string name, const std::shared_ptr<tf2_ros::Buffer> & tf,
   const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap_ros)
@@ -177,43 +177,43 @@ void RegulatedPurePursuitController2::configure(
   carrot_arc_pub_ = node->create_publisher<nav_msgs::msg::Path>("lookahead_collision_arc", 1);
 }
 
-void RegulatedPurePursuitController2::cleanup()
+void SameFuzzyLogicController::cleanup()
 {
   RCLCPP_INFO(
     logger_,
     "Cleaning up controller: %s of type"
-    " regulated_pure_pursuit_controller2::RegulatedPurePursuitController2",
+    " same_fuzzy_logic_controller::SameFuzzyLogicController",
     plugin_name_.c_str());
   global_path_pub_.reset();
   carrot_pub_.reset();
   carrot_arc_pub_.reset();
 }
 
-void RegulatedPurePursuitController2::activate()
+void SameFuzzyLogicController::activate()
 {
   RCLCPP_INFO(
     logger_,
     "Activating controller: %s of type "
-    "regulated_pure_pursuit_controller2::RegulatedPurePursuitController2",
+    "same_fuzzy_logic_controller::SameFuzzyLogicController",
     plugin_name_.c_str());
   global_path_pub_->on_activate();
   carrot_pub_->on_activate();
   carrot_arc_pub_->on_activate();
 }
 
-void RegulatedPurePursuitController2::deactivate()
+void SameFuzzyLogicController::deactivate()
 {
   RCLCPP_INFO(
     logger_,
     "Deactivating controller: %s of type "
-    "regulated_pure_pursuit_controller2::RegulatedPurePursuitController2",
+    "same_fuzzy_logic_controller::SameFuzzyLogicController",
     plugin_name_.c_str());
   global_path_pub_->on_deactivate();
   carrot_pub_->on_deactivate();
   carrot_arc_pub_->on_deactivate();
 }
 
-std::unique_ptr<geometry_msgs::msg::PointStamped> RegulatedPurePursuitController2::createCarrotMsg(
+std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::createCarrotMsg(
   const geometry_msgs::msg::PoseStamped & carrot_pose)
 {
   auto carrot_msg = std::make_unique<geometry_msgs::msg::PointStamped>();
@@ -224,7 +224,7 @@ std::unique_ptr<geometry_msgs::msg::PointStamped> RegulatedPurePursuitController
   return carrot_msg;
 }
 
-double RegulatedPurePursuitController2::getLookAheadDistance(const geometry_msgs::msg::Twist & speed)
+double SameFuzzyLogicController::getLookAheadDistance(const geometry_msgs::msg::Twist & speed)
 {
   // If using velocity-scaled look ahead distances, find and clamp the dist
   // Else, use the static look ahead distance
@@ -237,7 +237,7 @@ double RegulatedPurePursuitController2::getLookAheadDistance(const geometry_msgs
   return lookahead_dist;
 }
 
-geometry_msgs::msg::TwistStamped RegulatedPurePursuitController2::computeVelocityCommands(
+geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityCommands(
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::Twist & speed,
   nav2_core::GoalChecker * goal_checker)
@@ -318,7 +318,7 @@ geometry_msgs::msg::TwistStamped RegulatedPurePursuitController2::computeVelocit
 
   // Collision checking on this velocity heading
   if (isCollisionImminent(pose, linear_vel, angular_vel)) {
-    throw nav2_core::PlannerException("RegulatedPurePursuitController2 detected collision ahead!");
+    throw nav2_core::PlannerException("SameFuzzyLogicController detected collision ahead!");
   }
 
   //************************
@@ -349,7 +349,7 @@ geometry_msgs::msg::TwistStamped RegulatedPurePursuitController2::computeVelocit
   return cmd_vel;
 }
 
-bool RegulatedPurePursuitController2::shouldRotateToPath(
+bool SameFuzzyLogicController::shouldRotateToPath(
   const geometry_msgs::msg::PoseStamped & carrot_pose, double & angle_to_path)
 {
   // Whether we should rotate robot to rough path heading
@@ -357,7 +357,7 @@ bool RegulatedPurePursuitController2::shouldRotateToPath(
   return use_rotate_to_heading_ && fabs(angle_to_path) > rotate_to_heading_min_angle_;
 }
 
-bool RegulatedPurePursuitController2::shouldRotateToGoalHeading(
+bool SameFuzzyLogicController::shouldRotateToGoalHeading(
   const geometry_msgs::msg::PoseStamped & carrot_pose)
 {
   // Whether we should rotate robot to goal heading
@@ -365,7 +365,7 @@ bool RegulatedPurePursuitController2::shouldRotateToGoalHeading(
   return use_rotate_to_heading_ && dist_to_goal < goal_dist_tol_;
 }
 
-void RegulatedPurePursuitController2::rotateToHeading(
+void SameFuzzyLogicController::rotateToHeading(
   double & linear_vel, double & angular_vel,
   const double & angle_to_path, const geometry_msgs::msg::Twist & curr_speed)
 {
@@ -380,7 +380,7 @@ void RegulatedPurePursuitController2::rotateToHeading(
   angular_vel = std::clamp(angular_vel, min_feasible_angular_speed, max_feasible_angular_speed);
 }
 
-geometry_msgs::msg::PoseStamped RegulatedPurePursuitController2::getLookAheadPoint(
+geometry_msgs::msg::PoseStamped SameFuzzyLogicController::getLookAheadPoint(
   const double & lookahead_dist,
   const nav_msgs::msg::Path & transformed_plan)
 {
@@ -398,7 +398,7 @@ geometry_msgs::msg::PoseStamped RegulatedPurePursuitController2::getLookAheadPoi
   return *goal_pose_it;
 }
 
-bool RegulatedPurePursuitController2::isCollisionImminent(
+bool SameFuzzyLogicController::isCollisionImminent(
   const geometry_msgs::msg::PoseStamped & robot_pose,
   const double & linear_vel, const double & angular_vel)
 {
@@ -457,7 +457,7 @@ bool RegulatedPurePursuitController2::isCollisionImminent(
   return false;
 }
 
-bool RegulatedPurePursuitController2::inCollision(const double & x, const double & y)
+bool SameFuzzyLogicController::inCollision(const double & x, const double & y)
 {
   unsigned int mx, my;
 
@@ -479,7 +479,7 @@ bool RegulatedPurePursuitController2::inCollision(const double & x, const double
   }
 }
 
-double RegulatedPurePursuitController2::costAtPose(const double & x, const double & y)
+double SameFuzzyLogicController::costAtPose(const double & x, const double & y)
 {
   unsigned int mx, my;
 
@@ -489,7 +489,7 @@ double RegulatedPurePursuitController2::costAtPose(const double & x, const doubl
       "The dimensions of the costmap is too small to fully include your robot's footprint, "
       "thusly the robot cannot proceed further");
     throw nav2_core::PlannerException(
-            "RegulatedPurePursuitController2: Dimensions of the costmap are too small "
+            "SameFuzzyLogicController: Dimensions of the costmap are too small "
             "to encapsulate the robot footprint at current speeds!");
   }
 
@@ -497,7 +497,7 @@ double RegulatedPurePursuitController2::costAtPose(const double & x, const doubl
   return static_cast<double>(cost);
 }
 
-void RegulatedPurePursuitController2::applyConstraints(
+void SameFuzzyLogicController::applyConstraints(
   const double & dist_error, const double & lookahead_dist,
   const double & curvature, const geometry_msgs::msg::Twist & /*curr_speed*/,
   const double & pose_cost, double & linear_vel, double & sign)
@@ -554,12 +554,12 @@ void RegulatedPurePursuitController2::applyConstraints(
   linear_vel = sign * linear_vel;
 }
 
-void RegulatedPurePursuitController2::setPlan(const nav_msgs::msg::Path & path)
+void SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)
 {
   global_plan_ = path;
 }
 
-void RegulatedPurePursuitController2::setSpeedLimit(
+void SameFuzzyLogicController::setSpeedLimit(
   const double & speed_limit,
   const bool & percentage)
 {
@@ -577,7 +577,7 @@ void RegulatedPurePursuitController2::setSpeedLimit(
   }
 }
 
-nav_msgs::msg::Path RegulatedPurePursuitController2::transformGlobalPlan(
+nav_msgs::msg::Path SameFuzzyLogicController::transformGlobalPlan(
   const geometry_msgs::msg::PoseStamped & pose)
 {
   if (global_plan_.poses.empty()) {
@@ -641,7 +641,7 @@ nav_msgs::msg::Path RegulatedPurePursuitController2::transformGlobalPlan(
   return transformed_plan;
 }
 
-double RegulatedPurePursuitController2::findDirectionChange(
+double SameFuzzyLogicController::findDirectionChange(
   const geometry_msgs::msg::PoseStamped & pose)
 {
   // Iterating through the global path to determine the position of the cusp
@@ -669,7 +669,7 @@ double RegulatedPurePursuitController2::findDirectionChange(
   return std::numeric_limits<double>::max();
 }
 
-bool RegulatedPurePursuitController2::transformPose(
+bool SameFuzzyLogicController::transformPose(
   const std::string frame,
   const geometry_msgs::msg::PoseStamped & in_pose,
   geometry_msgs::msg::PoseStamped & out_pose) const
@@ -688,9 +688,9 @@ bool RegulatedPurePursuitController2::transformPose(
   }
   return false;
 }
-}  // namespace nav2_regulated_pure_pursuit_controller2
+}  // namespace nav2_same_fuzzy_logic_controller
 
 // Register this controller as a nav2_core plugin
 PLUGINLIB_EXPORT_CLASS(
-  nav2_regulated_pure_pursuit_controller2::RegulatedPurePursuitController2,
+  nav2_same_fuzzy_logic_controller::SameFuzzyLogicController,
   nav2_core::Controller)
