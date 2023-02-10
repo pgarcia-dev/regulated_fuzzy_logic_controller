@@ -8,7 +8,7 @@ int main(int argc, char **argv)
     Engine *engine = new Engine;
     engine->setName("SFLC");
     engine->setDescription("");
-
+/**
     InputVariable* Ambient = new InputVariable;
     Ambient->setName("Ambient");
     Ambient->setDescription("");
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     Power->setRange(0.000, 1.000);
     Power->setLockValueInRange(false);
     Power->setAggregation(new Maximum);
-    Power->setDefuzzifier(new Centroid(200));
+    Power->setDefuzzifier(new LargestOfMaximum);
     Power->setDefaultValue(fl::nan);
     Power->setLockPreviousValue(false);
     Power->addTerm(new Triangle("LOW", 0.000, 0.150, 0.250));
@@ -49,14 +49,14 @@ int main(int argc, char **argv)
     engine->addRuleBlock(ruleBlock);
 
 
-    scalar location = 0.150;
+    scalar location = 0.001;
     Ambient->setValue(location);
     engine->process();
 
-    FL_LOG( "input = " << Op::str(location) << " => " << "output = " << Op::str(Power->getValue()) );
+    FL_LOG( "inputt = " << Op::str(location) << " => " << "output = " << Op::str(Power->getValue()) );
+**/
 
 
-/**
     InputVariable* Uao_gtg = new InputVariable;
     Uao_gtg->setName("Uao_gtg");
     Uao_gtg->setDescription("");
@@ -64,17 +64,17 @@ int main(int argc, char **argv)
    // Uao_gtg->setRange(-3.8,3.8); ///////////////////////////////
     Uao_gtg->setRange(-10,10);
     Uao_gtg->setLockValueInRange(false);
-    Uao_gtg->addTerm(new Triangle("NL", -3.8, -3.3, -2.8));
-    Uao_gtg->addTerm(new Triangle("NM", 0.250, 0.500, 0.750));
-    Uao_gtg->addTerm(new Triangle("N", 0.7500, 0.950, 1.000));
-    Uao_gtg->addTerm(new Triangle("NS", 0.000, 0.150, 0.250));
-    Uao_gtg->addTerm(new Triangle("ZN", 0.250, 0.500, 0.750));
+    Uao_gtg->addTerm(new Triangle("NL", -3.15, -3.0, -2.8));
+    Uao_gtg->addTerm(new Triangle("NM", -2.8, -1.9, -1.1));
+    Uao_gtg->addTerm(new Triangle("N", -1.1, -0.9, -0.6));
+    Uao_gtg->addTerm(new Triangle("NS", -0.6, -0.5, -0.4));
+    Uao_gtg->addTerm(new Triangle("ZN", -0.4, -0.25, -0.1));
     Uao_gtg->addTerm(new Triangle("Z", -0.1, 0, 0.1)); //----------
-    Uao_gtg->addTerm(new Triangle("ZP", 0.000, 0.150, 0.250));
-    Uao_gtg->addTerm(new Triangle("PS", 0.250, 0.500, 0.750));
-    Uao_gtg->addTerm(new Triangle("P", 0.7500, 0.950, 1.000));
-    Uao_gtg->addTerm(new Triangle("PM", 0.000, 0.150, 0.250));
-    Uao_gtg->addTerm(new Triangle("PL", 3.8, 3.3, 3.8));
+    Uao_gtg->addTerm(new Triangle("ZP", 0.1, 0.25, 0.4));
+    Uao_gtg->addTerm(new Triangle("PS", 0.4, 0.5, 0.6));
+    Uao_gtg->addTerm(new Triangle("P", 0.6, 0.9, 1.1));
+    Uao_gtg->addTerm(new Triangle("PM",1.1, 1.9, 2.8));
+    Uao_gtg->addTerm(new Triangle("PL", 2.8, 3.0, 3.15));
     engine->addInputVariable(Uao_gtg);
 
 
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
     linear_velocity->setRange(0.000, 1.000);
     linear_velocity->setLockValueInRange(false);
     linear_velocity->setAggregation(new Maximum);
-    linear_velocity->setDefuzzifier(new Centroid(200));
+    linear_velocity->setDefuzzifier(new LargestOfMaximum);
     linear_velocity->setDefaultValue(fl::nan);
     linear_velocity->setLockPreviousValue(false);
     linear_velocity->addTerm(new Triangle("LOW", 0.000, 0.150, 0.2500));
@@ -102,10 +102,9 @@ int main(int argc, char **argv)
     angular_velocity->setRange(0.000, 1.000);
     angular_velocity->setLockValueInRange(false);
     angular_velocity->setAggregation(new Maximum);
-   // angular_velocity->setDefuzzifier(new Centroid(500));
-  //  Detergent->setDefuzzifier(new MeanOfMaximum(500));
-    angular_velocity->setDefuzzifier(new Centroid(200)); 
-    ///angular_velocity->setDefuzzifier(new WeightedAverage("Automatic"));
+    angular_velocity->setDefuzzifier(new LargestOfMaximum);
+  //  angular_velocity->setDefuzzifier(new Centroid(200)); 
+
 
     angular_velocity->setDefaultValue(fl::nan);
     angular_velocity->setLockPreviousValue(false);
@@ -153,14 +152,22 @@ int main(int argc, char **argv)
     engine->addRuleBlock(ruleBlock);
 
 
+    scalar input_angle = -3.14;
+    FL_LOG(Op::str(input_angle) << ",, " << Uao_gtg->range())
+    for (int i = 0; i < 50; ++i){
+        input_angle += 0.125;
+        Uao_gtg->setValue(input_angle);
+        engine->process();
+        FL_LOG( "input = " << Op::str(input_angle) << " => " << "output = " << Op::str(linear_velocity->getValue()) << ", " << Op::str(angular_velocity->getValue()));
 
+    }
 
-    scalar location = -3.79;
-    Uao_gtg->setValue(location);
-    engine->process();
+    //scalar location = -3.79;
+    //Uao_gtg->setValue(location);
+    //engine->process();
 
-    FL_LOG( "input = " << Op::str(location) << " => " << "output = " << Op::str(linear_velocity->getValue()) << ", " << Op::str(angular_velocity->getValue()));
-**/
+   // FL_LOG( "input = " << Op::str(location) << " => " << "output = " << Op::str(linear_velocity->getValue()) << ", " << Op::str(angular_velocity->getValue()));
+
 
 
 
