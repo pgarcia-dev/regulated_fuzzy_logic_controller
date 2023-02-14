@@ -22,7 +22,7 @@
 #include <utility>
 
 #include "nav2_same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
-#include "nav2_core/exceptions.hpp"
+//#include "nav2_core/exceptions.hpp" //*********************************
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
@@ -44,8 +44,8 @@ void SameFuzzyLogicController::configure(
   const std::shared_ptr<nav2_costmap_2d::Costmap2DROS> & costmap_ros)
 {
   auto node = parent.lock();
-  if (!node) {
-    throw nav2_core::PlannerException("Unable to lock node!");
+  if (!node) {//******************************
+    ;//throw nav2_core::PlannerException("Unable to lock node!");
   }
 
   costmap_ros_ = costmap_ros;
@@ -317,8 +317,8 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   }
 
   // Collision checking on this velocity heading
-  if (isCollisionImminent(pose, linear_vel, angular_vel)) {
-    throw nav2_core::PlannerException("SameFuzzyLogicController detected collision ahead!");
+  if (isCollisionImminent(pose, linear_vel, angular_vel)) {//*********************
+   ; //throw nav2_core::PlannerException("SameFuzzyLogicController detected collision ahead!");
   }
 
   //************************
@@ -488,9 +488,9 @@ double SameFuzzyLogicController::costAtPose(const double & x, const double & y)
       logger_,
       "The dimensions of the costmap is too small to fully include your robot's footprint, "
       "thusly the robot cannot proceed further");
-    throw nav2_core::PlannerException(
-            "SameFuzzyLogicController: Dimensions of the costmap are too small "
-            "to encapsulate the robot footprint at current speeds!");
+   // throw nav2_core::PlannerException(//***************************
+   //         "SameFuzzyLogicController: Dimensions of the costmap are too small "
+     //       "to encapsulate the robot footprint at current speeds!");
   }
 
   unsigned char cost = costmap_->getCost(mx, my);
@@ -581,13 +581,13 @@ nav_msgs::msg::Path SameFuzzyLogicController::transformGlobalPlan(
   const geometry_msgs::msg::PoseStamped & pose)
 {
   if (global_plan_.poses.empty()) {
-    throw nav2_core::PlannerException("Received plan with zero length");
+   ;//throw nav2_core::PlannerException("Received plan with zero length"); //********
   }
 
   // let's get the pose of the robot in the frame of the plan
   geometry_msgs::msg::PoseStamped robot_pose;
   if (!transformPose(global_plan_.header.frame_id, pose, robot_pose)) {
-    throw nav2_core::PlannerException("Unable to transform robot pose into global plan's frame");
+    ;// nav2_core::PlannerException("Unable to transform robot pose into global plan's frame");
   }
 
   // We'll discard points on the plan that are outside the local costmap
@@ -635,7 +635,7 @@ nav_msgs::msg::Path SameFuzzyLogicController::transformGlobalPlan(
   global_path_pub_->publish(transformed_plan);
 
   if (transformed_plan.poses.empty()) {
-    throw nav2_core::PlannerException("Resulting plan has 0 poses in it.");
+    ; //throw nav2_core::PlannerException("Resulting plan has 0 poses in it.");//************
   }
 
   return transformed_plan;
@@ -692,5 +692,5 @@ bool SameFuzzyLogicController::transformPose(
 
 // Register this controller as a nav2_core plugin
 PLUGINLIB_EXPORT_CLASS(
-  nav2_same_fuzzy_logic_controller::SameFuzzyLogicController,
+  nav2_same_fuzzy_logic_controller::SameFuzzyLogicController                                                                                                                                                                                                                                                                                                      ,
   nav2_core::Controller)

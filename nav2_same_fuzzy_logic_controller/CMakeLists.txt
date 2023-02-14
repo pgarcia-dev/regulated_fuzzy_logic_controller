@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(nav2_regulated_pure_pursuit_controller2)
+project(nav2_same_fuzzy_logic_controller)
 
 find_package(ament_cmake REQUIRED)
 find_package(nav2_common REQUIRED)
@@ -30,10 +30,10 @@ set(dependencies
   tf2
 )
 
-set(library_name nav2_regulated_pure_pursuit_controller2)
+set(library_name nav2_same_fuzzy_logic_controller)
 
 add_library(${library_name} SHARED
-        src/regulated_pure_pursuit_controller2.cpp)
+        src/same_fuzzy_logic_controller.cpp)
 
 # prevent pluginlib from using boost
 target_compile_definitions(${library_name} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
@@ -64,7 +64,7 @@ ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
 
-pluginlib_export_plugin_description_file(nav2_core nav2_regulated_pure_pursuit_controller2.xml)
+pluginlib_export_plugin_description_file(nav2_core nav2_same_fuzzy_logic_controller.xml)
 
 ament_package()
 
