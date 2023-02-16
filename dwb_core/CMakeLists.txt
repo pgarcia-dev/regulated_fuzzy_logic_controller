@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(same_fuzzy_logic_controller)
+project(dwb_core)
 
 find_package(ament_cmake REQUIRED)
 find_package(nav2_common REQUIRED)
@@ -41,18 +41,18 @@ set(dependencies
   nav2_core
 )
 
-add_library(same_fuzzy_logic_controller SHARED
+add_library(dwb_core SHARED
   src/dwb_local_planner.cpp
   src/publisher.cpp
   src/illegal_trajectory_tracker.cpp
   src/trajectory_utils.cpp
 )
 
-ament_target_dependencies(same_fuzzy_logic_controller
+ament_target_dependencies(dwb_core
   ${dependencies}
 )
 
-install(TARGETS same_fuzzy_logic_controller
+install(TARGETS dwb_core
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -62,21 +62,20 @@ install(DIRECTORY include/
   DESTINATION include/
 )
 
-#if(BUILD_TESTING)
- # find_package(ament_lint_auto REQUIRED)
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
- # set(ament_cmake_copyright_FOUND TRUE)
-  #ament_lint_auto_find_test_dependencies()
+  set(ament_cmake_copyright_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
 
- # find_package(ament_cmake_gtest REQUIRED)
-#  add_subdirectory(test)
-#endif()
+  find_package(ament_cmake_gtest REQUIRED)
+  add_subdirectory(test)
+endif()
 
 ament_export_include_directories(include)
-ament_export_libraries(same_fuzzy_logic_controller)
+ament_export_libraries(dwb_core)
 ament_export_dependencies(${dependencies})
 
-#pluginlib_export_plugin_description_file(nav2_core local_planner_plugin.xml)
-pluginlib_export_plugin_description_file(nav2_core same_fuzzy_logic_controller_plugin.xml)
+pluginlib_export_plugin_description_file(nav2_core local_planner_plugin.xml)
 
 ament_package()
