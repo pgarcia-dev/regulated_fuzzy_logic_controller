@@ -1,0 +1,453 @@
+[0.010s] Invoking command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller
+[0.051s] -- The C compiler identification is GNU 11.3.0
+[0.090s] -- The CXX compiler identification is GNU 11.3.0
+[0.094s] -- Detecting C compiler ABI info
+[0.147s] -- Detecting C compiler ABI info - done
+[0.151s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.151s] -- Detecting C compile features
+[0.152s] -- Detecting C compile features - done
+[0.153s] -- Detecting CXX compiler ABI info
+[0.212s] -- Detecting CXX compiler ABI info - done
+[0.216s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.216s] -- Detecting CXX compile features
+[0.217s] -- Detecting CXX compile features - done
+[0.220s] -- Found ament_cmake: 1.5.2 (/opt/ros/rolling/share/ament_cmake/cmake)
+[0.341s] -- Found Python3: /usr/bin/python3.10 (found version "3.10.6") found components: Interpreter 
+[0.381s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.416s] -- Found nav2_common: 1.1.0 (/home/pgarcia/ros2_ws/install/nav2_common/share/nav2_common/cmake)
+[0.418s] -- Found rclcpp: 18.0.0 (/opt/ros/rolling/share/rclcpp/cmake)
+[0.461s] -- Found rosidl_generator_c: 3.3.1 (/opt/ros/rolling/share/rosidl_generator_c/cmake)
+[0.470s] -- Found rosidl_generator_cpp: 3.3.1 (/opt/ros/rolling/share/rosidl_generator_cpp/cmake)
+[0.481s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.498s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.556s] -- Found rmw_implementation_cmake: 6.4.0 (/opt/ros/rolling/share/rmw_implementation_cmake/cmake)
+[0.560s] -- Found rmw_cyclonedds_cpp: 1.5.0 (/opt/ros/rolling/share/rmw_cyclonedds_cpp/cmake)
+[0.589s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[0.599s] -- Looking for pthread.h
+[0.665s] -- Looking for pthread.h - found
+[0.665s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.735s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.735s] -- Found Threads: TRUE  
+[0.817s] -- Found std_msgs: 4.6.1 (/opt/ros/rolling/share/std_msgs/cmake)
+[0.838s] -- Found geometry_msgs: 4.6.1 (/opt/ros/rolling/share/geometry_msgs/cmake)
+[0.863s] -- Found nav_2d_msgs: 1.1.0 (/home/pgarcia/ros2_ws/install/nav_2d_msgs/share/nav_2d_msgs/cmake)
+[0.904s] -- Found dwb_msgs: 1.1.0 (/home/pgarcia/ros2_ws/install/dwb_msgs/share/dwb_msgs/cmake)
+[1.040s] -- Found nav2_costmap_2d: 1.1.0 (/home/pgarcia/ros2_ws/install/nav2_costmap_2d/share/nav2_costmap_2d/cmake)
+[1.527s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[1.528s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.018s] -- Found nav_2d_utils: 1.1.0 (/home/pgarcia/ros2_ws/install/nav_2d_utils/share/nav_2d_utils/cmake)
+[2.277s] -- Found nav2_core: 1.1.0 (/home/pgarcia/ros2_ws/install/nav2_core/share/nav2_core/cmake)
+[3.921s] -- Setting build type to Release as none was specified.
+[8.305s] -- Configuring done
+[8.333s] -- Generating done
+[8.335s] -- Build files have been written to: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller
+[8.342s] Invoked command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller
+[8.343s] Invoking command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake --build /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller -- -j8 -l8
+[8.389s] [ 50%] [32mBuilding CXX object CMakeFiles/same_fuzzy_logic_controller.dir/src/same_fuzzy_logic_controller.cpp.o[0m
+[10.550s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.550s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:209:19:[m[K [01;31m[Kerror: [m[K‘[01m[KDWBPublisher[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::DWBPublisher[m[K’?
+[10.551s]   209 |   std::unique_ptr<[01;31m[KDWBPublisher[m[K> pub_;
+[10.551s]       |                   [01;31m[K^~~~~~~~~~~~[m[K
+[10.551s]       |                   [32m[Kdwb_core::DWBPublisher[m[K
+[10.551s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:24[m[K,
+[10.551s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.551s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/publisher.hpp:69:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::DWBPublisher[m[K’ declared here
+[10.551s]    69 | class [01;36m[KDWBPublisher[m[K
+[10.551s]       |       [01;36m[K^~~~~~~~~~~~[m[K
+[10.551s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.551s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:209:31:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.551s]   209 |   std::unique_ptr<DWBPublisher[01;31m[K>[m[K pub_;
+[10.551s]       |                               [01;31m[K^[m[K
+[10.552s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:209:31:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[10.552s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:213:26:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryGenerator[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::TrajectoryGenerator[m[K’?
+[10.552s]   213 |   pluginlib::ClassLoader<[01;31m[KTrajectoryGenerator[m[K> traj_gen_loader_;
+[10.552s]       |                          [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[10.552s]       |                          [32m[Kdwb_core::TrajectoryGenerator[m[K
+[10.552s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/dwb_local_planner.hpp:46[m[K,
+[10.552s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:26[m[K,
+[10.552s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.552s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/trajectory_generator.hpp:64:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::TrajectoryGenerator[m[K’ declared here
+[10.552s]    64 | class [01;36m[KTrajectoryGenerator[m[K
+[10.552s]       |       [01;36m[K^~~~~~~~~~~~~~~~~~~[m[K
+[10.552s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.552s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:213:45:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.552s]   213 |   pluginlib::ClassLoader<TrajectoryGenerator[01;31m[K>[m[K traj_gen_loader_;
+[10.552s]       |                                             [01;31m[K^[m[K
+[10.555s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:214:3:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryGenerator[m[K’ does not name a type
+[10.555s]   214 |   [01;31m[KTrajectoryGenerator[m[K::Ptr traj_generator_;
+[10.555s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~[m[K
+[10.556s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:216:26:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::TrajectoryCritic[m[K’?
+[10.556s]   216 |   pluginlib::ClassLoader<[01;31m[KTrajectoryCritic[m[K> critic_loader_;
+[10.556s]       |                          [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.556s]       |                          [32m[Kdwb_core::TrajectoryCritic[m[K
+[10.556s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/publisher.hpp:43[m[K,
+[10.556s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:24[m[K,
+[10.556s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.556s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/trajectory_critic.hpp:78:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::TrajectoryCritic[m[K’ declared here
+[10.556s]    78 | class [01;36m[KTrajectoryCritic[m[K
+[10.556s]       |       [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[10.556s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.556s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:216:42:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.556s]   216 |   pluginlib::ClassLoader<TrajectoryCritic[01;31m[K>[m[K critic_loader_;
+[10.556s]       |                                          [01;31m[K^[m[K
+[10.557s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:217:15:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::TrajectoryCritic[m[K’?
+[10.557s]   217 |   std::vector<[01;31m[KTrajectoryCritic[m[K::Ptr> critics_;
+[10.557s]       |               [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.557s]       |               [32m[Kdwb_core::TrajectoryCritic[m[K
+[10.557s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/publisher.hpp:43[m[K,
+[10.557s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:24[m[K,
+[10.557s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.557s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/trajectory_critic.hpp:78:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::TrajectoryCritic[m[K’ declared here
+[10.557s]    78 | class [01;36m[KTrajectoryCritic[m[K
+[10.557s]       |       [01;36m[K^~~~~~~~~~~~~~~~[m[K
+[10.557s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.557s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:217:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.557s]   217 |   std::vector<TrajectoryCritic::Ptr[01;31m[K>[m[K critics_;
+[10.557s]       |                                    [01;31m[K^[m[K
+[10.557s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:217:36:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[10.563s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::setSpeedLimit(const double&, const bool&)[m[K’:
+[10.563s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:139:9:[m[K [01;31m[Kerror: [m[K‘[01m[Ktraj_generator_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktraj_gen_loader_[m[K’?
+[10.563s]   139 |     if ([01;31m[Ktraj_generator_[m[K) {
+[10.563s]       |         [01;31m[K^~~~~~~~~~~~~~~[m[K
+[10.563s]       |         [32m[Ktraj_gen_loader_[m[K
+[10.571s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In constructor ‘[01m[Ksame_fuzzy_logic_controller::SameFuzzyLogicController::SameFuzzyLogicController()[m[K’:
+[10.571s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:43:3:[m[K [01;31m[Kerror: [m[Kexpression list treated as compound expression in mem-initializer [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[10.571s]    43 | : [01;31m[Ktraj_gen_loader_("dwb_core", "dwb_core::TrajectoryGenerator")[m[K,
+[10.571s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.571s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:43:20:[m[K [01;31m[Kerror: [m[Kleft operand of comma operator has no effect [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-value-Werror=unused-value]8;;[m[K]
+[10.571s]    43 | : traj_gen_loader_([01;31m[K"dwb_core"[m[K, "dwb_core::TrajectoryGenerator"),
+[10.571s]       |                    [01;31m[K^~~~~~~~~~[m[K
+[10.572s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:43:3:[m[K [01;31m[Kerror: [m[Kinvalid conversion from ‘[01m[Kconst char*[m[K’ to ‘[01m[Kint[m[K’ [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[10.572s]    43 | : [01;31m[Ktraj_gen_loader_("dwb_core", "dwb_core::TrajectoryGenerator")[m[K,
+[10.572s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.572s]       |   [01;31m[K|[m[K
+[10.572s]       |   [01;31m[Kconst char*[m[K
+[10.572s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:44:3:[m[K [01;31m[Kerror: [m[Kexpression list treated as compound expression in mem-initializer [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[10.572s]    44 |   [01;31m[Kcritic_loader_("dwb_core", "dwb_core::TrajectoryCritic")[m[K
+[10.572s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.572s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:44:18:[m[K [01;31m[Kerror: [m[Kleft operand of comma operator has no effect [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-value-Werror=unused-value]8;;[m[K]
+[10.572s]    44 |   critic_loader_([01;31m[K"dwb_core"[m[K, "dwb_core::TrajectoryCritic")
+[10.572s]       |                  [01;31m[K^~~~~~~~~~[m[K
+[10.572s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:44:3:[m[K [01;31m[Kerror: [m[Kinvalid conversion from ‘[01m[Kconst char*[m[K’ to ‘[01m[Kint[m[K’ [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[10.572s]    44 |   [01;31m[Kcritic_loader_("dwb_core", "dwb_core::TrajectoryCritic")[m[K
+[10.572s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.572s]       |   [01;31m[K|[m[K
+[10.572s]       |   [01;31m[Kconst char*[m[K
+[10.576s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::configure(const WeakPtr&, std::string, std::shared_ptr<tf2_ros::Buffer>, std::shared_ptr<nav2_costmap_2d::Costmap2DROS>)[m[K’:
+[10.576s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:105:27:[m[K [01;31m[Kerror: [m[K‘[01m[KDWBPublisher[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::DWBPublisher[m[K’?
+[10.576s]   105 |   pub_ = std::make_unique<[01;31m[KDWBPublisher[m[K>(node, dwb_plugin_name_);
+[10.576s]       |                           [01;31m[K^~~~~~~~~~~~[m[K
+[10.576s]       |                           [32m[Kdwb_core::DWBPublisher[m[K
+[10.576s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:24[m[K,
+[10.576s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.576s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/publisher.hpp:69:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::DWBPublisher[m[K’ declared here
+[10.576s]    69 | class [01;36m[KDWBPublisher[m[K
+[10.577s]       |       [01;36m[K^~~~~~~~~~~~[m[K
+[10.577s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:105:40:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[Kmake_unique<<expression error> >(std::shared_ptr<rclcpp_lifecycle::LifecycleNode>&, std::string&)[m[K’
+[10.577s]   105 |   pub_ = [01;31m[Kstd::make_unique<DWBPublisher>(node, dwb_plugin_name_)[m[K;
+[10.577s]       |          [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.577s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[10.577s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:16[m[K:
+[10.577s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...)[m[K’
+[10.577s]   961 |     [01;36m[Kmake_unique[m[K(_Args&&... __args)
+[10.577s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[10.577s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:961:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[10.577s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:105:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.577s]   105 |   pub_ = [01;31m[Kstd::make_unique<DWBPublisher>(node, dwb_plugin_name_)[m[K;
+[10.577s]       |          [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.577s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[10.577s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:16[m[K:
+[10.577s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp> typename std::_MakeUniq<_Tp>::__array std::make_unique(std::size_t)[m[K’
+[10.577s]   967 |     [01;36m[Kmake_unique[m[K(size_t __num)
+[10.577s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[10.577s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:967:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[10.578s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:105:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.578s]   105 |   pub_ = [01;31m[Kstd::make_unique<DWBPublisher>(node, dwb_plugin_name_)[m[K;
+[10.578s]       |          [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.578s] In file included from [01m[K/usr/include/c++/11/memory:76[m[K,
+[10.578s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:16[m[K:
+[10.578s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class _Tp, class ... _Args> typename std::_MakeUniq<_Tp>::__invalid_type std::make_unique(_Args&& ...)[m[K’ (deleted)
+[10.578s]   973 |     [01;36m[Kmake_unique[m[K(_Args&&...) = delete;
+[10.578s]       |     [01;36m[K^~~~~~~~~~~[m[K
+[10.578s] [01m[K/usr/include/c++/11/bits/unique_ptr.h:973:5:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[10.578s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:105:40:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[10.578s]   105 |   pub_ = [01;31m[Kstd::make_unique<DWBPublisher>(node, dwb_plugin_name_)[m[K;
+[10.578s]       |          [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.578s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:106:7:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.578s]   106 |   pub_[01;31m[K->[m[Kon_configure();
+[10.578s]       |       [01;31m[K^~[m[K
+[10.582s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:108:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ktraj_generator_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktraj_generator_name[m[K’?
+[10.582s]   108 |   [01;31m[Ktraj_generator_[m[K = traj_gen_loader_.createUniqueInstance(traj_generator_name);
+[10.582s]       |   [01;31m[K^~~~~~~~~~~~~~~[m[K
+[10.582s]       |   [32m[Ktraj_generator_name[m[K
+[10.582s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:108:38:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KcreateUniqueInstance[m[K’ in ‘[01m[K((same_fuzzy_logic_controller::SameFuzzyLogicController*)this)->same_fuzzy_logic_controller::SameFuzzyLogicController::traj_gen_loader_[m[K’, which is of non-class type ‘[01m[Kint[m[K’
+[10.582s]   108 |   traj_generator_ = traj_gen_loader_.[01;31m[KcreateUniqueInstance[m[K(traj_generator_name);
+[10.582s]       |                                      [01;31m[K^~~~~~~~~~~~~~~~~~~~[m[K
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::activate()[m[K’:
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:125:7:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.583s]   125 |   pub_[01;31m[K->[m[Kon_activate();
+[10.583s]       |       [01;31m[K^~[m[K
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::deactivate()[m[K’:
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:131:7:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.583s]   131 |   pub_[01;31m[K->[m[Kon_deactivate();
+[10.583s]       |       [01;31m[K^~[m[K
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::cleanup()[m[K’:
+[10.583s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:137:7:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.584s]   137 |   pub_[01;31m[K->[m[Kon_cleanup();
+[10.584s]       |       [01;31m[K^~[m[K
+[10.589s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:139:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ktraj_generator_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktraj_gen_loader_[m[K’?
+[10.589s]   139 |   [01;31m[Ktraj_generator_[m[K.reset();
+[10.589s]       |   [01;31m[K^~~~~~~~~~~~~~~[m[K
+[10.589s]       |   [32m[Ktraj_gen_loader_[m[K
+[10.589s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kstd::string same_fuzzy_logic_controller::SameFuzzyLogicController::resolveCriticClassName(std::string)[m[K’:
+[10.590s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:152:26:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[KisClassAvailable[m[K’ in ‘[01m[K((same_fuzzy_logic_controller::SameFuzzyLogicController*)this)->same_fuzzy_logic_controller::SameFuzzyLogicController::critic_loader_[m[K’, which is of non-class type ‘[01m[Kint[m[K’
+[10.590s]   152 |       if (critic_loader_.[01;31m[KisClassAvailable[m[K(full_name)) {
+[10.590s]       |                          [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.590s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::loadCritics()[m[K’:
+[10.590s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:190:5:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.591s]   190 |     [01;31m[KTrajectoryCritic[m[K::Ptr plugin = critic_loader_.createUniqueInstance(plugin_class);
+[10.591s]       |     [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.591s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:194:14:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Kpush_back[m[K’ in ‘[01m[K((same_fuzzy_logic_controller::SameFuzzyLogicController*)this)->same_fuzzy_logic_controller::SameFuzzyLogicController::critics_[m[K’, which is of non-class type ‘[01m[Kint[m[K’
+[10.591s]   194 |     critics_.[01;31m[Kpush_back[m[K(plugin);
+[10.591s]       |              [01;31m[K^~~~~~~~~[m[K
+[10.595s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:194:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kplugin[m[K’ was not declared in this scope; did you mean ‘[01m[Kpluginlib[m[K’?
+[10.595s]   194 |     critics_.push_back([01;31m[Kplugin[m[K);
+[10.595s]       |                        [01;31m[K^~~~~~[m[K
+[10.596s]       |                        [32m[Kpluginlib[m[K
+[10.596s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual void same_fuzzy_logic_controller::SameFuzzyLogicController::setPlan(const Path&)[m[K’:
+[10.596s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:211:8:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.597s]   211 |   for ([01;31m[KTrajectoryCritic[m[K::Ptr & critic : critics_) {
+[10.597s]       |        [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.597s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:211:39:[m[K [01;31m[Kerror: [m[Kfound ‘[01m[K:[m[K’ in nested-name-specifier, expected ‘[01m[K::[m[K’
+[10.597s]   211 |   for (TrajectoryCritic::Ptr & critic [01;31m[K:[m[K critics_) {
+[10.597s]       |                                       [01;31m[K^[m[K
+[10.597s]       |                                       [32m[K::[m[K
+[10.597s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:211:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kcritic[m[K’ has not been declared
+[10.597s]   211 |   for (TrajectoryCritic::Ptr & [01;31m[Kcritic[m[K : critics_) {
+[10.597s]       |                                [01;31m[K^~~~~~[m[K
+[10.602s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:215:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ktraj_generator_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktraj_gen_loader_[m[K’?
+[10.602s]   215 |   [01;31m[Ktraj_generator_[m[K->reset();
+[10.602s]       |   [01;31m[K^~~~~~~~~~~~~~~[m[K
+[10.602s]       |   [32m[Ktraj_gen_loader_[m[K
+[10.602s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:217:7:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.602s]   217 |   pub_[01;31m[K->[m[KpublishGlobalPlan(path2d);
+[10.602s]       |       [01;31m[K^~[m[K
+[10.602s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:217:34:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+[10.602s]   217 |   pub_->publishGlobalPlan(path2d)[01;31m[K;[m[K
+[10.603s]       |                                  [01;31m[K^[m[K
+[10.603s]       |                                  [32m[K)[m[K
+[10.603s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:211:7:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+[10.603s]   211 |   for [01;36m[K([m[KTrajectoryCritic::Ptr & critic : critics_) {
+[10.603s]       |       [01;36m[K^[m[K
+[10.604s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual geometry_msgs::msg::TwistStamped same_fuzzy_logic_controller::SameFuzzyLogicController::computeVelocityCommands(const PoseStamped&, const Twist&, nav2_core::GoalChecker*)[m[K’:
+[10.605s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:228:11:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.605s]   228 |   if (pub_[01;31m[K->[m[KshouldRecordEvaluation()) {
+[10.605s]       |           [01;31m[K^~[m[K
+[10.605s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:236:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.605s]   236 |     pub_[01;31m[K->[m[KpublishEvaluation(results);
+[10.605s]       |         [01;31m[K^~[m[K
+[10.605s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:241:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.605s]   241 |     pub_[01;31m[K->[m[KpublishEvaluation(results);
+[10.605s]       |         [01;31m[K^~[m[K
+[10.605s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:244:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.605s]   244 |     pub_[01;31m[K->[m[KpublishEvaluation(results);
+[10.605s]       |         [01;31m[K^~[m[K
+[10.605s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:247:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.605s]   247 |     pub_[01;31m[K->[m[KpublishEvaluation(results);
+[10.606s]       |         [01;31m[K^~[m[K
+[10.606s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:250:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.606s]   250 |     pub_[01;31m[K->[m[KpublishEvaluation(results);
+[10.606s]       |         [01;31m[K^~[m[K
+[10.606s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvoid same_fuzzy_logic_controller::SameFuzzyLogicController::prepareGlobalPlan(const Pose2DStamped&, nav_2d_msgs::msg::Path2D&, nav_2d_msgs::msg::Pose2DStamped&, bool)[m[K’:
+[10.606s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:262:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.606s]   262 |     pub_[01;31m[K->[m[KpublishTransformedPlan(transformed_plan);
+[10.606s]       |         [01;31m[K^~[m[K
+[10.606s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual nav_2d_msgs::msg::Twist2DStamped same_fuzzy_logic_controller::SameFuzzyLogicController::computeVelocityCommands(const Pose2DStamped&, const Twist2D&, std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation_<std::allocator<void> > >&)[m[K’:
+[10.606s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:291:8:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.607s]   291 |   for ([01;31m[KTrajectoryCritic[m[K::Ptr & critic : critics_) {
+[10.607s]       |        [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.607s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:291:39:[m[K [01;31m[Kerror: [m[Kfound ‘[01m[K:[m[K’ in nested-name-specifier, expected ‘[01m[K::[m[K’
+[10.607s]   291 |   for (TrajectoryCritic::Ptr & critic [01;31m[K:[m[K critics_) {
+[10.607s]       |                                       [01;31m[K^[m[K
+[10.607s]       |                                       [32m[K::[m[K
+[10.607s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:291:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kcritic[m[K’ has not been declared
+[10.607s]   291 |   for (TrajectoryCritic::Ptr & [01;31m[Kcritic[m[K : critics_) {
+[10.607s]       |                                [01;31m[K^~~~~~[m[K
+[10.607s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:297:3:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Ktry[m[K’
+[10.607s]   297 |   [01;31m[Ktry[m[K {
+[10.607s]       |   [01;31m[K^~~[m[K
+[10.607s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:295:4:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Ktry[m[K’
+[10.607s]   295 |   }
+[10.607s]       |    [01;31m[K^[m[K
+[10.608s]       |    [32m[K;[m[K
+[10.608s]   296 | 
+[10.608s]   297 |   [32m[Ktry[m[K {
+[10.608s]       |   [32m[K~~~[m[K
+[10.608s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:297:3:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Ktry[m[K’
+[10.608s]   297 |   [01;31m[Ktry[m[K {
+[10.608s]       |   [01;31m[K^~~[m[K
+[10.608s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:295:4:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[Ktry[m[K’
+[10.608s]   295 |   }
+[10.608s]       |    [01;31m[K^[m[K
+[10.608s]       |    [32m[K)[m[K
+[10.608s]   296 | 
+[10.608s]   297 |   [32m[Ktry[m[K {
+[10.608s]       |   [32m[K~~~[m[K
+[10.608s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:291:7:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+[10.609s]   291 |   for [01;36m[K([m[KTrajectoryCritic::Ptr & critic : critics_) {
+[10.609s]       |       [01;36m[K^[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:306:10:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.609s]   306 |     for ([01;31m[KTrajectoryCritic[m[K::Ptr & critic : critics_) {
+[10.609s]       |          [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:306:41:[m[K [01;31m[Kerror: [m[Kfound ‘[01m[K:[m[K’ in nested-name-specifier, expected ‘[01m[K::[m[K’
+[10.609s]   306 |     for (TrajectoryCritic::Ptr & critic [01;31m[K:[m[K critics_) {
+[10.609s]       |                                         [01;31m[K^[m[K
+[10.609s]       |                                         [32m[K::[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:306:34:[m[K [01;31m[Kerror: [m[K‘[01m[Kcritic[m[K’ has not been declared
+[10.609s]   306 |     for (TrajectoryCritic::Ptr & [01;31m[Kcritic[m[K : critics_) {
+[10.609s]       |                                  [01;31m[K^~~~~~[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:310:16:[m[K [01;31m[Kerror: [m[Kcould not convert ‘[01m[Klock.std::unique_lock<std::recursive_mutex>::unlock()[m[K’ from ‘[01m[Kvoid[m[K’ to ‘[01m[Kbool[m[K’
+[10.609s]   310 |     [01;31m[Klock.unlock()[m[K;
+[10.609s]       |     [01;31m[K~~~~~~~~~~~^~[m[K
+[10.609s]       |                [01;31m[K|[m[K
+[10.609s]       |                [01;31m[Kvoid[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:312:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.609s]   312 |     pub_[01;31m[K->[m[KpublishLocalPlan(pose.header, best.traj);
+[10.609s]       |         [01;31m[K^~[m[K
+[10.609s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:312:51:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+[10.610s]   312 |     pub_->publishLocalPlan(pose.header, best.traj)[01;31m[K;[m[K
+[10.610s]       |                                                   [01;31m[K^[m[K
+[10.610s]       |                                                   [32m[K)[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:306:9:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+[10.610s]   306 |     for [01;36m[K([m[KTrajectoryCritic::Ptr & critic : critics_) {
+[10.610s]       |         [01;36m[K^[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:313:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.610s]   313 |     pub_[01;31m[K->[m[KpublishCostGrid(costmap_ros_, critics_);
+[10.610s]       |         [01;31m[K^~[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:320:10:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.610s]   320 |     for ([01;31m[KTrajectoryCritic[m[K::Ptr & critic : critics_) {
+[10.610s]       |          [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:320:41:[m[K [01;31m[Kerror: [m[Kfound ‘[01m[K:[m[K’ in nested-name-specifier, expected ‘[01m[K::[m[K’
+[10.610s]   320 |     for (TrajectoryCritic::Ptr & critic [01;31m[K:[m[K critics_) {
+[10.610s]       |                                         [01;31m[K^[m[K
+[10.610s]       |                                         [32m[K::[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:320:34:[m[K [01;31m[Kerror: [m[K‘[01m[Kcritic[m[K’ has not been declared
+[10.610s]   320 |     for (TrajectoryCritic::Ptr & [01;31m[Kcritic[m[K : critics_) {
+[10.610s]       |                                  [01;31m[K^~~~~~[m[K
+[10.610s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:324:16:[m[K [01;31m[Kerror: [m[Kcould not convert ‘[01m[Klock.std::unique_lock<std::recursive_mutex>::unlock()[m[K’ from ‘[01m[Kvoid[m[K’ to ‘[01m[Kbool[m[K’
+[10.610s]   324 |     [01;31m[Klock.unlock()[m[K;
+[10.611s]       |     [01;31m[K~~~~~~~~~~~^~[m[K
+[10.611s]       |                [01;31m[K|[m[K
+[10.611s]       |                [01;31m[Kvoid[m[K
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:326:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.611s]   326 |     pub_[01;31m[K->[m[KpublishLocalPlan(pose.header, empty_traj);
+[10.611s]       |         [01;31m[K^~[m[K
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:326:52:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[K;[m[K’ token
+[10.611s]   326 |     pub_->publishLocalPlan(pose.header, empty_traj)[01;31m[K;[m[K
+[10.611s]       |                                                    [01;31m[K^[m[K
+[10.611s]       |                                                    [32m[K)[m[K
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:320:9:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+[10.611s]   320 |     for [01;36m[K([m[KTrajectoryCritic::Ptr & critic : critics_) {
+[10.611s]       |         [01;36m[K^[m[K
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:327:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.611s]   327 |     pub_[01;31m[K->[m[KpublishCostGrid(costmap_ros_, critics_);
+[10.611s]       |         [01;31m[K^~[m[K
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual dwb_msgs::msg::TrajectoryScore same_fuzzy_logic_controller::SameFuzzyLogicController::coreScoringAlgorithm(const Pose2D&, nav_2d_msgs::msg::Twist2D, std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation_<std::allocator<void> > >&)[m[K’:
+[10.611s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:346:3:[m[K [01;31m[Kerror: [m[K‘[01m[KIllegalTrajectoryTracker[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::IllegalTrajectoryTracker[m[K’?
+[10.611s]   346 |   [01;31m[KIllegalTrajectoryTracker[m[K tracker;
+[10.612s]       |   [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.612s]       |   [32m[Kdwb_core::IllegalTrajectoryTracker[m[K
+[10.612s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:23[m[K:
+[10.612s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/illegal_trajectory_tracker.hpp:46:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::IllegalTrajectoryTracker[m[K’ declared here
+[10.612s]    46 | class [01;36m[KIllegalTrajectoryTracker[m[K
+[10.612s]       |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.615s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:348:3:[m[K [01;31m[Kerror: [m[K‘[01m[Ktraj_generator_[m[K’ was not declared in this scope; did you mean ‘[01m[Ktraj_gen_loader_[m[K’?
+[10.615s]   348 |   [01;31m[Ktraj_generator_[m[K->startNewIteration(velocity);
+[10.615s]       |   [01;31m[K^~~~~~~~~~~~~~~[m[K
+[10.615s]       |   [32m[Ktraj_gen_loader_[m[K
+[10.619s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:355:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktracker[m[K’ was not declared in this scope
+[10.620s]   355 |       [01;31m[Ktracker[m[K.addLegalTrajectory();
+[10.620s]       |       [01;31m[K^~~~~~~[m[K
+[10.624s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:383:7:[m[K [01;31m[Kerror: [m[K‘[01m[Ktracker[m[K’ was not declared in this scope
+[10.624s]   383 |       [01;31m[Ktracker[m[K.addIllegalTrajectory(e);
+[10.625s]       |       [01;31m[K^~~~~~~[m[K
+[10.629s] In file included from [01m[K/opt/ros/rolling/include/rclcpp/rclcpp/logging.hpp:24[m[K,
+[10.629s]                  from [01m[K/opt/ros/rolling/include/rclcpp/rclcpp/client.hpp:40[m[K,
+[10.629s]                  from [01m[K/opt/ros/rolling/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+[10.629s]                  from [01m[K/opt/ros/rolling/include/rclcpp_lifecycle/rclcpp_lifecycle/lifecycle_node.hpp:56[m[K,
+[10.629s]                  from [01m[K/home/pgarcia/ros2_ws/install/nav2_costmap_2d/include/nav2_costmap_2d/costmap_2d_publisher.hpp:46[m[K,
+[10.629s]                  from [01m[K/home/pgarcia/ros2_ws/install/nav2_costmap_2d/include/nav2_costmap_2d/costmap_2d_ros.hpp:48[m[K,
+[10.629s]                  from [01m[K/home/pgarcia/ros2_ws/install/nav2_core/include/nav2_core/controller.hpp:42[m[K,
+[10.630s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp:22[m[K,
+[10.630s]                  from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:21[m[K:
+[10.630s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:389:74:[m[K [01;31m[Kerror: [m[K‘[01m[Ktracker[m[K’ was not declared in this scope
+[10.630s]   389 |       RCLCPP_ERROR(rclcpp::get_logger("SameFuzzyLogicController"), "%s", [01;31m[Ktracker[m[K.getMessage().c_str());
+[10.630s]       |                                                                          [01;31m[K^~~~~~~[m[K
+[10.633s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:390:29:[m[K [01;31m[Kerror: [m[K‘[01m[Ktracker[m[K’ was not declared in this scope
+[10.633s]   390 |       for (auto const & x : [01;31m[Ktracker[m[K.getPercentages()) {
+[10.633s]       |                             [01;31m[K^~~~~~~[m[K
+[10.638s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:397:40:[m[K [01;31m[Kerror: [m[K‘[01m[Ktracker[m[K’ was not declared in this scope
+[10.638s]   397 |     throw NoLegalTrajectoriesException([01;31m[Ktracker[m[K);
+[10.638s]       |                                        [01;31m[K^~~~~~~[m[K
+[10.638s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:397:11:[m[K [01;31m[Kerror: [m[K‘[01m[KNoLegalTrajectoriesException[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::NoLegalTrajectoriesException[m[K’?
+[10.638s]   397 |     throw [01;31m[KNoLegalTrajectoriesException[m[K(tracker);
+[10.639s]       |           [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.639s]       |           [32m[Kdwb_core::NoLegalTrajectoriesException[m[K
+[10.639s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:23[m[K:
+[10.639s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/illegal_trajectory_tracker.hpp:68:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::NoLegalTrajectoriesException[m[K’ declared here
+[10.639s]    68 | class [01;36m[KNoLegalTrajectoriesException[m[K
+[10.639s]       |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[10.639s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual dwb_msgs::msg::TrajectoryScore same_fuzzy_logic_controller::SameFuzzyLogicController::scoreTrajectory(const Trajectory2D&, double)[m[K’:
+[10.639s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:411:8:[m[K [01;31m[Kerror: [m[K‘[01m[KTrajectoryCritic[m[K’ has not been declared
+[10.639s]   411 |   for ([01;31m[KTrajectoryCritic[m[K::Ptr & critic : critics_) {
+[10.639s]       |        [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[10.640s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:411:39:[m[K [01;31m[Kerror: [m[Kfound ‘[01m[K:[m[K’ in nested-name-specifier, expected ‘[01m[K::[m[K’
+[10.640s]   411 |   for (TrajectoryCritic::Ptr & critic [01;31m[K:[m[K critics_) {
+[10.640s]       |                                       [01;31m[K^[m[K
+[10.640s]       |                                       [32m[K::[m[K
+[10.640s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:411:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kcritic[m[K’ has not been declared
+[10.640s]   411 |   for (TrajectoryCritic::Ptr & [01;31m[Kcritic[m[K : critics_) {
+[10.640s]       |                                [01;31m[K^~~~~~[m[K
+[10.640s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:431:3:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Kreturn[m[K’
+[10.640s]   431 |   [01;31m[Kreturn[m[K score;
+[10.640s]       |   [01;31m[K^~~~~~[m[K
+[10.640s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:429:4:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Kreturn[m[K’
+[10.640s]   429 |   }
+[10.640s]       |    [01;31m[K^[m[K
+[10.640s]       |    [32m[K;[m[K
+[10.640s]   430 | 
+[10.640s]   431 |   [32m[Kreturn[m[K score;
+[10.640s]       |   [32m[K~~~~~~[m[K
+[10.640s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:431:3:[m[K [01;31m[Kerror: [m[Kexpected primary-expression before ‘[01m[Kreturn[m[K’
+[10.641s]   431 |   [01;31m[Kreturn[m[K score;
+[10.641s]       |   [01;31m[K^~~~~~[m[K
+[10.641s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:429:4:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K)[m[K’ before ‘[01m[Kreturn[m[K’
+[10.641s]   429 |   }
+[10.641s]       |    [01;31m[K^[m[K
+[10.641s]       |    [32m[K)[m[K
+[10.641s]   430 | 
+[10.641s]   431 |   [32m[Kreturn[m[K score;
+[10.641s]       |   [32m[K~~~~~~[m[K
+[10.641s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:411:7:[m[K [01;36m[Knote: [m[Kto match this ‘[01m[K([m[K’
+[10.641s]   411 |   for [01;36m[K([m[KTrajectoryCritic::Ptr & critic : critics_) {
+[10.641s]       |       [01;36m[K^[m[K
+[10.641s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:406:10:[m[K [01;31m[Kerror: [m[Kunused parameter ‘[01m[Kbest_score[m[K’ [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Werror=unused-parameter]8;;[m[K]
+[10.641s]   406 |   [01;31m[Kdouble best_score[m[K)
+[10.641s]       |   [01;31m[K~~~~~~~^~~~~~~~~~[m[K
+[10.641s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual nav_2d_msgs::msg::Path2D same_fuzzy_logic_controller::SameFuzzyLogicController::transformGlobalPlan(const Pose2DStamped&)[m[K’:
+[10.641s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:529:9:[m[K [01;31m[Kerror: [m[Kbase operand of ‘[01m[K->[m[K’ is not a pointer
+[10.642s]   529 |     pub_[01;31m[K->[m[KpublishGlobalPlan(global_plan_);
+[10.642s]       |         [01;31m[K^~[m[K
+[11.700s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual nav_2d_msgs::msg::Twist2DStamped same_fuzzy_logic_controller::SameFuzzyLogicController::computeVelocityCommands(const Pose2DStamped&, const Twist2D&, std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation_<std::allocator<void> > >&)[m[K’:
+[11.700s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:333:1:[m[K [01;31m[Kerror: [m[Kcontrol reaches end of non-void function [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreturn-type-Werror=return-type]8;;[m[K]
+[11.701s]   333 | [01;31m[K}[m[K
+[11.701s]       | [01;31m[K^[m[K
+[11.701s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual dwb_msgs::msg::TrajectoryScore same_fuzzy_logic_controller::SameFuzzyLogicController::scoreTrajectory(const Trajectory2D&, double)[m[K’:
+[11.702s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:432:1:[m[K [01;31m[Kerror: [m[Kcontrol reaches end of non-void function [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreturn-type-Werror=return-type]8;;[m[K]
+[11.702s]   432 | [01;31m[K}[m[K
+[11.702s]       | [01;31m[K^[m[K
+[11.715s] cc1plus: all warnings being treated as errors
+[11.727s] gmake[2]: *** [CMakeFiles/same_fuzzy_logic_controller.dir/build.make:76: CMakeFiles/same_fuzzy_logic_controller.dir/src/same_fuzzy_logic_controller.cpp.o] Error 1
+[11.727s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/same_fuzzy_logic_controller.dir/all] Error 2
+[11.727s] gmake: *** [Makefile:146: all] Error 2
+[11.729s] Invoked command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake --build /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller -- -j8 -l8

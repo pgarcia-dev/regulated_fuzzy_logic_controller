@@ -1,0 +1,35 @@
+[35m[1mConsolidate compiler generated dependencies of target same_fuzzy_logic_controller[0m
+[100%] Built target same_fuzzy_logic_controller
+-- Install configuration: "Release"
+-- Execute custom install script
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/lib/libsame_fuzzy_logic_controller.so
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/dwb_local_planner.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/exceptions.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/illegal_trajectory_tracker.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/publisher.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/trajectory_critic.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/trajectory_generator.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//dwb_core/trajectory_utils.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/include//same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/library_path.sh
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/library_path.dsv
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller//same_fuzzy_logic_controller_plugin.xml
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/ament_index/resource_index/package_run_dependencies/same_fuzzy_logic_controller
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/ament_index/resource_index/parent_prefix_path/same_fuzzy_logic_controller
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/path.sh
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/environment/path.dsv
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/local_setup.bash
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/local_setup.sh
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/local_setup.zsh
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/local_setup.dsv
+-- Symlinking: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/package.dsv
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/ament_index/resource_index/packages/same_fuzzy_logic_controller
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/ament_index/resource_index/nav2_core__pluginlib__plugin/same_fuzzy_logic_controller
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/cmake/same_fuzzy_logic_controllerConfig.cmake
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/cmake/same_fuzzy_logic_controllerConfig-version.cmake
+-- Up-to-date symlink: /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/install/same_fuzzy_logic_controller/share/same_fuzzy_logic_controller/package.xml

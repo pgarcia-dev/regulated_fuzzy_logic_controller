@@ -1,0 +1,16 @@
+[0.012s] Invoking command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake --build /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller -- -j8 -l8
+[0.052s] [35m[1mConsolidate compiler generated dependencies of target same_fuzzy_logic_controller[0m
+[0.070s] [ 50%] [32mBuilding CXX object CMakeFiles/same_fuzzy_logic_controller.dir/src/same_fuzzy_logic_controller.cpp.o[0m
+[2.314s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:[m[K In member function ‘[01m[Kvirtual dwb_msgs::msg::TrajectoryScore same_fuzzy_logic_controller::SameFuzzyLogicController::coreScoringAlgorithm(const Pose2D&, nav_2d_msgs::msg::Twist2D, std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation_<std::allocator<void> > >&)[m[K’:
+[2.314s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:397:11:[m[K [01;31m[Kerror: [m[K‘[01m[KNoLegalTrajectoriesException[m[K’ was not declared in this scope; did you mean ‘[01m[Kdwb_core::NoLegalTrajectoriesException[m[K’?
+[2.314s]   397 |     throw [01;31m[KNoLegalTrajectoriesException[m[K(tracker);
+[2.314s]       |           [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[2.314s]       |           [32m[Kdwb_core::NoLegalTrajectoriesException[m[K
+[2.315s] In file included from [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/src/same_fuzzy_logic_controller.cpp:23[m[K:
+[2.315s] [01m[K/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/same_fuzzy_logic_controller/include/dwb_core/illegal_trajectory_tracker.hpp:68:7:[m[K [01;36m[Knote: [m[K‘[01m[Kdwb_core::NoLegalTrajectoriesException[m[K’ declared here
+[2.315s]    68 | class [01;36m[KNoLegalTrajectoriesException[m[K
+[2.315s]       |       [01;36m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[3.553s] gmake[2]: *** [CMakeFiles/same_fuzzy_logic_controller.dir/build.make:76: CMakeFiles/same_fuzzy_logic_controller.dir/src/same_fuzzy_logic_controller.cpp.o] Error 1
+[3.553s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/same_fuzzy_logic_controller.dir/all] Error 2
+[3.553s] gmake: *** [Makefile:146: all] Error 2
+[3.556s] Invoked command in '/home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/pgarcia/ros2_ws/install/nav2_simple_commander:/opt/ros/rolling /usr/bin/cmake --build /home/pgarcia/Documents/GitHub/same_fuzzy_logic_controller/build/same_fuzzy_logic_controller -- -j8 -l8
