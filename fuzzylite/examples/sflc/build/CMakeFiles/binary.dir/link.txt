@@ -1,1 +1,1 @@
-/usr/bin/c++ -O3 -DNDEBUG -rdynamic CMakeFiles/binary.dir/src/main.cpp.o -o FuzzyLiteDemo  /home/pgarcia/fuzzylite/fuzzylite/release/bin/libfuzzylite-static.a 
+/usr/bin/c++ -O3 -DNDEBUG -rdynamic CMakeFiles/binary.dir/src/main.cpp.o -o FuzzyLiteDemo  /home/pgarcia/same_fuzzy_logic_controller/fuzzylite/fuzzylite/release/bin/libfuzzylite-static.a 

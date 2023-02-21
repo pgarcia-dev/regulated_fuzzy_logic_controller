@@ -224,6 +224,9 @@ SameFuzzyLogicController::computeVelocityCommands(
   const geometry_msgs::msg::Twist & velocity,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
+
+  //RCLCPP_INFO(logger_, "**************** OK");
+
   std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> results = nullptr;
   if (pub_->shouldRecordEvaluation()) {
     results = std::make_shared<dwb_msgs::msg::LocalPlanEvaluation>();

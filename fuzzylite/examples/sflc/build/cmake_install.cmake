@@ -1,4 +1,4 @@
-# Install script for directory: /home/pgarcia/fuzzylite/examples/sflc
+# Install script for directory: /home/pgarcia/same_fuzzy_logic_controller/fuzzylite/examples/sflc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pgarcia/fuzzylite/examples/sflc/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/pgarcia/same_fuzzy_logic_controller/fuzzylite/examples/sflc/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

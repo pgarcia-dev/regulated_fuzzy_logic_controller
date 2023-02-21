@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/pgarcia/fuzzylite/examples/sflc/src/main.cpp" "CMakeFiles/binary.dir/src/main.cpp.o" "gcc" "CMakeFiles/binary.dir/src/main.cpp.o.d"
+  "/home/pgarcia/same_fuzzy_logic_controller/fuzzylite/examples/sflc/src/main.cpp" "CMakeFiles/binary.dir/src/main.cpp.o" "gcc" "CMakeFiles/binary.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.

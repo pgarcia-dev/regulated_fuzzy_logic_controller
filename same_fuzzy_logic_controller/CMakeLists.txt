@@ -43,6 +43,9 @@ set(dependencies
 
 add_library(same_fuzzy_logic_controller SHARED
   src/same_fuzzy_logic_controller.cpp
+  src/publisher.cpp
+  src/illegal_trajectory_tracker.cpp
+  src/trajectory_utils.cpp
 )
 
 ament_target_dependencies(same_fuzzy_logic_controller
