@@ -5,6 +5,74 @@ int main(int argc, char **argv)
 {
     using namespace fl;
 
+    const float INPUT_NL_MIN = -3.15;
+    const float INPUT_NL_MED = -3.0;
+    const float INPUT_NL_MAX = -2.8;
+    const float INPUT_NM_MIN = -2.8;
+    const float INPUT_NM_MED = -1.9;
+    const float INPUT_NM_MAX = -1.1;
+    const float INPUT_N_MIN = -1.1;
+    const float INPUT_N_MED = -0.9;
+    const float INPUT_N_MAX = -0.6;
+    const float INPUT_NS_MIN = -0.6;
+    const float INPUT_NS_MED = -0.5;
+    const float INPUT_NS_MAX = -0.4;
+    const float INPUT_ZN_MIN = -0.4;
+    const float INPUT_ZN_MED = -0.25;
+    const float INPUT_ZN_MAX = -0.1;
+    const float INPUT_Z_MIN = -0.1; 
+    const float INPUT_Z_MED = 0; //-------------
+    const float INPUT_Z_MAX = 0.1;
+    const float INPUT_ZP_MIN = 0.1;
+    const float INPUT_ZP_MED = 0.25;
+    const float INPUT_ZP_MAX = 0.4;
+    const float INPUT_PS_MIN = 0.4;
+    const float INPUT_PS_MED = 0.5;
+    const float INPUT_PS_MAX = 0.6;
+    const float INPUT_P_MIN = 0.6;
+    const float INPUT_P_MED = 0.9;
+    const float INPUT_P_MAX = 1.1;
+    const float INPUT_PM_MIN = 1.1;
+    const float INPUT_PM_MED = 1.9;
+    const float INPUT_PM_MAX = 2.8;
+    const float INPUT_PL_MIN = 2.8;
+    const float INPUT_PL_MED = 3.0;
+    const float INPUT_PL_MAX = 3.15;
+
+    const float OUTPUT_ANG_NL_MIN = -1;
+    const float OUTPUT_ANG_NL_MED = -0.8;
+    const float OUTPUT_ANG_NL_MAX = -0.6;
+    const float OUTPUT_ANG_NM_MIN = -0.6;
+    const float OUTPUT_ANG_NM_MED = -0.45;
+    const float OUTPUT_ANG_NM_MAX = -0.31;
+    const float OUTPUT_ANG_N_MIN = -0.31;
+    const float OUTPUT_ANG_N_MED = -0.25;
+    const float OUTPUT_ANG_N_MAX = -0.19;
+    const float OUTPUT_ANG_NS_MIN = -0.19;
+    const float OUTPUT_ANG_NS_MED = -0.15;
+    const float OUTPUT_ANG_NS_MAX = -0.1;
+    const float OUTPUT_ANG_ZN_MIN = -0.1;
+    const float OUTPUT_ANG_ZN_MED = -0.05;
+    const float OUTPUT_ANG_ZN_MAX = -0.025;
+    const float OUTPUT_ANG_Z_MIN = -0.025; 
+    const float OUTPUT_ANG_Z_MED = 0; //-------------
+    const float OUTPUT_ANG_Z_MAX = 0.025;
+    const float OUTPUT_ANG_ZP_MIN = 0.025;
+    const float OUTPUT_ANG_ZP_MED = 0.05;
+    const float OUTPUT_ANG_ZP_MAX = 0.1;
+    const float OUTPUT_ANG_PS_MIN = 0.1;
+    const float OUTPUT_ANG_PS_MED = 0.15;
+    const float OUTPUT_ANG_PS_MAX = 0.19;
+    const float OUTPUT_ANG_P_MIN = 0.19;
+    const float OUTPUT_ANG_P_MED = 0.25;
+    const float OUTPUT_ANG_P_MAX = 0.31;
+    const float OUTPUT_ANG_PM_MIN = 0.31;
+    const float OUTPUT_ANG_PM_MED = 0.45;
+    const float OUTPUT_ANG_PM_MAX = 0.6;
+    const float OUTPUT_ANG_PL_MIN = 0.6;
+    const float OUTPUT_ANG_PL_MED = 0.8;
+    const float OUTPUT_ANG_PL_MAX = 1;
+
     Engine *engine = new Engine;
     engine->setName("SFLC");
     engine->setDescription("");
@@ -15,17 +83,17 @@ int main(int argc, char **argv)
     Uao_gtg->setEnabled(true);
     Uao_gtg->setRange(-3.8,3.8); 
     Uao_gtg->setLockValueInRange(false);
-    Uao_gtg->addTerm(new Triangle("NL", -3.15, -3.0, -2.8));
-    Uao_gtg->addTerm(new Triangle("NM", -2.8, -1.9, -1.1));
-    Uao_gtg->addTerm(new Triangle("N", -1.1, -0.9, -0.6));
-    Uao_gtg->addTerm(new Triangle("NS", -0.6, -0.5, -0.4));
-    Uao_gtg->addTerm(new Triangle("ZN", -0.4, -0.25, -0.1));
-    Uao_gtg->addTerm(new Triangle("Z", -0.1, 0, 0.1)); //----------
-    Uao_gtg->addTerm(new Triangle("ZP", 0.1, 0.25, 0.4));
-    Uao_gtg->addTerm(new Triangle("PS", 0.4, 0.5, 0.6));
-    Uao_gtg->addTerm(new Triangle("P", 0.6, 0.9, 1.1));
-    Uao_gtg->addTerm(new Triangle("PM",1.1, 1.9, 2.8));
-    Uao_gtg->addTerm(new Triangle("PL", 2.8, 3.0, 3.15));
+    Uao_gtg->addTerm(new Triangle("NL", INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
+    Uao_gtg->addTerm(new Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
+    Uao_gtg->addTerm(new Triangle("N",  INPUT_N_MIN, INPUT_N_MED, INPUT_N_MAX));
+    Uao_gtg->addTerm(new Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));
+    Uao_gtg->addTerm(new Triangle("ZN", INPUT_ZN_MIN, INPUT_ZN_MED, INPUT_ZN_MAX));
+    Uao_gtg->addTerm(new Triangle("Z",  INPUT_Z_MIN, INPUT_Z_MED, INPUT_Z_MAX)); //----------
+    Uao_gtg->addTerm(new Triangle("ZP", INPUT_ZP_MIN, INPUT_ZP_MED, INPUT_ZP_MAX));
+    Uao_gtg->addTerm(new Triangle("PS", INPUT_PS_MIN, INPUT_PS_MED, INPUT_PS_MAX));
+    Uao_gtg->addTerm(new Triangle("P",  INPUT_P_MIN, INPUT_P_MED, INPUT_P_MAX));
+    Uao_gtg->addTerm(new Triangle("PM", INPUT_PM_MIN, INPUT_PM_MED, INPUT_PM_MAX));
+    Uao_gtg->addTerm(new Triangle("PL", INPUT_PL_MIN, INPUT_PL_MED, INPUT_PL_MAX));
     engine->addInputVariable(Uao_gtg);
 
     OutputVariable* linear_velocity = new OutputVariable;
@@ -54,17 +122,17 @@ int main(int argc, char **argv)
     angular_velocity->setDefuzzifier(new LargestOfMaximum);
     angular_velocity->setDefaultValue(fl::nan);
     angular_velocity->setLockPreviousValue(false);
-    angular_velocity->addTerm(new Triangle("NL", -1, -0.8, -0.6));
-    angular_velocity->addTerm(new Triangle("NM", -0.6, -0.45, -0.31));
-    angular_velocity->addTerm(new Triangle("N", -0.31, -0.25, -0.19));
-    angular_velocity->addTerm(new Triangle("NS", -0.19, -0.15, -0.10));
-    angular_velocity->addTerm(new Triangle("ZN", -0.1, -0.05, -0.025));
-    angular_velocity->addTerm(new Triangle("Z", -0.025, 0, 0.025)); //----------
-    angular_velocity->addTerm(new Triangle("ZP", 0.025, 0.05, 0.1));
-    angular_velocity->addTerm(new Triangle("PS", 0.1, 0.15, 0.19));
-    angular_velocity->addTerm(new Triangle("P", 0.19, 0.25, 0.31));
-    angular_velocity->addTerm(new Triangle("PM",0.31, 0.45, 0.6));
-    angular_velocity->addTerm(new Triangle("PL", 0.6, 0.8, 1));
+    angular_velocity->addTerm(new Triangle("NL", OUTPUT_ANG_NL_MIN, OUTPUT_ANG_NL_MED, OUTPUT_ANG_NL_MAX));
+    angular_velocity->addTerm(new Triangle("NM", OUTPUT_ANG_NM_MIN, OUTPUT_ANG_NM_MED, OUTPUT_ANG_NM_MAX));
+    angular_velocity->addTerm(new Triangle("N",  OUTPUT_ANG_N_MIN, OUTPUT_ANG_N_MED,OUTPUT_ANG_N_MAX));
+    angular_velocity->addTerm(new Triangle("NS", OUTPUT_ANG_NS_MIN, OUTPUT_ANG_NS_MED,OUTPUT_ANG_NS_MAX));
+    angular_velocity->addTerm(new Triangle("ZN", OUTPUT_ANG_ZN_MIN, OUTPUT_ANG_ZN_MED,OUTPUT_ANG_ZN_MAX));
+    angular_velocity->addTerm(new Triangle("Z",  OUTPUT_ANG_Z_MIN, OUTPUT_ANG_Z_MED,OUTPUT_ANG_Z_MAX)); //----------
+    angular_velocity->addTerm(new Triangle("ZP", OUTPUT_ANG_ZP_MIN, OUTPUT_ANG_ZP_MED,OUTPUT_ANG_ZP_MAX));
+    angular_velocity->addTerm(new Triangle("PS", OUTPUT_ANG_PS_MIN, OUTPUT_ANG_PS_MED, OUTPUT_ANG_PS_MAX));
+    angular_velocity->addTerm(new Triangle("P",  OUTPUT_ANG_P_MIN, OUTPUT_ANG_P_MED, OUTPUT_ANG_P_MAX));
+    angular_velocity->addTerm(new Triangle("PM", OUTPUT_ANG_PM_MIN, OUTPUT_ANG_PM_MED, OUTPUT_ANG_PM_MAX));
+    angular_velocity->addTerm(new Triangle("PL", OUTPUT_ANG_PL_MIN, OUTPUT_ANG_PL_MED, OUTPUT_ANG_PL_MAX));
     engine->addOutputVariable(angular_velocity);
 
     RuleBlock* ruleBlock = new RuleBlock;
