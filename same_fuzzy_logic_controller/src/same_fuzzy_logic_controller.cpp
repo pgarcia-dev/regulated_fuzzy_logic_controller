@@ -205,8 +205,15 @@ SameFuzzyLogicController::loadCritics()
 }
 
 void
-SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)
+SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////////////////////////////////////////////////////////////////////////////////
 {
+// RCLCPP_INFO(logger_, "next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
+ // RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
+
+  //RCLCPP_INFO(logger_, "next paths's pose2 - x: %f , y: %f", path.poses.at(1).pose.position.x, path.poses.at(1).pose.position.x);
+
+
+
   auto path2d = nav_2d_utils::pathToPath2D(path);
   for (dwb_core::TrajectoryCritic::Ptr & critic : critics_) {
     critic->reset();
@@ -226,7 +233,9 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 {
 
   //RCLCPP_INFO(logger_, "**************** OK");
-  RCLCPP_INFO(logger_, "pose: x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+  RCLCPP_INFO(logger_, "robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
+  RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
+
 
 
   std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> results = nullptr;
