@@ -219,13 +219,15 @@ SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)
 }
 
 geometry_msgs::msg::TwistStamped
-SameFuzzyLogicController::computeVelocityCommands(
+SameFuzzyLogicController::computeVelocityCommands( ///////////////////////////////////////////////////////////////////////////////////////////////
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::Twist & velocity,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
 
   //RCLCPP_INFO(logger_, "**************** OK");
+  RCLCPP_INFO(logger_, "pose: x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+
 
   std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> results = nullptr;
   if (pub_->shouldRecordEvaluation()) {
