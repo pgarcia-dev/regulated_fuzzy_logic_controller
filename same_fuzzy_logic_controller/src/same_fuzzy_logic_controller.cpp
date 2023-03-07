@@ -32,6 +32,7 @@
 #include "pluginlib/class_list_macros.hpp"
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/twist_stamped.hpp"
+#include <tf2/transform_datatypes.h>
 
 using nav2_util::declare_parameter_if_not_declared;
 using nav2_util::geometry_utils::euclidean_distance;
@@ -210,9 +211,6 @@ SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////
 // RCLCPP_INFO(logger_, "next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
  // RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
 
-  //RCLCPP_INFO(logger_, "next paths's pose2 - x: %f , y: %f", path.poses.at(1).pose.position.x, path.poses.at(1).pose.position.x);
-
-
 
   auto path2d = nav_2d_utils::pathToPath2D(path);
   for (dwb_core::TrajectoryCritic::Ptr & critic : critics_) {
@@ -231,11 +229,14 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   const geometry_msgs::msg::Twist & velocity,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
-
-  //RCLCPP_INFO(logger_, "**************** OK");
-  RCLCPP_INFO(logger_, "robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
-  RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
-
+  //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
+  
+  //RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
+  tf2::Quaternion q(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
+  tf2::Matrix3x3 m(q);
+  double roll, pitch, yaw;
+  m.getRPY(roll, pitch, yaw);
+  RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
 
 
   std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> results = nullptr;
