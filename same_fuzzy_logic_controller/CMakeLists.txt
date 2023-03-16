@@ -62,6 +62,9 @@ install(DIRECTORY include/
   DESTINATION include/
 )
 
+target_link_directories(same_fuzzy_logic_controller PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin")#---------
+target_link_libraries(same_fuzzy_logic_controller fuzzylite)
+
 #if(BUILD_TESTING)
  # find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
