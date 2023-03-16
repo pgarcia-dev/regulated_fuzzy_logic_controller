@@ -212,6 +212,8 @@ SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////
 // RCLCPP_INFO(logger_, "next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
  // RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
 
+//  next_waypoint_x_ = path.poses.back().pose.position.x;
+//  next_waypoint_y_ = path.poses.back().pose.position.y;
   next_waypoint_x_ = path.poses.at(0).pose.position.x;
   next_waypoint_y_ = path.poses.at(0).pose.position.y;
 
@@ -253,7 +255,8 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   if (heading <= -M_PI)
     heading += 2*M_PI;
 
-  if (heading > 0)////////////////
+  
+  if (heading > 0) //////////////// temporal until using TF2
     heading -= M_PI;
   else
     heading += M_PI;
