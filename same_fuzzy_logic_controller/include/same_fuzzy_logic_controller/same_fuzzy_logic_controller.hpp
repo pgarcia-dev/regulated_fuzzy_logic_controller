@@ -219,6 +219,10 @@ protected:
   std::string dwb_plugin_name_;
 
   bool short_circuit_trajectory_evaluation_;
+
+  ////////
+  double next_waypoint_x_;
+  double next_waypoint_y_;
 };
 
 }  // namespace same_fuzzy_logic_controller

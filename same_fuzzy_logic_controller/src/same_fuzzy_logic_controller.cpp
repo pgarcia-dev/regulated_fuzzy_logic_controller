@@ -17,6 +17,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <cmath>
 
 #include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 #include "dwb_core/exceptions.hpp"
@@ -211,6 +212,8 @@ SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////
 // RCLCPP_INFO(logger_, "next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
  // RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
 
+  next_waypoint_x_ = path.poses.at(0).pose.position.x;
+  next_waypoint_y_ = path.poses.at(0).pose.position.y;
 
   auto path2d = nav_2d_utils::pathToPath2D(path);
   for (dwb_core::TrajectoryCritic::Ptr & critic : critics_) {
@@ -230,13 +233,36 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   nav2_core::GoalChecker * /*goal_checker*/)
 {
   //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
-  
   //RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
+
   tf2::Quaternion q(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
   tf2::Matrix3x3 m(q);
   double roll, pitch, yaw;
   m.getRPY(roll, pitch, yaw);
-  RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
+  //RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
+
+  double dx = next_waypoint_x_ - pose.pose.position.x; 
+  double dy = next_waypoint_y_ - pose.pose.position.y; 
+
+  double angle = atan2(dy, dx);
+
+  double heading = angle - yaw;     
+  //and here I just make sure my angle is between minus pi and pi! 
+  if (heading > M_PI)
+    heading -= (2*M_PI);
+  if (heading <= -M_PI)
+    heading += 2*M_PI;
+
+  if (heading > 0)////////////////
+    heading -= M_PI;
+  else
+    heading += M_PI;
+
+  RCLCPP_INFO(logger_, "*** %f",heading);
+  //RCLCPP_INFO(logger_, "***1 robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
+  //RCLCPP_INFO(logger_, "***2 next paths's position - x: %f , y: %f", next_waypoint_x_, next_waypoint_y_);
+
+
 
 
   std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> results = nullptr;
