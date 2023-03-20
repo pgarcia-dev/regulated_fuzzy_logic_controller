@@ -251,12 +251,15 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   double angle = atan2(dy, dx);
 
-  double heading = angle - yaw;     
+  double heading = angle - yaw;    
+
+  //RCLCPP_INFO(logger_, "*** real heading %f",heading);
+
   //and here I just make sure my angle is between minus pi and pi! 
-  if (heading > M_PI)
-    heading -= (2*M_PI);
-  if (heading <= -M_PI)
-    heading += 2*M_PI;
+  //if (heading > M_PI)
+   // heading -= (2*M_PI);
+  //if (heading <= -M_PI)
+    //heading += 2*M_PI;
 
   
  // if (heading > 0) //////////////// temporal until using TF2
@@ -264,7 +267,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   //else
    // heading += M_PI;
 
-  RCLCPP_INFO(logger_, "*** real heading %f",heading);
+  
 
   //if (heading > 0.5 || heading < -0.5) //------------------------------
   //  heading = 0;
