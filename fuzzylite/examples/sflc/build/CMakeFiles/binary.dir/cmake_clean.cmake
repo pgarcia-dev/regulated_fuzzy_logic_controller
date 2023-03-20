@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/binary.dir/src/main.cpp.o"
   "CMakeFiles/binary.dir/src/main.cpp.o.d"
-  "FuzzyLiteDemo"
-  "FuzzyLiteDemo.pdb"
+  "binary"
+  "binary.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
