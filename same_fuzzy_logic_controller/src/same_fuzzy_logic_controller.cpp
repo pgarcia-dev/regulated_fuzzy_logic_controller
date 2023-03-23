@@ -212,13 +212,18 @@ SameFuzzyLogicController::loadCritics()
 void
 SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////////////////////////////////////////////////////////////////////////////////
 {
-// RCLCPP_INFO(logger_, "next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
- // RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
+ ////////RCLCPP_INFO(logger_, "*****************next paths's position - x: %f , y: %f, z: %f, vector size: %ld", path.poses.at(0).pose.position.x, path.poses.at(0).pose.position.y, path.poses.at(0).pose.position.z, path.poses.size());
+ ///////RCLCPP_INFO(logger_, "*****************next paths's position back - x: %f , y: %f", path.poses.back().pose.position.x, path.poses.back().pose.position.y);
+  //RCLCPP_INFO(logger_, "*****************next paths's position begin - x: %f , y: %f", path.poses.begin()->pose.position.x, path.poses.begin()->pose.position.y);
+// RCLCPP_INFO(logger_, "next paths's orientation - x: %f , y: %f, z: %f, w: %f", path.poses.at(0).pose.orientation.x, path.poses.at(0).pose.orientation.y, path.poses.at(0).pose.orientation.z, path.poses.at(0).pose.orientation.w);
+  if (next_waypoint_x_ != path.poses.begin()->pose.position.x || next_waypoint_y_ != path.poses.begin()->pose.position.y)
+    RCLCPP_INFO(logger_, "*** ########### NEW NEXT WAYPOINT ############");
 
-//  next_waypoint_x_ = path.poses.back().pose.position.x;
-//  next_waypoint_y_ = path.poses.back().pose.position.y;
-  next_waypoint_x_ = path.poses.at(0).pose.position.x;
-  next_waypoint_y_ = path.poses.at(0).pose.position.y;
+  next_waypoint_x_ = path.poses.begin()->pose.position.x;
+  next_waypoint_y_ = path.poses.begin()->pose.position.y;
+
+  //RCLCPP_INFO(logger_, "*** frame reference path: %s",path.header.frame_id.c_str());
+ // RCLCPP_INFO(logger_, "*** frame reference next wp: %s",path.header.frame_id);
 
   auto path2d = nav_2d_utils::pathToPath2D(path);
   for (dwb_core::TrajectoryCritic::Ptr & critic : critics_) {
@@ -237,7 +242,11 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   const geometry_msgs::msg::Twist & velocity,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
-  //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
+
+
+  //RCLCPP_INFO(logger_, "*** r pose reference frame: %s",pose.header.frame_id.c_str());
+
+  //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f, pose.pose.position.x, pose.pose.position.y);
   //RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
 
   tf2::Quaternion q(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
@@ -246,6 +255,11 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   m.getRPY(roll, pitch, yaw);
   //RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
 
+  RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+  RCLCPP_INFO(logger_, "*** next paths's position - x: %f , y: %f", next_waypoint_x_, next_waypoint_y_);
+  
+
+
   double dx = next_waypoint_x_ - pose.pose.position.x; 
   double dy = next_waypoint_y_ - pose.pose.position.y; 
 
@@ -253,14 +267,15 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   double heading = angle - yaw;    
 
-  //RCLCPP_INFO(logger_, "*** real heading %f",heading);
+  
 
   //and here I just make sure my angle is between minus pi and pi! 
-  //if (heading > M_PI)
-   // heading -= (2*M_PI);
-  //if (heading <= -M_PI)
-    //heading += 2*M_PI;
+  if (heading > M_PI)
+    heading -= (2*M_PI);
+  if (heading <= -M_PI)
+    heading += 2*M_PI;
 
+  RCLCPP_INFO(logger_, "*** real heading %f",heading);
   
  // if (heading > 0) //////////////// temporal until using TF2
   //  heading -= M_PI;
@@ -441,27 +456,70 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   ruleBlock->setImplication(new Minimum);
   //  ruleBlock->setImplication(new AlgebraicProduct);
   ruleBlock->setActivation(new General);
+  /**
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PS", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
   engine->addRuleBlock(ruleBlock);
+ 
+   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is Z", engine)); /////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is Z", engine));
+   
+
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is PL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is PM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is P", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is PS", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZN", engine)); 
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is NS", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is N", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is NM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is NL", engine));
+  **/
+
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is PL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is PM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is P", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is PS", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZN", engine)); 
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is NS", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is N", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is NM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is NL", engine));
+
+
+  engine->addRuleBlock(ruleBlock);
 
   Uao_gtg->setValue(heading);
   engine->process();
-  RCLCPP_INFO(logger_, "*** input heading:%f, output linear:%f, output angular: %f  ",heading, linear_velocity->getValue(), angular_velocity->getValue());
 
   geometry_msgs::msg::TwistStamped cmd_vel;
   cmd_vel.header = pose.header;  
   cmd_vel.twist.linear.x = linear_velocity->getValue();
   cmd_vel.twist.angular.z = angular_velocity->getValue();
+ // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+ // RCLCPP_INFO(logger_, "*** input heading:%f, output linear:%f, output angular: %f  ",heading, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;
   
