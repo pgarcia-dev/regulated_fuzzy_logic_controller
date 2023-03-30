@@ -42,7 +42,7 @@ set(dependencies
 )
 
 add_library(same_fuzzy_logic_controller SHARED
-  src/same_fuzzy_logic_controller.cpp
+  src/same_fuzzy_logic_controller/same_fuzzy_logic_controller.cpp
   src/publisher.cpp
   src/illegal_trajectory_tracker.cpp
   src/trajectory_utils.cpp
