@@ -262,12 +262,8 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   double dx = next_waypoint_x_ - pose.pose.position.x; 
   double dy = next_waypoint_y_ - pose.pose.position.y; 
-
   double angle = atan2(dy, dx);
-
   double heading = angle - yaw;    
-
-  
 
   //and here I just make sure my angle is between minus pi and pi! 
   if (heading > M_PI)
@@ -301,86 +297,86 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   using namespace fl;
 
-  const float INPUT_NL_MIN = -3.15;
-  const float INPUT_NL_MED = -3.0;
-  const float INPUT_NL_MAX = -2.8;
-  const float INPUT_NM_MIN = -2.8;
-  const float INPUT_NM_MED = -1.9;
-  const float INPUT_NM_MAX = -1.1;
-  const float INPUT_N_MIN = -1.1;
-  const float INPUT_N_MED = -0.9;
-  const float INPUT_N_MAX = -0.6;
-  const float INPUT_NS_MIN = -0.6;
-  const float INPUT_NS_MED = -0.5;
-  const float INPUT_NS_MAX = -0.4;
-  const float INPUT_ZN_MIN = -0.4;
-  const float INPUT_ZN_MED = -0.25;
-  const float INPUT_ZN_MAX = -0.1;
-  const float INPUT_Z_MIN = -0.1; 
-  const float INPUT_Z_MED = 0; //-------------
-  const float INPUT_Z_MAX = 0.1;
-  const float INPUT_ZP_MIN = 0.1;
-  const float INPUT_ZP_MED = 0.25;
-  const float INPUT_ZP_MAX = 0.4;
-  const float INPUT_PS_MIN = 0.4;
-  const float INPUT_PS_MED = 0.5;
-  const float INPUT_PS_MAX = 0.6;
-  const float INPUT_P_MIN = 0.6;
-  const float INPUT_P_MED = 0.9;
-  const float INPUT_P_MAX = 1.1;
-  const float INPUT_PM_MIN = 1.1;
-  const float INPUT_PM_MED = 1.9;
-  const float INPUT_PM_MAX = 2.8;
-  const float INPUT_PL_MIN = 2.8;
-  const float INPUT_PL_MED = 3.0;
-  const float INPUT_PL_MAX = 3.15;
+  static const float INPUT_NL_MIN = -3.15;
+  static const float INPUT_NL_MED = -3.0;
+  static const float INPUT_NL_MAX = -2.8;
+  static const float INPUT_NM_MIN = -2.8;
+  static const float INPUT_NM_MED = -1.9;
+  static const float INPUT_NM_MAX = -1.1;
+  static const float INPUT_N_MIN = -1.1;
+  static const float INPUT_N_MED = -0.9;
+  static const float INPUT_N_MAX = -0.6;
+  static const float INPUT_NS_MIN = -0.6;
+  static const float INPUT_NS_MED = -0.5;
+  static const float INPUT_NS_MAX = -0.4;
+  static const float INPUT_ZN_MIN = -0.4;
+  static const float INPUT_ZN_MED = -0.25;
+  static const float INPUT_ZN_MAX = -0.1;
+  static const float INPUT_Z_MIN = -0.1; 
+  static const float INPUT_Z_MED = 0; //-------------
+  static const float INPUT_Z_MAX = 0.1;
+  static const float INPUT_ZP_MIN = 0.1;
+  static const float INPUT_ZP_MED = 0.25;
+  static const float INPUT_ZP_MAX = 0.4;
+  static const float INPUT_PS_MIN = 0.4;
+  static const float INPUT_PS_MED = 0.5;
+  static const float INPUT_PS_MAX = 0.6;
+  static const float INPUT_P_MIN = 0.6;
+  static const float INPUT_P_MED = 0.9;
+  static const float INPUT_P_MAX = 1.1;
+  static const float INPUT_PM_MIN = 1.1;
+  static const float INPUT_PM_MED = 1.9;
+  static const float INPUT_PM_MAX = 2.8;
+  static const float INPUT_PL_MIN = 2.8;
+  static const float INPUT_PL_MED = 3.0;
+  static const float INPUT_PL_MAX = 3.15;
 
-  const float OUTPUT_ANG_NL_MIN = -1;
-  const float OUTPUT_ANG_NL_MED = -0.8;
-  const float OUTPUT_ANG_NL_MAX = -0.6;
-  const float OUTPUT_ANG_NM_MIN = -0.6;
-  const float OUTPUT_ANG_NM_MED = -0.45;
-  const float OUTPUT_ANG_NM_MAX = -0.31;
-  const float OUTPUT_ANG_N_MIN = -0.31;
-  const float OUTPUT_ANG_N_MED = -0.25;
-  const float OUTPUT_ANG_N_MAX = -0.19;
-  const float OUTPUT_ANG_NS_MIN = -0.19;
-  const float OUTPUT_ANG_NS_MED = -0.15;
-  const float OUTPUT_ANG_NS_MAX = -0.1;
-  const float OUTPUT_ANG_ZN_MIN = -0.1;
-  const float OUTPUT_ANG_ZN_MED = -0.05;
-  const float OUTPUT_ANG_ZN_MAX = -0.025;
-  const float OUTPUT_ANG_Z_MIN = -0.025; 
-  const float OUTPUT_ANG_Z_MED = 0; //-------------
-  const float OUTPUT_ANG_Z_MAX = 0.025;
-  const float OUTPUT_ANG_ZP_MIN = 0.025;
-  const float OUTPUT_ANG_ZP_MED = 0.05;
-  const float OUTPUT_ANG_ZP_MAX = 0.1;
-  const float OUTPUT_ANG_PS_MIN = 0.1;
-  const float OUTPUT_ANG_PS_MED = 0.15;
-  const float OUTPUT_ANG_PS_MAX = 0.19;
-  const float OUTPUT_ANG_P_MIN = 0.19;
-  const float OUTPUT_ANG_P_MED = 0.25;
-  const float OUTPUT_ANG_P_MAX = 0.31;
-  const float OUTPUT_ANG_PM_MIN = 0.31;
-  const float OUTPUT_ANG_PM_MED = 0.45;
-  const float OUTPUT_ANG_PM_MAX = 0.6;
-  const float OUTPUT_ANG_PL_MIN = 0.6;
-  const float OUTPUT_ANG_PL_MED = 0.8;
-  const float OUTPUT_ANG_PL_MAX = 1;
+  static const float OUTPUT_ANG_NL_MIN = -1;
+  static const float OUTPUT_ANG_NL_MED = -0.8;
+  static const float OUTPUT_ANG_NL_MAX = -0.6;
+  static const float OUTPUT_ANG_NM_MIN = -0.6;
+  static const float OUTPUT_ANG_NM_MED = -0.45;
+  static const float OUTPUT_ANG_NM_MAX = -0.31;
+  static const float OUTPUT_ANG_N_MIN = -0.31;
+  static const float OUTPUT_ANG_N_MED = -0.25;
+  static const float OUTPUT_ANG_N_MAX = -0.19;
+  static const float OUTPUT_ANG_NS_MIN = -0.19;
+  static const float OUTPUT_ANG_NS_MED = -0.15;
+  static const float OUTPUT_ANG_NS_MAX = -0.1;
+  static const float OUTPUT_ANG_ZN_MIN = -0.1;
+  static const float OUTPUT_ANG_ZN_MED = -0.05;
+  static const float OUTPUT_ANG_ZN_MAX = -0.025;
+  static const float OUTPUT_ANG_Z_MIN = -0.025; 
+  static const float OUTPUT_ANG_Z_MED = 0; //-------------
+  static const float OUTPUT_ANG_Z_MAX = 0.025;
+  static const float OUTPUT_ANG_ZP_MIN = 0.025;
+  static const float OUTPUT_ANG_ZP_MED = 0.05;
+  static const float OUTPUT_ANG_ZP_MAX = 0.1;
+  static const float OUTPUT_ANG_PS_MIN = 0.1;
+  static const float OUTPUT_ANG_PS_MED = 0.15;
+  static const float OUTPUT_ANG_PS_MAX = 0.19;
+  static const float OUTPUT_ANG_P_MIN = 0.19;
+  static const float OUTPUT_ANG_P_MED = 0.25;
+  static const float OUTPUT_ANG_P_MAX = 0.31;
+  static const float OUTPUT_ANG_PM_MIN = 0.31;
+  static const float OUTPUT_ANG_PM_MED = 0.45;
+  static const float OUTPUT_ANG_PM_MAX = 0.6;
+  static const float OUTPUT_ANG_PL_MIN = 0.6;
+  static const float OUTPUT_ANG_PL_MED = 0.8;
+  static const float OUTPUT_ANG_PL_MAX = 1;
 
-  const float OUTPUT_LIN_S_MIN = 0;
-  const float OUTPUT_LIN_S_MED = 0.11;
-  const float OUTPUT_LIN_S_MAX = 0.22;
-  const float OUTPUT_LIN_M_MIN = 0.19;
-  const float OUTPUT_LIN_M_MED = 0.2;
-  const float OUTPUT_LIN_M_MAX = 0.4;
-  const float OUTPUT_LIN_L_MIN = 0.35;
-  const float OUTPUT_LIN_L_MED = 0.45;
-  const float OUTPUT_LIN_L_MAX = 0.55;
-  const float OUTPUT_LIN_VL_MIN = 0.5; 
-  const float OUTPUT_LIN_VL_MED = 0.6; 
-  const float OUTPUT_LIN_VL_MAX = 0.7;
+  static const float OUTPUT_LIN_S_MIN = 0;
+  static const float OUTPUT_LIN_S_MED = 0.11;
+  static const float OUTPUT_LIN_S_MAX = 0.22;
+  static const float OUTPUT_LIN_M_MIN = 0.19;
+  static const float OUTPUT_LIN_M_MED = 0.2;
+  static const float OUTPUT_LIN_M_MAX = 0.4;
+  static const float OUTPUT_LIN_L_MIN = 0.35;
+  static const float OUTPUT_LIN_L_MED = 0.45;
+  static const float OUTPUT_LIN_L_MAX = 0.55;
+  static const float OUTPUT_LIN_VL_MIN = 0.5; 
+  static const float OUTPUT_LIN_VL_MED = 0.6; 
+  static const float OUTPUT_LIN_VL_MAX = 0.7;
 
   Engine *engine = new Engine;
   engine->setName("SFLC");
