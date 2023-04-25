@@ -33,6 +33,7 @@
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "pluginlib/class_loader.hpp"
 #include "pluginlib/class_list_macros.hpp"
+#include "same_fuzzy_logic_controller/path_handler.hpp"
 
 namespace same_fuzzy_logic_controller
 {
@@ -219,6 +220,7 @@ protected:
   std::string dwb_plugin_name_;
 
   bool short_circuit_trajectory_evaluation_;
+  std::unique_ptr<same_fuzzy_logic_controller::PathHandler> path_handler_;
 
   ////////
   double next_waypoint_x_;
