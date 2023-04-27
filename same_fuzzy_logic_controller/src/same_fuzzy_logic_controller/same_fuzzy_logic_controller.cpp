@@ -260,14 +260,14 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
   //RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
 
+ // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+  //RCLCPP_INFO(logger_, "*** next paths's position - x: %f , y: %f", next_waypoint_x_, next_waypoint_y_);
+
   tf2::Quaternion q(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
   tf2::Matrix3x3 m(q);
   double roll, pitch, yaw;
-  m.getRPY(roll, pitch, yaw); //***************** getyaw
-  //RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
-
- // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  //RCLCPP_INFO(logger_, "*** next paths's position - x: %f , y: %f", next_waypoint_x_, next_waypoint_y_);
+  m.getRPY(roll, pitch, yaw); //***************** getYaw instead
+  RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
 
     // Transform path to robot base frame
   auto transformed_plan = path_handler_->transformGlobalPlan(
@@ -278,15 +278,25 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   double dx = transformed_plan.poses.begin()->pose.position.x;// - pose.pose.position.x; //*******xq -?
   double dy = transformed_plan.poses.begin()->pose.position.y;// - pose.pose.position.y; 
-  double angle = atan2(dy, dx);//*************
-  //double angle = atan2(dx, dy);
-  double heading = angle;// - yaw;    //***********
+
+  double heading = std::atan2(dy, dx); //+ yaw;//*************- yaw
+  RCLCPP_INFO(logger_, "***222 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
+ // heading -= 3;
+ // RCLCPP_INFO(logger_, "***33 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
+
+ // double heading2 = atan2(dx, dy);
+ // double heading = angle;// - yaw;    //***********
+
 
   //and here I just make sure my angle is between minus pi and pi! 
- // if (heading > M_PI)
-  //  heading -= (2*M_PI);
+  //if (heading > M_PI)
+    //heading -= (2*M_PI);
   //if (heading <= -M_PI)
-   // heading += 2*M_PI;
+    //heading += 2*M_PI;
+
+
+  
+
 
  // RCLCPP_INFO(logger_, "*** real heading %f",heading);
   
@@ -303,8 +313,6 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   
   //RCLCPP_INFO(logger_, "***1 robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
-  RCLCPP_INFO(logger_, "***2 next paths's position - x: %f , y: %f", transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.x);
-
   
 
 
@@ -534,7 +542,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   cmd_vel.twist.linear.x = linear_velocity->getValue();
   cmd_vel.twist.angular.z = angular_velocity->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  RCLCPP_INFO(logger_, "***2 input heading:%f, output linear:%f, output angular: %f  ",heading, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  //RCLCPP_INFO(logger_, "***2 input heading:%f, output linear:%f, output angular: %f  ",heading, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;
   
