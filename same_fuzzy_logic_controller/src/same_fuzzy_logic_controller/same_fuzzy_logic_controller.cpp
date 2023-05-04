@@ -258,19 +258,17 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//********5 aprox
   //global_path_pub_->publish(transformed_plan);//*********
 
-  double dx = transformed_plan.poses.begin()->pose.position.x;// - pose.pose.position.x; //*******xq -?
-  double dy = transformed_plan.poses.begin()->pose.position.y;// - pose.pose.position.y; 
+  //double dx = transformed_plan.poses.begin()->pose.position.x;// - pose.pose.position.x; //*******xq -?
+  //double dy = transformed_plan.poses.begin()->pose.position.y;// - pose.pose.position.y; 
 
-  double heading = atan2(dy, dx); //+ yaw;//*************- yaw
+  //double heading = atan2(dy, dx); //+ yaw;//*************- yaw
   //RCLCPP_INFO(logger_, "*** THIS IS JUST A TEST: atan2(%f,%f) = %f", transformed_plan.poses.begin()->pose.position.y, transformed_plan.poses.begin()->pose.position.x, atan2(transformed_plan.poses.begin()->pose.position.y, transformed_plan.poses.begin()->pose.position.x));
-  RCLCPP_INFO(logger_, "***1 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
+  //RCLCPP_INFO(logger_, "***1 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
  // heading -= 3;
  // RCLCPP_INFO(logger_, "***33 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
 
-
   // Find look ahead distance and point on path and publish
   double lookahead_dist = 0.6; //getLookAheadDistance(speed);////////////////////////
-
 
   // Get the particular point on the path at the lookahead distance
   auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
@@ -279,7 +277,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   double dx2 = carrot_pose.pose.position.x;
   double dy2 = carrot_pose.pose.position.y;
   double angle_to_path = atan2(dy2, dx2); 
-  RCLCPP_INFO(logger_, "***2 heading: %f- next paths's position - x: %f , y: %f", angle_to_path, dx2, dy2);
+ // RCLCPP_INFO(logger_, "***2 heading: %f- next paths's position - x: %f , y: %f", angle_to_path, dx2, dy2);
 
   using namespace fl;
 
@@ -352,8 +350,8 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   static const float OUTPUT_ANG_PL_MAX = 1;
 
   static const float OUTPUT_LIN_S_MIN = 0;
-  static const float OUTPUT_LIN_S_MED = 0.11;
-  static const float OUTPUT_LIN_S_MAX = 0.22;
+  static const float OUTPUT_LIN_S_MED = 0.0025;//0.11///////////////////////////////////////
+  static const float OUTPUT_LIN_S_MAX = 0.005;/////////////////////////////////////////////0.22;
   static const float OUTPUT_LIN_M_MIN = 0.19;
   static const float OUTPUT_LIN_M_MED = 0.2;
   static const float OUTPUT_LIN_M_MAX = 0.4;
@@ -438,78 +436,26 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   ruleBlock->setImplication(new Minimum);
   //  ruleBlock->setImplication(new AlgebraicProduct);
   ruleBlock->setActivation(new General);
-  
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is S and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is S and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is S and angular_velocity is ZP", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is ZP", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is ZP", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is ZP", engine));
-  engine->addRuleBlock(ruleBlock);
 
-  /**
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
+
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
+
+//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
+ // ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PS", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
   engine->addRuleBlock(ruleBlock);
-  **/
- 
- /**
-   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is Z", engine)); /////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is Z", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is Z", engine));
-   
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is PL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is PM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is P", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is PS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZP", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZN", engine)); 
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is NS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is N", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is NM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is NL", engine));
-  **/
-
-/**
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is PL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is PM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is P", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is PS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZP", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZN", engine)); 
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is NS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is N", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is NM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is NL", engine));
-**/
 
   engine->addRuleBlock(ruleBlock);
-
   Uao_gtg->setValue(angle_to_path);
   engine->process();
 
@@ -518,7 +464,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   cmd_vel.twist.linear.x = linear_velocity->getValue();
   cmd_vel.twist.angular.z = angular_velocity->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  RCLCPP_INFO(logger_, "***3 input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  RCLCPP_INFO(logger_, "*** input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;
   
