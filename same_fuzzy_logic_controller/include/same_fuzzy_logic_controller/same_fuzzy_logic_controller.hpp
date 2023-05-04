@@ -200,6 +200,22 @@ protected:
    */
   virtual void loadCritics();
 
+  geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
+
+    /**
+   * @brief Find the intersection a circle and a line segment.
+   * This assumes the circle is centered at the origin.
+   * If no intersection is found, a floating point error will occur.
+   * @param p1 first endpoint of line segment
+   * @param p2 second endpoint of line segment
+   * @param r radius of circle
+   * @return point of intersection
+   */
+  static geometry_msgs::msg::Point circleSegmentIntersection(
+    const geometry_msgs::msg::Point & p1,
+    const geometry_msgs::msg::Point & p2,
+    double r);
+
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   rclcpp::Clock::SharedPtr clock_;
   rclcpp::Logger logger_{rclcpp::get_logger("SameFuzzyLogicController")};

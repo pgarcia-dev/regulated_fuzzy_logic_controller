@@ -253,72 +253,33 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   const geometry_msgs::msg::Twist & velocity,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
- /// RCLCPP_INFO(logger_, "***********2");
 
-  //RCLCPP_INFO(logger_, "*** r pose reference frame: %s",pose.header.frame_id.c_str());
-
-  //RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  //RCLCPP_INFO(logger_, "robot's orientation - x: %f , y: %f, z: %f, w: %f", pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
-
- // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  //RCLCPP_INFO(logger_, "*** next paths's position - x: %f , y: %f", next_waypoint_x_, next_waypoint_y_);
-
-  tf2::Quaternion q(pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w);
-  tf2::Matrix3x3 m(q);
-  double roll, pitch, yaw;
-  m.getRPY(roll, pitch, yaw); //***************** getYaw instead
-  RCLCPP_INFO(logger_, "*** robot's orientation - roll: %f , pitch: %f, yaw: %f", roll, pitch, yaw);
-
-    // Transform path to robot base frame
-  auto transformed_plan = path_handler_->transformGlobalPlan(
-    pose, 5);//********5 aprox
+  // Transform path to robot base frame
+  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//********5 aprox
   //global_path_pub_->publish(transformed_plan);//*********
-
-
 
   double dx = transformed_plan.poses.begin()->pose.position.x;// - pose.pose.position.x; //*******xq -?
   double dy = transformed_plan.poses.begin()->pose.position.y;// - pose.pose.position.y; 
 
-  double heading = std::atan2(dy, dx); //+ yaw;//*************- yaw
-  RCLCPP_INFO(logger_, "***222 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
+  double heading = atan2(dy, dx); //+ yaw;//*************- yaw
+  //RCLCPP_INFO(logger_, "*** THIS IS JUST A TEST: atan2(%f,%f) = %f", transformed_plan.poses.begin()->pose.position.y, transformed_plan.poses.begin()->pose.position.x, atan2(transformed_plan.poses.begin()->pose.position.y, transformed_plan.poses.begin()->pose.position.x));
+  RCLCPP_INFO(logger_, "***1 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
  // heading -= 3;
  // RCLCPP_INFO(logger_, "***33 heading: %f- next paths's position - x: %f , y: %f", heading, transformed_plan.poses.begin()->pose.position.x, transformed_plan.poses.begin()->pose.position.y);
 
- // double heading2 = atan2(dx, dy);
- // double heading = angle;// - yaw;    //***********
+
+  // Find look ahead distance and point on path and publish
+  double lookahead_dist = 0.6; //getLookAheadDistance(speed);////////////////////////
 
 
-  //and here I just make sure my angle is between minus pi and pi! 
-  //if (heading > M_PI)
-    //heading -= (2*M_PI);
-  //if (heading <= -M_PI)
-    //heading += 2*M_PI;
+  // Get the particular point on the path at the lookahead distance
+  auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
+ // carrot_pub_->publish(createCarrotMsg(carrot_pose));
 
-
-  
-
-
- // RCLCPP_INFO(logger_, "*** real heading %f",heading);
-  
- // if (heading > 0) //////////////// temporal until using TF2
-  //  heading -= M_PI;
-  //else
-   // heading += M_PI;
-
-  
-
-  //if (heading > 0.5 || heading < -0.5) //------------------------------
-  //  heading = 0;
-
-
-  
-  //RCLCPP_INFO(logger_, "***1 robot's position - x: %f , y: %f, z: %f", pose.pose.position.x, pose.pose.position.y, pose.pose.position.z);
-  
-
-
-
-
-
+  double dx2 = carrot_pose.pose.position.x;
+  double dy2 = carrot_pose.pose.position.y;
+  double angle_to_path = atan2(dy2, dx2); 
+  RCLCPP_INFO(logger_, "***2 heading: %f- next paths's position - x: %f , y: %f", angle_to_path, dx2, dy2);
 
   using namespace fl;
 
@@ -478,6 +439,20 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   //  ruleBlock->setImplication(new AlgebraicProduct);
   ruleBlock->setActivation(new General);
   
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is S and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is S and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is S and angular_velocity is Z", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is S and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is ZP", engine));
+  engine->addRuleBlock(ruleBlock);
+
+  /**
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
@@ -490,6 +465,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
   engine->addRuleBlock(ruleBlock);
+  **/
  
  /**
    ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is Z", engine));
@@ -534,7 +510,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
 
   engine->addRuleBlock(ruleBlock);
 
-  Uao_gtg->setValue(heading);
+  Uao_gtg->setValue(angle_to_path);
   engine->process();
 
   geometry_msgs::msg::TwistStamped cmd_vel;
@@ -542,7 +518,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   cmd_vel.twist.linear.x = linear_velocity->getValue();
   cmd_vel.twist.angular.z = angular_velocity->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  //RCLCPP_INFO(logger_, "***2 input heading:%f, output linear:%f, output angular: %f  ",heading, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  RCLCPP_INFO(logger_, "***3 input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;
   
@@ -691,6 +667,76 @@ SameFuzzyLogicController::computeVelocityCommands(
             "Could not find a legal trajectory: " +
             std::string(e.what()));
   }
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+geometry_msgs::msg::PoseStamped SameFuzzyLogicController::getLookAheadPoint(
+  const double & lookahead_dist,
+  const nav_msgs::msg::Path & transformed_plan)
+{
+  // Find the first pose which is at a distance greater than the lookahead distance
+  auto goal_pose_it = std::find_if(
+    transformed_plan.poses.begin(), transformed_plan.poses.end(), [&](const auto & ps) {
+      return hypot(ps.pose.position.x, ps.pose.position.y) >= lookahead_dist;
+    });
+
+  // If the no pose is not far enough, take the last pose
+  if (goal_pose_it == transformed_plan.poses.end()) {
+    goal_pose_it = std::prev(transformed_plan.poses.end());
+  } else if (goal_pose_it != transformed_plan.poses.begin()) {
+    // Find the point on the line segment between the two poses
+    // that is exactly the lookahead distance away from the robot pose (the origin)
+    // This can be found with a closed form for the intersection of a segment and a circle
+    // Because of the way we did the std::find_if, prev_pose is guaranteed to be inside the circle,
+    // and goal_pose is guaranteed to be outside the circle.
+    auto prev_pose_it = std::prev(goal_pose_it);
+    auto point = circleSegmentIntersection(
+      prev_pose_it->pose.position,
+      goal_pose_it->pose.position, lookahead_dist);
+    geometry_msgs::msg::PoseStamped pose;
+    pose.header.frame_id = prev_pose_it->header.frame_id;
+    pose.header.stamp = goal_pose_it->header.stamp;
+    pose.pose.position = point;
+    return pose;
+  }
+
+  return *goal_pose_it;
+}
+
+
+geometry_msgs::msg::Point SameFuzzyLogicController::circleSegmentIntersection(
+  const geometry_msgs::msg::Point & p1,
+  const geometry_msgs::msg::Point & p2,
+  double r)
+{
+  // Formula for intersection of a line with a circle centered at the origin,
+  // modified to always return the point that is on the segment between the two points.
+  // https://mathworld.wolfram.com/Circle-LineIntersection.html
+  // This works because the poses are transformed into the robot frame.
+  // This can be derived from solving the system of equations of a line and a circle
+  // which results in something that is just a reformulation of the quadratic formula.
+  // Interactive illustration in doc/circle-segment-intersection.ipynb as well as at
+  // https://www.desmos.com/calculator/td5cwbuocd
+  double x1 = p1.x;
+  double x2 = p2.x;
+  double y1 = p1.y;
+  double y2 = p2.y;
+
+  double dx = x2 - x1;
+  double dy = y2 - y1;
+  double dr2 = dx * dx + dy * dy;
+  double D = x1 * y2 - x2 * y1;
+
+  // Augmentation to only return point within segment
+  double d1 = x1 * x1 + y1 * y1;
+  double d2 = x2 * x2 + y2 * y2;
+  double dd = d2 - d1;
+
+  geometry_msgs::msg::Point p;
+  double sqrt_term = std::sqrt(r * r * dr2 - D * D);
+  p.x = (D * dy + std::copysign(1.0, dd) * dx * sqrt_term) / dr2;
+  p.y = (-D * dx + std::copysign(1.0, dd) * dy * sqrt_term) / dr2;
+  return p;
 }
 
 dwb_msgs::msg::TrajectoryScore
