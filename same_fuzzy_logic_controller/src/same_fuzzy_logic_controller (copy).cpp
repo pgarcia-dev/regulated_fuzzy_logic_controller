@@ -44,12 +44,13 @@ using nav2_util::geometry_utils::euclidean_distance;
 
 namespace same_fuzzy_logic_controller
 {
-
+/*
 SameFuzzyLogicController::SameFuzzyLogicController()
 : traj_gen_loader_("dwb_core", "dwb_core::TrajectoryGenerator"),
   critic_loader_("dwb_core", "dwb_core::TrajectoryCritic")
 {
 }
+*/
 
 void SameFuzzyLogicController::configure(
   const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,

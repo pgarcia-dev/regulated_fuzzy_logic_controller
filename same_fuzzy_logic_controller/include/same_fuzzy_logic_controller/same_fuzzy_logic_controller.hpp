@@ -15,101 +15,68 @@
 #ifndef SAME_FUZZY_LOGIC_CONTROLLER
 #define SAME_FUZZY_LOGIC_CONTROLLER
 
-#include <memory>
 #include <string>
 #include <vector>
+#include <memory>
+#include <algorithm>
+#include <mutex>
 
 #include "nav2_core/controller.hpp"
-#include "nav2_core/goal_checker.hpp"
-#include "dwb_core/publisher.hpp"
-
-#include "dwb_core/dwb_local_planner.hpp"
-
-#include "dwb_core/trajectory_critic.hpp"
-#include "dwb_core/trajectory_generator.hpp"
-#include "nav_2d_msgs/msg/pose2_d_stamped.hpp"
-#include "nav_2d_msgs/msg/twist2_d_stamped.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "pluginlib/class_loader.hpp"
 #include "pluginlib/class_list_macros.hpp"
+#include "geometry_msgs/msg/pose2_d.hpp"
 #include "same_fuzzy_logic_controller/path_handler.hpp"
+#include "same_fuzzy_logic_controller/collision_checker.hpp"
+#include "same_fuzzy_logic_controller/parameter_handler.hpp"
+#include "same_fuzzy_logic_controller/regulation_functions.hpp"
 
 namespace same_fuzzy_logic_controller
 {
 
 /**
- * @class SameFuzzyLogicController
- * @brief Plugin-based flexible controller
+ * @class same_fuzzy_logic_controller::SameFuzzyLogicController
+ * @brief Regulated pure pursuit controller plugin
  */
 class SameFuzzyLogicController : public nav2_core::Controller
 {
 public:
   /**
-   * @brief Constructor that brings up pluginlib loaders
+   * @brief Constructor for same_fuzzy_logic_controller::SameFuzzyLogicController
    */
-  SameFuzzyLogicController();
+  SameFuzzyLogicController() = default;
 
+  /**
+   * @brief Destrructor for same_fuzzy_logic_controller::SameFuzzyLogicController
+   */
+  ~SameFuzzyLogicController() override = default;
+
+  /**
+   * @brief Configure controller state machine
+   * @param parent WeakPtr to node
+   * @param name Name of plugin
+   * @param tf TF buffer
+   * @param costmap_ros Costmap2DROS object of environment
+   */
   void configure(
     const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
     std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros) override;
 
-  virtual ~SameFuzzyLogicController() {}
-
   /**
-   * @brief Activate lifecycle node
-   */
-  void activate() override;
-
-  /**
-   * @brief Deactivate lifecycle node
-   */
-  void deactivate() override;
-
-  /**
-   * @brief Cleanup lifecycle node
+   * @brief Cleanup controller state machine
    */
   void cleanup() override;
 
   /**
-   * @brief nav2_core setPlan - Sets the global plan
-   * @param path The global plan
+   * @brief Activate controller state machine
    */
-  void setPlan(const nav_msgs::msg::Path & path) override;
+  void activate() override;
 
   /**
-   * @brief nav2_core computeVelocityCommands - calculates the best command given the current pose and velocity
-   *
-   * It is presumed that the global plan is already set.
-   *
-   * This is mostly a wrapper for the protected computeVelocityCommands
-   * function which has additional debugging info.
-   *
-   * @param pose Current robot pose
-   * @param velocity Current robot velocity
-   * @param goal_checker   Ptr to the goal checker for this task in case useful in computing commands
-   * @return The best command for the robot to drive
+   * @brief Deactivate controller state machine
    */
-  geometry_msgs::msg::TwistStamped computeVelocityCommands(
-    const geometry_msgs::msg::PoseStamped & pose,
-    const geometry_msgs::msg::Twist & velocity,
-    nav2_core::GoalChecker * /*goal_checker*/) override;
-
-  /**
-   * @brief Score a given command. Can be used for testing.
-   *
-   * Given a trajectory, calculate the score where lower scores are better.
-   * If the given (positive) score exceeds the best_score, calculation may be cut short, as the
-   * score can only go up from there.
-   *
-   * @param traj Trajectory to check
-   * @param best_score If positive, the threshold for early termination
-   * @return The full scoring of the input trajectory
-   */
-  virtual dwb_msgs::msg::TrajectoryScore scoreTrajectory(
-    const dwb_msgs::msg::Trajectory2D & traj,
-    double best_score = -1);
+  void deactivate() override;
 
   /**
    * @brief Compute the best command given the current pose and velocity, with possible debug information
@@ -120,13 +87,19 @@ public:
    *
    * @param pose      Current robot pose
    * @param velocity  Current robot velocity
-   * @param results   Output param, if not NULL, will be filled in with full evaluation results
+   * @param goal_checker   Ptr to the goal checker for this task in case useful in computing commands
    * @return          Best command
    */
-  virtual nav_2d_msgs::msg::Twist2DStamped computeVelocityCommands(
-    const nav_2d_msgs::msg::Pose2DStamped & pose,
-    const nav_2d_msgs::msg::Twist2D & velocity,
-    std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> & results);
+  geometry_msgs::msg::TwistStamped computeVelocityCommands(
+    const geometry_msgs::msg::PoseStamped & pose,
+    const geometry_msgs::msg::Twist & velocity,
+    nav2_core::GoalChecker * /*goal_checker*/) override;
+
+  /**
+   * @brief nav2_core setPlan - Sets the global plan
+   * @param path The global plan
+   */
+  void setPlan(const nav_msgs::msg::Path & path) override;
 
   /**
    * @brief Limits the maximum linear speed of the robot.
@@ -135,74 +108,65 @@ public:
    * @param percentage Setting speed limit in percentage if true
    * or in absolute values in false case.
    */
-  void setSpeedLimit(const double & speed_limit, const bool & percentage) override
-  {
-    if (traj_generator_) {
-      traj_generator_->setSpeedLimit(speed_limit, percentage);
-    }
-  }
+  void setSpeedLimit(const double & speed_limit, const bool & percentage) override;
 
 protected:
   /**
-   * @brief Helper method for two common operations for the operating on the global_plan
-   *
-   * Transforms the global plan (stored in global_plan_) relative to the pose and saves it in
-   * transformed_plan and possibly publishes it. Then it takes the last pose and transforms it
-   * to match the local costmap's frame
+   * @brief Get lookahead distance
+   * @param cmd the current speed to use to compute lookahead point
+   * @return lookahead distance
    */
-  void prepareGlobalPlan(
-    const nav_2d_msgs::msg::Pose2DStamped & pose, nav_2d_msgs::msg::Path2D & transformed_plan,
-    nav_2d_msgs::msg::Pose2DStamped & goal_pose, bool publish_plan = true);
+  double getLookAheadDistance(const geometry_msgs::msg::Twist &);
 
   /**
-   * @brief Iterate through all the twists and find the best one
+   * @brief Creates a PointStamped message for visualization
+   * @param carrot_pose Input carrot point as a PoseStamped
+   * @return CarrotMsg a carrot point marker, PointStamped
    */
-  virtual dwb_msgs::msg::TrajectoryScore coreScoringAlgorithm(
-    const geometry_msgs::msg::Pose2D & pose,
-    const nav_2d_msgs::msg::Twist2D velocity,
-    std::shared_ptr<dwb_msgs::msg::LocalPlanEvaluation> & results);
+  std::unique_ptr<geometry_msgs::msg::PointStamped> createCarrotMsg(
+    const geometry_msgs::msg::PoseStamped & carrot_pose);
 
   /**
-   * @brief Transforms global plan into same frame as pose, clips far away poses and possibly prunes passed poses
-   *
-   * Three key operations
-   * 1) Transforms global plan into frame of the given pose
-   * 2) Only returns poses that are near the robot, i.e. whether they are likely on the local costmap
-   * 3) If prune_plan_ is true, it will remove all points that we've already passed from both the transformed plan
-   *     and the saved global_plan_. Technically, it iterates to a pose on the path that is within prune_distance_
-   *     of the robot and erases all poses before that.
-   *
-   * Additionally, shorten_transformed_plan_ determines whether we will pass the full plan all
-   * the way to the nav goal on to the critics or just a subset of the plan near the robot.
-   * True means pass just a subset. This gives DWB less discretion to decide how it gets to the
-   * nav goal. Instead it is encouraged to try to get on to the path generated by the global planner.
+   * @brief Whether robot should rotate to rough path heading
+   * @param carrot_pose current lookahead point
+   * @param angle_to_path Angle of robot output relatie to carrot marker
+   * @return Whether should rotate to path heading
    */
-  virtual nav_2d_msgs::msg::Path2D transformGlobalPlan(
-    const nav_2d_msgs::msg::Pose2DStamped & pose);
-  nav_2d_msgs::msg::Path2D global_plan_;  ///< Saved Global Plan
-  bool prune_plan_;
-  double prune_distance_;
-  bool debug_trajectory_details_;
-  rclcpp::Duration transform_tolerance_{0, 0};
-  bool shorten_transformed_plan_;
+  bool shouldRotateToPath(
+    const geometry_msgs::msg::PoseStamped & carrot_pose, double & angle_to_path);
 
   /**
-   * @brief try to resolve a possibly shortened critic name with the default namespaces and the suffix "Critic"
-   *
-   * @param base_name The name of the critic as read in from the parameter server
-   * @return Our attempted resolution of the name, with namespace prepended and/or the suffix Critic appended
+   * @brief Whether robot should rotate to final goal orientation
+   * @param carrot_pose current lookahead point
+   * @return Whether should rotate to goal heading
    */
-  std::string resolveCriticClassName(std::string base_name);
+  bool shouldRotateToGoalHeading(const geometry_msgs::msg::PoseStamped & carrot_pose);
 
   /**
-   * @brief Load the critic parameters from the namespace
-   * @param name The namespace of this planner.
+   * @brief Create a smooth and kinematically smoothed rotation command
+   * @param linear_vel linear velocity
+   * @param angular_vel angular velocity
+   * @param angle_to_path Angle of robot output relatie to carrot marker
+   * @param curr_speed the current robot speed
    */
-  virtual void loadCritics();
+  void rotateToHeading(
+    double & linear_vel, double & angular_vel,
+    const double & angle_to_path, const geometry_msgs::msg::Twist & curr_speed);
 
-  geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
+  /**
+   * @brief apply regulation constraints to the system
+   * @param linear_vel robot command linear velocity input
+   * @param lookahead_dist optimal lookahead distance
+   * @param curvature curvature of path
+   * @param speed Speed of robot
+   * @param pose_cost cost at this pose
+   */
+  void applyConstraints(
+    const double & curvature, const geometry_msgs::msg::Twist & speed,
+    const double & pose_cost, const nav_msgs::msg::Path & path,
+    double & linear_vel, double & sign);
 
-    /**
+  /**
    * @brief Find the intersection a circle and a line segment.
    * This assumes the circle is centered at the origin.
    * If no intersection is found, a floating point error will occur.
@@ -216,31 +180,39 @@ protected:
     const geometry_msgs::msg::Point & p2,
     double r);
 
+  /**
+   * @brief Get lookahead point
+   * @param lookahead_dist Optimal lookahead distance
+   * @param path Current global path
+   * @return Lookahead point
+   */
+  geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
+
+  /**
+   * @brief checks for the cusp position
+   * @param pose Pose input to determine the cusp position
+   * @return robot distance from the cusp
+   */
+  double findVelocitySignChange(const nav_msgs::msg::Path & transformed_plan);
+
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
-  rclcpp::Clock::SharedPtr clock_;
-  rclcpp::Logger logger_{rclcpp::get_logger("SameFuzzyLogicController")};
-
   std::shared_ptr<tf2_ros::Buffer> tf_;
+  std::string plugin_name_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
+  nav2_costmap_2d::Costmap2D * costmap_;
+  rclcpp::Logger logger_ {rclcpp::get_logger("SameFuzzyLogicController")};
 
-  std::unique_ptr<dwb_core::DWBPublisher> pub_;
-  std::vector<std::string> default_critic_namespaces_;
+  Parameters * params_;
+  double goal_dist_tol_;
+  double control_duration_;
 
-  // Plugin handling
-  pluginlib::ClassLoader<dwb_core::TrajectoryGenerator> traj_gen_loader_;
-  dwb_core::TrajectoryGenerator::Ptr traj_generator_;
-
-  pluginlib::ClassLoader<dwb_core::TrajectoryCritic> critic_loader_;
-  std::vector<dwb_core::TrajectoryCritic::Ptr> critics_;
-
-  std::string dwb_plugin_name_;
-
-  bool short_circuit_trajectory_evaluation_;
+  std::shared_ptr<rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>> global_path_pub_;
+  std::shared_ptr<rclcpp_lifecycle::LifecyclePublisher<geometry_msgs::msg::PointStamped>>
+  carrot_pub_;
+  std::shared_ptr<rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>> carrot_arc_pub_;
   std::unique_ptr<same_fuzzy_logic_controller::PathHandler> path_handler_;
-
-  ////////
-  double next_waypoint_x_;
-  double next_waypoint_y_;
+  std::unique_ptr<same_fuzzy_logic_controller::ParameterHandler> param_handler_;
+  std::unique_ptr<same_fuzzy_logic_controller::CollisionChecker> collision_checker_;
 };
 
 }  // namespace same_fuzzy_logic_controller

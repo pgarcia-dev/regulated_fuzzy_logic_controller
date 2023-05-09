@@ -1,39 +1,19 @@
-/*
- * Software License Agreement (BSD License)
- *
- *  Copyright (c) 2017, Locus Robotics
- *  All rights reserved.
- *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions
- *  are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above
- *     copyright notice, this list of conditions and the following
- *     disclaimer in the documentation and/or other materials provided
- *     with the distribution.
- *   * Neither the name of the copyright holder nor the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- *  COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- */
+// Copyright (c) 2023 Pablo García. pgarcia.developer@gmail.com
+//
+// Licensed under the Apache License, Version 2.0 (the “License”);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an “AS IS” BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-#ifndef DWB_CORE__DWB_LOCAL_PLANNER_HPP_
-#define DWB_CORE__DWB_LOCAL_PLANNER_HPP_
+#ifndef SAME_FUZZY_LOGIC_CONTROLLER
+#define SAME_FUZZY_LOGIC_CONTROLLER
 
 #include <memory>
 #include <string>
@@ -42,6 +22,9 @@
 #include "nav2_core/controller.hpp"
 #include "nav2_core/goal_checker.hpp"
 #include "dwb_core/publisher.hpp"
+
+#include "dwb_core/dwb_local_planner.hpp"
+
 #include "dwb_core/trajectory_critic.hpp"
 #include "dwb_core/trajectory_generator.hpp"
 #include "nav_2d_msgs/msg/pose2_d_stamped.hpp"
@@ -50,28 +33,29 @@
 #include "rclcpp_lifecycle/lifecycle_node.hpp"
 #include "pluginlib/class_loader.hpp"
 #include "pluginlib/class_list_macros.hpp"
+#include "same_fuzzy_logic_controller/path_handler.hpp"
 
-namespace dwb_core
+namespace same_fuzzy_logic_controller
 {
 
 /**
- * @class DWBLocalPlanner
+ * @class SameFuzzyLogicController
  * @brief Plugin-based flexible controller
  */
-class DWBLocalPlanner : public nav2_core::Controller
+class SameFuzzyLogicController : public nav2_core::Controller
 {
 public:
   /**
    * @brief Constructor that brings up pluginlib loaders
    */
-  DWBLocalPlanner();
+  SameFuzzyLogicController();
 
   void configure(
     const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
     std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros) override;
 
-  virtual ~DWBLocalPlanner() {}
+  virtual ~SameFuzzyLogicController() {}
 
   /**
    * @brief Activate lifecycle node
@@ -216,28 +200,49 @@ protected:
    */
   virtual void loadCritics();
 
+  geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
+
+    /**
+   * @brief Find the intersection a circle and a line segment.
+   * This assumes the circle is centered at the origin.
+   * If no intersection is found, a floating point error will occur.
+   * @param p1 first endpoint of line segment
+   * @param p2 second endpoint of line segment
+   * @param r radius of circle
+   * @return point of intersection
+   */
+  static geometry_msgs::msg::Point circleSegmentIntersection(
+    const geometry_msgs::msg::Point & p1,
+    const geometry_msgs::msg::Point & p2,
+    double r);
+
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   rclcpp::Clock::SharedPtr clock_;
-  rclcpp::Logger logger_{rclcpp::get_logger("DWBLocalPlanner")};
+  rclcpp::Logger logger_{rclcpp::get_logger("SameFuzzyLogicController")};
 
   std::shared_ptr<tf2_ros::Buffer> tf_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
 
-  std::unique_ptr<DWBPublisher> pub_;
+  std::unique_ptr<dwb_core::DWBPublisher> pub_;
   std::vector<std::string> default_critic_namespaces_;
 
   // Plugin handling
-  pluginlib::ClassLoader<TrajectoryGenerator> traj_gen_loader_;
-  TrajectoryGenerator::Ptr traj_generator_;
+  pluginlib::ClassLoader<dwb_core::TrajectoryGenerator> traj_gen_loader_;
+  dwb_core::TrajectoryGenerator::Ptr traj_generator_;
 
-  pluginlib::ClassLoader<TrajectoryCritic> critic_loader_;
-  std::vector<TrajectoryCritic::Ptr> critics_;
+  pluginlib::ClassLoader<dwb_core::TrajectoryCritic> critic_loader_;
+  std::vector<dwb_core::TrajectoryCritic::Ptr> critics_;
 
   std::string dwb_plugin_name_;
 
   bool short_circuit_trajectory_evaluation_;
+  std::unique_ptr<same_fuzzy_logic_controller::PathHandler> path_handler_;
+
+  ////////
+  double next_waypoint_x_;
+  double next_waypoint_y_;
 };
 
-}  // namespace dwb_core
+}  // namespace same_fuzzy_logic_controller
 
-#endif  // DWB_CORE__DWB_LOCAL_PLANNER_HPP_
+#endif  // SAME_FUZZY_LOGIC_CONTROLLER

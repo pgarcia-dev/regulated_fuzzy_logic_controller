@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef NAV2_REGULATED_PURE_PURSUIT_CONTROLLER__PARAMETER_HANDLER_HPP_
-#define NAV2_REGULATED_PURE_PURSUIT_CONTROLLER__PARAMETER_HANDLER_HPP_
+#ifndef SAME_FUZZY_LOGIC_CONTROLLER__PARAMETER_HANDLER_HPP_
+#define SAME_FUZZY_LOGIC_CONTROLLER__PARAMETER_HANDLER_HPP_
 
 #include <string>
 #include <vector>
@@ -27,7 +27,7 @@
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_util/node_utils.hpp"
 
-namespace nav2_regulated_pure_pursuit_controller
+namespace same_fuzzy_logic_controller
 {
 
 struct Parameters
@@ -103,4 +103,4 @@ protected:
 
 }  // namespace nav2_regulated_pure_pursuit_controller
 
-#endif  // NAV2_REGULATED_PURE_PURSUIT_CONTROLLER__PARAMETER_HANDLER_HPP_
+#endif  // SAME_FUZZY_LOGIC_CONTROLLER__PARAMETER_HANDLER_HPP_
