@@ -36,12 +36,8 @@
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/twist_stamped.hpp"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
 
 using namespace nav2_costmap_2d;  // NOLINT
-
-
 
 using nav2_util::declare_parameter_if_not_declared;
 using nav2_util::geometry_utils::euclidean_distance;
@@ -118,8 +114,7 @@ void SameFuzzyLogicController::configure(
   traj_generator_ = traj_gen_loader_.createUniqueInstance(traj_generator_name);
 
   traj_generator_->initialize(node, dwb_plugin_name_);
-/**
-/
+
   try {
     loadCritics();
   } catch (const std::exception & e) {
@@ -128,7 +123,7 @@ void SameFuzzyLogicController::configure(
             "Couldn't load critics! Caught exception: " +
             std::string(e.what()));
   }
-  **/
+
 
   // Handles global path transformations
   path_handler_ = std::make_unique<same_fuzzy_logic_controller::PathHandler>(
@@ -155,7 +150,7 @@ SameFuzzyLogicController::cleanup()
   //traj_generator_.reset();
 }
 
-/**
+
 std::string
 SameFuzzyLogicController::resolveCriticClassName(std::string base_name)
 {
@@ -173,9 +168,9 @@ SameFuzzyLogicController::resolveCriticClassName(std::string base_name)
   }
   return base_name;
 }
-**/
 
-/**
+
+
 void
 SameFuzzyLogicController::loadCritics()
 {
@@ -222,7 +217,7 @@ SameFuzzyLogicController::loadCritics()
     RCLCPP_INFO(logger_, "Critic plugin initialized");
   }
 }
-**/
+
 
 void
 SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) ////////////////////////////////////////////////////////////////////////////////////////
@@ -484,7 +479,7 @@ SameFuzzyLogicController::computeVelocityCommands( /////////////////////////////
   }
   **/
 }
-/**
+
 void
 SameFuzzyLogicController::prepareGlobalPlan(
   const nav_2d_msgs::msg::Pose2DStamped & pose, nav_2d_msgs::msg::Path2D & transformed_plan,
@@ -564,7 +559,7 @@ SameFuzzyLogicController::computeVelocityCommands(
             std::string(e.what()));
   }
 }
-**/
+
 
 geometry_msgs::msg::PoseStamped SameFuzzyLogicController::getLookAheadPoint(
   const double & lookahead_dist,
@@ -634,7 +629,7 @@ geometry_msgs::msg::Point SameFuzzyLogicController::circleSegmentIntersection(
   p.y = (-D * dx + std::copysign(1.0, dd) * dy * sqrt_term) / dr2;
   return p;
 }
-/**
+
 dwb_msgs::msg::TrajectoryScore
 SameFuzzyLogicController::coreScoringAlgorithm(
   const geometry_msgs::msg::Pose2D & pose,
@@ -702,9 +697,7 @@ SameFuzzyLogicController::coreScoringAlgorithm(
 
   return best;
 }
-**/
 
-/**
 dwb_msgs::msg::TrajectoryScore
 SameFuzzyLogicController::scoreTrajectory(
   const dwb_msgs::msg::Trajectory2D & traj,
@@ -734,9 +727,8 @@ SameFuzzyLogicController::scoreTrajectory(
   }
 
   return score;
-}**/
+}
 
-/**
 nav_2d_msgs::msg::Path2D
 SameFuzzyLogicController::transformGlobalPlan(
   const nav_2d_msgs::msg::Pose2DStamped & pose)
@@ -840,7 +832,7 @@ SameFuzzyLogicController::transformGlobalPlan(
   }
   return transformed_plan;
 }
-**/
+
 
 }  // namespace same_fuzzy_logic_controller
 
