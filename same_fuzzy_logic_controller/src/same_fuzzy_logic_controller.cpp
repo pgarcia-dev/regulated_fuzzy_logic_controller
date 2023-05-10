@@ -55,13 +55,11 @@ void SameFuzzyLogicController::configure(
 
   // Handles storage and dynamic configuration of parameters.
   // Returns pointer to data current param settings.
-  param_handler_ = std::make_unique<ParameterHandler>(
-    node, plugin_name_, logger_, costmap_->getSizeInMetersX());
+  param_handler_ = std::make_unique<ParameterHandler>(node, plugin_name_, logger_, costmap_->getSizeInMetersX());
   params_ = param_handler_->getParams();
 
   // Handles global path transformations
-  path_handler_ = std::make_unique<PathHandler>(
-    tf2::durationFromSec(params_->transform_tolerance), tf_, costmap_ros_);
+  path_handler_ = std::make_unique<PathHandler>( tf2::durationFromSec(params_->transform_tolerance), tf_, costmap_ros_);
 
   // Checks for imminent collisions
   collision_checker_ = std::make_unique<CollisionChecker>(node, costmap_ros_, params_);
@@ -78,39 +76,26 @@ void SameFuzzyLogicController::configure(
 
 void SameFuzzyLogicController::cleanup()
 {
-  RCLCPP_INFO(
-    logger_,
-    "Cleaning up controller: %s of type"
-    " regulated_pure_pursuit_controller::SameFuzzyLogicController",
-    plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Cleaning up controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_.reset();
   carrot_pub_.reset();
 }
 
 void SameFuzzyLogicController::activate()
 {
-  RCLCPP_INFO(
-    logger_,
-    "Activating controller: %s of type "
-    "regulated_pure_pursuit_controller::SameFuzzyLogicController",
-    plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Activating controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_->on_activate();
   carrot_pub_->on_activate();
 }
 
 void SameFuzzyLogicController::deactivate()
 {
-  RCLCPP_INFO(
-    logger_,
-    "Deactivating controller: %s of type "
-    "regulated_pure_pursuit_controller::SameFuzzyLogicController",
-    plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Deactivating controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_->on_deactivate();
   carrot_pub_->on_deactivate();
 }
 
-std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::createCarrotMsg(
-  const geometry_msgs::msg::PoseStamped & carrot_pose)
+std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::createCarrotMsg(const geometry_msgs::msg::PoseStamped & carrot_pose)
 {
   auto carrot_msg = std::make_unique<geometry_msgs::msg::PointStamped>();
   carrot_msg->header = carrot_pose.header;
@@ -121,7 +106,7 @@ std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::crea
 }
 
 double SameFuzzyLogicController::getLookAheadDistance(
-  const geometry_msgs::msg::Twist & speed)
+const geometry_msgs::msg::Twist & speed)
 {
   // If using velocity-scaled look ahead distances, find and clamp the dist
   // Else, use the static look ahead distance
