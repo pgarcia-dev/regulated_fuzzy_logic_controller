@@ -24,12 +24,14 @@
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
+#include "fl/Headers.h"
 
 using std::hypot;
 using std::min;
 using std::max;
 using std::abs;
 using namespace nav2_costmap_2d;  // NOLINT
+using namespace fl;
 
 namespace same_fuzzy_logic_controller
 {
@@ -149,11 +151,226 @@ double calculateCurvature(geometry_msgs::msg::Point lookahead_point)
   }
 }
 
-geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityCommands(
-  const geometry_msgs::msg::PoseStamped & pose,
-  const geometry_msgs::msg::Twist & speed,
-  nav2_core::GoalChecker * goal_checker)
+void SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)  //==========================================
 {
+  path_handler_->setPlan(path);
+}
+
+geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityCommands( //===========================================
+  const geometry_msgs::msg::PoseStamped & pose,
+  const geometry_msgs::msg::Twist & /*speed*/,
+  nav2_core::GoalChecker * /*goal_checker*/)
+{
+    // Transform path to robot base frame
+  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//********5 aprox
+  //global_path_pub_->publish(transformed_plan);//*********
+
+  // Find look ahead distance and point on path and publish
+  double lookahead_dist = 0.6; //getLookAheadDistance(speed);////////////////////////
+
+  // Get the particular point on the path at the lookahead distance
+  auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
+ // carrot_pub_->publish(createCarrotMsg(carrot_pose));
+
+  double dx2 = carrot_pose.pose.position.x;
+  double dy2 = carrot_pose.pose.position.y;
+  double angle_to_path = atan2(dy2, dx2); 
+ // RCLCPP_INFO(logger_, "***2 heading: %f- next paths's position - x: %f , y: %f", angle_to_path, dx2, dy2);
+
+  static const float INPUT_NL_MIN = -3.15;
+  static const float INPUT_NL_MED = -3.0;
+  static const float INPUT_NL_MAX = -2.8;
+  static const float INPUT_NM_MIN = -2.8;
+  static const float INPUT_NM_MED = -1.9;
+  static const float INPUT_NM_MAX = -1.1;
+  static const float INPUT_N_MIN = -1.1;
+  static const float INPUT_N_MED = -0.9;
+  static const float INPUT_N_MAX = -0.6;
+  static const float INPUT_NS_MIN = -0.6;
+  static const float INPUT_NS_MED = -0.5;
+  static const float INPUT_NS_MAX = -0.4;
+  static const float INPUT_ZN_MIN = -0.4;
+  static const float INPUT_ZN_MED = -0.25;
+  static const float INPUT_ZN_MAX = -0.1;
+  static const float INPUT_Z_MIN = -0.1; 
+  static const float INPUT_Z_MED = 0; //-------------
+  static const float INPUT_Z_MAX = 0.1;
+  static const float INPUT_ZP_MIN = 0.1;
+  static const float INPUT_ZP_MED = 0.25;
+  static const float INPUT_ZP_MAX = 0.4;
+  static const float INPUT_PS_MIN = 0.4;
+  static const float INPUT_PS_MED = 0.5;
+  static const float INPUT_PS_MAX = 0.6;
+  static const float INPUT_P_MIN = 0.6;
+  static const float INPUT_P_MED = 0.9;
+  static const float INPUT_P_MAX = 1.1;
+  static const float INPUT_PM_MIN = 1.1;
+  static const float INPUT_PM_MED = 1.9;
+  static const float INPUT_PM_MAX = 2.8;
+  static const float INPUT_PL_MIN = 2.8;
+  static const float INPUT_PL_MED = 3.0;
+  static const float INPUT_PL_MAX = 3.15;
+
+  static const float OUTPUT_ANG_NL_MIN = -1;
+  static const float OUTPUT_ANG_NL_MED = -0.8;
+  static const float OUTPUT_ANG_NL_MAX = -0.6;
+  static const float OUTPUT_ANG_NM_MIN = -0.6;
+  static const float OUTPUT_ANG_NM_MED = -0.45;
+  static const float OUTPUT_ANG_NM_MAX = -0.31;
+  static const float OUTPUT_ANG_N_MIN = -0.31;
+  static const float OUTPUT_ANG_N_MED = -0.25;
+  static const float OUTPUT_ANG_N_MAX = -0.19;
+  static const float OUTPUT_ANG_NS_MIN = -0.19;
+  static const float OUTPUT_ANG_NS_MED = -0.15;
+  static const float OUTPUT_ANG_NS_MAX = -0.1;
+  static const float OUTPUT_ANG_ZN_MIN = -0.1;
+  static const float OUTPUT_ANG_ZN_MED = -0.05;
+  static const float OUTPUT_ANG_ZN_MAX = -0.025;
+  static const float OUTPUT_ANG_Z_MIN = -0.025; 
+  static const float OUTPUT_ANG_Z_MED = 0; //-------------
+  static const float OUTPUT_ANG_Z_MAX = 0.025;
+  static const float OUTPUT_ANG_ZP_MIN = 0.025;
+  static const float OUTPUT_ANG_ZP_MED = 0.05;
+  static const float OUTPUT_ANG_ZP_MAX = 0.1;
+  static const float OUTPUT_ANG_PS_MIN = 0.1;
+  static const float OUTPUT_ANG_PS_MED = 0.15;
+  static const float OUTPUT_ANG_PS_MAX = 0.19;
+  static const float OUTPUT_ANG_P_MIN = 0.19;
+  static const float OUTPUT_ANG_P_MED = 0.25;
+  static const float OUTPUT_ANG_P_MAX = 0.31;
+  static const float OUTPUT_ANG_PM_MIN = 0.31;
+  static const float OUTPUT_ANG_PM_MED = 0.45;
+  static const float OUTPUT_ANG_PM_MAX = 0.6;
+  static const float OUTPUT_ANG_PL_MIN = 0.6;
+  static const float OUTPUT_ANG_PL_MED = 0.8;
+  static const float OUTPUT_ANG_PL_MAX = 1;
+
+  static const float OUTPUT_LIN_S_MIN = 0;
+  static const float OUTPUT_LIN_S_MED = 0.0025;//0.11///////////////////////////////////////
+  static const float OUTPUT_LIN_S_MAX = 0.005;/////////////////////////////////////////////0.22;
+  static const float OUTPUT_LIN_M_MIN = 0.19;
+  static const float OUTPUT_LIN_M_MED = 0.2;
+  static const float OUTPUT_LIN_M_MAX = 0.4;
+  static const float OUTPUT_LIN_L_MIN = 0.35;
+  static const float OUTPUT_LIN_L_MED = 0.45;
+  static const float OUTPUT_LIN_L_MAX = 0.55;
+  static const float OUTPUT_LIN_VL_MIN = 0.5; 
+  static const float OUTPUT_LIN_VL_MED = 0.6; 
+  static const float OUTPUT_LIN_VL_MAX = 0.7;
+
+  Engine *engine = new Engine;
+  engine->setName("SFLC");
+  engine->setDescription("");
+
+  InputVariable* Uao_gtg = new InputVariable;
+  Uao_gtg->setName("Uao_gtg");
+  Uao_gtg->setDescription("");
+  Uao_gtg->setEnabled(true);
+  Uao_gtg->setRange(-3.8,3.8); 
+  Uao_gtg->setLockValueInRange(false);
+  Uao_gtg->addTerm(new Triangle("NL", INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
+  Uao_gtg->addTerm(new Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
+  Uao_gtg->addTerm(new Triangle("N",  INPUT_N_MIN,  INPUT_N_MED,  INPUT_N_MAX));
+  Uao_gtg->addTerm(new Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));
+  Uao_gtg->addTerm(new Triangle("ZN", INPUT_ZN_MIN, INPUT_ZN_MED, INPUT_ZN_MAX));
+  Uao_gtg->addTerm(new Triangle("Z",  INPUT_Z_MIN,  INPUT_Z_MED,  INPUT_Z_MAX)); //----------
+  Uao_gtg->addTerm(new Triangle("ZP", INPUT_ZP_MIN, INPUT_ZP_MED, INPUT_ZP_MAX));
+  Uao_gtg->addTerm(new Triangle("PS", INPUT_PS_MIN, INPUT_PS_MED, INPUT_PS_MAX));
+  Uao_gtg->addTerm(new Triangle("P",  INPUT_P_MIN,  INPUT_P_MED,  INPUT_P_MAX));
+  Uao_gtg->addTerm(new Triangle("PM", INPUT_PM_MIN, INPUT_PM_MED, INPUT_PM_MAX));
+  Uao_gtg->addTerm(new Triangle("PL", INPUT_PL_MIN, INPUT_PL_MED, INPUT_PL_MAX));
+  engine->addInputVariable(Uao_gtg);
+
+  OutputVariable* linear_velocity = new OutputVariable;
+  linear_velocity->setName("linear_velocity");
+  linear_velocity->setDescription("");
+  linear_velocity->setEnabled(true);
+  linear_velocity->setRange(0, 0.7);
+  linear_velocity->setLockValueInRange(false);
+  linear_velocity->setAggregation(new Maximum);
+  linear_velocity->setDefuzzifier(new LargestOfMaximum);
+  linear_velocity->setDefaultValue(fl::nan);
+  linear_velocity->setLockPreviousValue(false);
+  linear_velocity->addTerm(new Triangle("S",  OUTPUT_LIN_S_MIN, OUTPUT_LIN_S_MED, OUTPUT_LIN_S_MAX));
+  linear_velocity->addTerm(new Triangle("M",  OUTPUT_LIN_M_MIN, OUTPUT_LIN_M_MED, OUTPUT_LIN_M_MAX));
+  linear_velocity->addTerm(new Triangle("L",  OUTPUT_LIN_L_MIN, OUTPUT_LIN_L_MED, OUTPUT_LIN_L_MAX));
+  linear_velocity->addTerm(new Triangle("VL", OUTPUT_LIN_VL_MIN, OUTPUT_LIN_VL_MED, OUTPUT_LIN_VL_MAX));
+  engine->addOutputVariable(linear_velocity);
+
+  OutputVariable* angular_velocity = new OutputVariable;
+  angular_velocity->setName("angular_velocity");
+  angular_velocity->setDescription("");
+  angular_velocity->setEnabled(true);
+  angular_velocity->setRange(-1,1);
+  angular_velocity->setLockValueInRange(false);
+  angular_velocity->setAggregation(new Maximum);
+  angular_velocity->setDefuzzifier(new LargestOfMaximum);
+  angular_velocity->setDefaultValue(fl::nan);
+  angular_velocity->setLockPreviousValue(false);
+  angular_velocity->addTerm(new Triangle("NL", OUTPUT_ANG_NL_MIN, OUTPUT_ANG_NL_MED, OUTPUT_ANG_NL_MAX));
+  angular_velocity->addTerm(new Triangle("NM", OUTPUT_ANG_NM_MIN, OUTPUT_ANG_NM_MED, OUTPUT_ANG_NM_MAX));
+  angular_velocity->addTerm(new Triangle("N",  OUTPUT_ANG_N_MIN,  OUTPUT_ANG_N_MED,  OUTPUT_ANG_N_MAX));
+  angular_velocity->addTerm(new Triangle("NS", OUTPUT_ANG_NS_MIN, OUTPUT_ANG_NS_MED, OUTPUT_ANG_NS_MAX));
+  angular_velocity->addTerm(new Triangle("ZN", OUTPUT_ANG_ZN_MIN, OUTPUT_ANG_ZN_MED, OUTPUT_ANG_ZN_MAX));
+  angular_velocity->addTerm(new Triangle("Z",  OUTPUT_ANG_Z_MIN,  OUTPUT_ANG_Z_MED,  OUTPUT_ANG_Z_MAX)); //----------
+  angular_velocity->addTerm(new Triangle("ZP", OUTPUT_ANG_ZP_MIN, OUTPUT_ANG_ZP_MED, OUTPUT_ANG_ZP_MAX));
+  angular_velocity->addTerm(new Triangle("PS", OUTPUT_ANG_PS_MIN, OUTPUT_ANG_PS_MED, OUTPUT_ANG_PS_MAX));
+  angular_velocity->addTerm(new Triangle("P",  OUTPUT_ANG_P_MIN,  OUTPUT_ANG_P_MED,  OUTPUT_ANG_P_MAX));
+  angular_velocity->addTerm(new Triangle("PM", OUTPUT_ANG_PM_MIN, OUTPUT_ANG_PM_MED, OUTPUT_ANG_PM_MAX));
+  angular_velocity->addTerm(new Triangle("PL", OUTPUT_ANG_PL_MIN, OUTPUT_ANG_PL_MED, OUTPUT_ANG_PL_MAX));
+  engine->addOutputVariable(angular_velocity);
+
+  RuleBlock* ruleBlock = new RuleBlock;
+  ruleBlock->setName("");
+  ruleBlock->setDescription("");
+  ruleBlock->setEnabled(true);
+  //ruleBlock->setConjunction(fl::null);
+  //ruleBlock->setDisjunction(fl::null);
+  ruleBlock->setEnabled(true);
+  ruleBlock->setConjunction(new Minimum);
+  ruleBlock->setDisjunction(new Maximum);
+  ruleBlock->setImplication(new Minimum);
+  //  ruleBlock->setImplication(new AlgebraicProduct);
+  ruleBlock->setActivation(new General);
+
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
+
+    ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
+
+//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
+ // ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PS", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
+  engine->addRuleBlock(ruleBlock);
+
+  engine->addRuleBlock(ruleBlock);
+  Uao_gtg->setValue(angle_to_path);
+  engine->process();
+
+  geometry_msgs::msg::TwistStamped cmd_vel;
+  cmd_vel.header = pose.header;  
+  cmd_vel.twist.linear.x = linear_velocity->getValue();
+  cmd_vel.twist.angular.z = angular_velocity->getValue();
+ // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
+  RCLCPP_INFO(logger_, "*** input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+
+  return cmd_vel;
+
+
+
+
+
+
+/*
+
   std::lock_guard<std::mutex> lock_reinit(param_handler_->getMutex());
 
   // Update for the current goal checker's state
@@ -239,6 +456,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   cmd_vel.twist.linear.x = linear_vel;
   cmd_vel.twist.angular.z = angular_vel;
   return cmd_vel;
+  */
 }
 
 bool SameFuzzyLogicController::shouldRotateToPath(
@@ -370,11 +588,6 @@ void SameFuzzyLogicController::applyConstraints(
   // Limit linear velocities to be valid
   linear_vel = std::clamp(fabs(linear_vel), 0.0, params_->desired_linear_vel);
   linear_vel = sign * linear_vel;
-}
-
-void SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)
-{
-  path_handler_->setPlan(path);
 }
 
 void SameFuzzyLogicController::setSpeedLimit(
