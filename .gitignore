@@ -54,3 +54,4 @@ cmake-build-debug/
 
 # doxygen docs
 doc/html/
+fuzzylite/.DS_Store
