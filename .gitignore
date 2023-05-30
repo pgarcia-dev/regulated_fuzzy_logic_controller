@@ -54,4 +54,5 @@ cmake-build-debug/
 
 # doxygen docs
 doc/html/
-fuzzylite/.DS_Store
+.DS_Store
+same_fuzzy_logic_controller/.DS_Store
