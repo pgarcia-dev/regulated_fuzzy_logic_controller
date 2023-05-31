@@ -13,6 +13,7 @@ find_package(nav_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(navigation2 REQUIRED)
 
 nav2_package()
 
@@ -47,6 +48,12 @@ ament_target_dependencies(${library_name}
 install(DIRECTORY include/
   DESTINATION include/
 )
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY maps DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY params DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY urdf DESTINATION share/${PROJECT_NAME})
 
 target_link_directories(${library_name} PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin")#---------
 target_link_libraries(${library_name} fuzzylite)
