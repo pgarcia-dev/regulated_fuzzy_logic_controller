@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(same_fuzzy_logic_controller)
 
-
 find_package(ament_cmake REQUIRED)
 find_package(nav2_common REQUIRED)
 find_package(nav2_core REQUIRED)
@@ -20,7 +19,6 @@ nav2_package()
 include_directories(
   include
 )
-
 
 set(dependencies
   rclcpp
@@ -45,9 +43,7 @@ ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
-install(DIRECTORY include/
-  DESTINATION include/
-)
+install(DIRECTORY include DESTINATION include/)
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY maps DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
@@ -55,7 +51,7 @@ install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY params DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY urdf DESTINATION share/${PROJECT_NAME})
 
-target_link_directories(${library_name} PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin")#---------
+target_link_directories(${library_name} PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin") #TODO ---------
 target_link_libraries(${library_name} fuzzylite)
 
 #if(BUILD_TESTING)
@@ -70,11 +66,6 @@ ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
 
-ament_export_include_directories(include)
-ament_export_libraries(${library_name})
-ament_export_dependencies(${dependencies})
-
-#pluginlib_export_plugin_description_file(nav2_core local_planner_plugin.xml)
 pluginlib_export_plugin_description_file(nav2_core same_fuzzy_logic_controller_plugin.xml)
 
 ament_package()
