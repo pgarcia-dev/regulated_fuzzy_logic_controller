@@ -151,7 +151,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   //global_path_pub_->publish(transformed_plan);//*********
 
   // Find look ahead distance and point on path and publish
-  double lookahead_dist = 0.3;//0.3;//0.6; //getLookAheadDistance(speed);////////////////////////--------------------------------------------
+  double lookahead_dist = 0.4;//0.3;//0.6; //getLookAheadDistance(speed);////////////////////////--------------------------------------------
 
   // Get the particular point on the path at the lookahead distance
   auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
@@ -230,54 +230,32 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   static const float OUTPUT_ANG_PL_MED = 0.8;
   static const float OUTPUT_ANG_PL_MAX = 1;
 
-/*
-  static const float OUTPUT_ANG_NL_MIN = -1;
-  static const float OUTPUT_ANG_NL_MED = -0.8;
-  static const float OUTPUT_ANG_NL_MAX = -0.6;
-  static const float OUTPUT_ANG_NM_MIN = -0.6;
-  static const float OUTPUT_ANG_NM_MED = -0.45;
-  static const float OUTPUT_ANG_NM_MAX = -0.31;
-  static const float OUTPUT_ANG_N_MIN = -0.31;
-  static const float OUTPUT_ANG_N_MED = -0.25;
-  static const float OUTPUT_ANG_N_MAX = -0.19;
-  static const float OUTPUT_ANG_NS_MIN = -0.19;
-  static const float OUTPUT_ANG_NS_MED = -0.15;
-  static const float OUTPUT_ANG_NS_MAX = -0.1;
-  static const float OUTPUT_ANG_ZN_MIN = -0.1;
-  static const float OUTPUT_ANG_ZN_MED = -0.05;
-  static const float OUTPUT_ANG_ZN_MAX = -0.025;
-  static const float OUTPUT_ANG_Z_MIN = -0.025; 
-  static const float OUTPUT_ANG_Z_MED = 0; //-------------
-  static const float OUTPUT_ANG_Z_MAX = 0.025;
-  static const float OUTPUT_ANG_ZP_MIN = 0.025;
-  static const float OUTPUT_ANG_ZP_MED = 0.05;
-  static const float OUTPUT_ANG_ZP_MAX = 0.1;
-  static const float OUTPUT_ANG_PS_MIN = 0.1;
-  static const float OUTPUT_ANG_PS_MED = 0.15;
-  static const float OUTPUT_ANG_PS_MAX = 0.19;
-  static const float OUTPUT_ANG_P_MIN = 0.19;
-  static const float OUTPUT_ANG_P_MED = 0.25;
-  static const float OUTPUT_ANG_P_MAX = 0.31;
-  static const float OUTPUT_ANG_PM_MIN = 0.31;
-  static const float OUTPUT_ANG_PM_MED = 0.45;
-  static const float OUTPUT_ANG_PM_MAX = 0.6;
-  static const float OUTPUT_ANG_PL_MIN = 0.6;
-  static const float OUTPUT_ANG_PL_MED = 0.8;
-  static const float OUTPUT_ANG_PL_MAX = 1;
-  */
+
+
+
+
 
   static const float OUTPUT_LIN_S_MIN = 0;
-  static const float OUTPUT_LIN_S_MED = 0.0025;//0.11///////////////////////////////////////
-  static const float OUTPUT_LIN_S_MAX = 0.005;/////////////////////////////////////////////0.22;
-  static const float OUTPUT_LIN_M_MIN = 0.19;
-  static const float OUTPUT_LIN_M_MED = 0.2;
-  static const float OUTPUT_LIN_M_MAX = 0.4;
-  static const float OUTPUT_LIN_L_MIN = 0.35;
-  static const float OUTPUT_LIN_L_MED = 0.45;
-  static const float OUTPUT_LIN_L_MAX = 0.55;
-  static const float OUTPUT_LIN_VL_MIN = 0.5; 
-  static const float OUTPUT_LIN_VL_MED = 0.6; 
-  static const float OUTPUT_LIN_VL_MAX = 0.7;
+  static const float OUTPUT_LIN_S_MED = 0.035;//0.0025;//0.11///////////////////////////////////////
+  static const float OUTPUT_LIN_S_MAX = 0.07;//0.005;/////////////////////////////////////////////0.22;
+
+
+  float increment = 0.25;
+  static const float OUTPUT_LIN_M_MIN = 0.06;
+  static const float OUTPUT_LIN_M_MED = 0.095;
+  static const float OUTPUT_LIN_M_MAX = 0.15;
+
+
+
+  static const float OUTPUT_LIN_L_MIN = 0.1 + increment;
+  static const float OUTPUT_LIN_L_MED = 0.15 + increment;
+  static const float OUTPUT_LIN_L_MAX = 0.2 + increment;
+
+
+
+  static const float OUTPUT_LIN_VL_MIN = 0.019 + increment; 
+  static const float OUTPUT_LIN_VL_MED = 0.22 + increment; 
+  static const float OUTPUT_LIN_VL_MAX = 0.26 + increment;
 
   Engine *engine = new Engine;
   engine->setName("SFLC");
@@ -360,9 +338,6 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NL", engine));
 
-    //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
-  //ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
-  //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
