@@ -151,7 +151,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   //global_path_pub_->publish(transformed_plan);//*********
 
   // Find look ahead distance and point on path and publish
-  double lookahead_dist = 0.3;//0.6; //getLookAheadDistance(speed);////////////////////////
+  double lookahead_dist = 0.3;//0.3;//0.6; //getLookAheadDistance(speed);////////////////////////--------------------------------------------
 
   // Get the particular point on the path at the lookahead distance
   auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
@@ -229,6 +229,42 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   static const float OUTPUT_ANG_PL_MIN = 0.6;
   static const float OUTPUT_ANG_PL_MED = 0.8;
   static const float OUTPUT_ANG_PL_MAX = 1;
+
+/*
+  static const float OUTPUT_ANG_NL_MIN = -1;
+  static const float OUTPUT_ANG_NL_MED = -0.8;
+  static const float OUTPUT_ANG_NL_MAX = -0.6;
+  static const float OUTPUT_ANG_NM_MIN = -0.6;
+  static const float OUTPUT_ANG_NM_MED = -0.45;
+  static const float OUTPUT_ANG_NM_MAX = -0.31;
+  static const float OUTPUT_ANG_N_MIN = -0.31;
+  static const float OUTPUT_ANG_N_MED = -0.25;
+  static const float OUTPUT_ANG_N_MAX = -0.19;
+  static const float OUTPUT_ANG_NS_MIN = -0.19;
+  static const float OUTPUT_ANG_NS_MED = -0.15;
+  static const float OUTPUT_ANG_NS_MAX = -0.1;
+  static const float OUTPUT_ANG_ZN_MIN = -0.1;
+  static const float OUTPUT_ANG_ZN_MED = -0.05;
+  static const float OUTPUT_ANG_ZN_MAX = -0.025;
+  static const float OUTPUT_ANG_Z_MIN = -0.025; 
+  static const float OUTPUT_ANG_Z_MED = 0; //-------------
+  static const float OUTPUT_ANG_Z_MAX = 0.025;
+  static const float OUTPUT_ANG_ZP_MIN = 0.025;
+  static const float OUTPUT_ANG_ZP_MED = 0.05;
+  static const float OUTPUT_ANG_ZP_MAX = 0.1;
+  static const float OUTPUT_ANG_PS_MIN = 0.1;
+  static const float OUTPUT_ANG_PS_MED = 0.15;
+  static const float OUTPUT_ANG_PS_MAX = 0.19;
+  static const float OUTPUT_ANG_P_MIN = 0.19;
+  static const float OUTPUT_ANG_P_MED = 0.25;
+  static const float OUTPUT_ANG_P_MAX = 0.31;
+  static const float OUTPUT_ANG_PM_MIN = 0.31;
+  static const float OUTPUT_ANG_PM_MED = 0.45;
+  static const float OUTPUT_ANG_PM_MAX = 0.6;
+  static const float OUTPUT_ANG_PL_MIN = 0.6;
+  static const float OUTPUT_ANG_PL_MED = 0.8;
+  static const float OUTPUT_ANG_PL_MAX = 1;
+  */
 
   static const float OUTPUT_LIN_S_MIN = 0;
   static const float OUTPUT_LIN_S_MED = 0.0025;//0.11///////////////////////////////////////
@@ -318,22 +354,44 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   //  ruleBlock->setImplication(new AlgebraicProduct);
   ruleBlock->setActivation(new General);
 
+  
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is NL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NL", engine));
+
+    //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
+  //ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
+  //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
+
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is PL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PL", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
+
+
+  /*
+
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
 
-    ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
+    //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
+  //ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
+  //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
+  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
 
-//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
- // ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-//  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PS", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
+  */
   engine->addRuleBlock(ruleBlock);
 
   engine->addRuleBlock(ruleBlock);
@@ -346,6 +404,16 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   cmd_vel.twist.angular.z = angular_velocity->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
   RCLCPP_INFO(logger_, "*** input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+
+ // Collision checking on this velocity heading
+  const double & carrot_dist = hypot(carrot_pose.pose.position.x, carrot_pose.pose.position.y);
+  if (/*params_->use_collision_detection &&*/ collision_checker_->isCollisionImminent(pose, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z, carrot_dist))
+  {
+    //throw nav2_core::NoValidControl("RegulatedPurePursuitController detected collision ahead!");
+    RCLCPP_INFO(logger_, "************** COLLISSION");
+
+  }
+  
 
   return cmd_vel;
 
