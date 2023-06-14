@@ -240,7 +240,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   static const float OUTPUT_LIN_S_MAX = 0.07;//0.005;/////////////////////////////////////////////0.22;
 
 
-  float increment = 0.25;
+  float increment = 0.25; //TODO: as rosparam
   static const float OUTPUT_LIN_M_MIN = 0.06;
   static const float OUTPUT_LIN_M_MED = 0.095;
   static const float OUTPUT_LIN_M_MAX = 0.15;
@@ -334,30 +334,10 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
 
   
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is NL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NL", engine));
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is PL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
-
-
-  /*
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
 
-    //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is M and angular_velocity is ZN", engine));
-  //ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is M and angular_velocity is Z", engine));/////////////
-  //ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is M and angular_velocity is ZP", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
   ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
@@ -366,7 +346,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
   ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
-  */
+
   engine->addRuleBlock(ruleBlock);
 
   engine->addRuleBlock(ruleBlock);
@@ -386,7 +366,6 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   {
     //throw nav2_core::NoValidControl("RegulatedPurePursuitController detected collision ahead!");
     RCLCPP_INFO(logger_, "************** COLLISSION");
-
   }
   
 
