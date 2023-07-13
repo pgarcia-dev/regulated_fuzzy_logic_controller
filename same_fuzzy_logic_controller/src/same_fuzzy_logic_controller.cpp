@@ -148,14 +148,14 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
 {
     // Transform path to robot base frame
   auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//********5 aprox
-  //global_path_pub_->publish(transformed_plan);//*********
+  //global_path_pub_->publish(transformed_plan);
 
   // Find look ahead distance and point on path and publish
   double lookahead_dist = 0.4;//0.3;//0.6; //getLookAheadDistance(speed);////////////////////////--------------------------------------------
 
   // Get the particular point on the path at the lookahead distance
   auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
- // carrot_pub_->publish(createCarrotMsg(carrot_pose));
+  carrot_pub_->publish(createCarrotMsg(carrot_pose));
 
   double dx2 = carrot_pose.pose.position.x;
   double dy2 = carrot_pose.pose.position.y;
