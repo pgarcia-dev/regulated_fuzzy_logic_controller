@@ -43,13 +43,21 @@ ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
-install(DIRECTORY include DESTINATION include/)
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY maps DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY params DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY urdf DESTINATION share/${PROJECT_NAME})
+install(TARGETS ${library_name}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+install(DIRECTORY include/
+  DESTINATION include/
+)
+
 
 target_link_directories(${library_name} PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin") #TODO ---------
 target_link_libraries(${library_name} fuzzylite)
