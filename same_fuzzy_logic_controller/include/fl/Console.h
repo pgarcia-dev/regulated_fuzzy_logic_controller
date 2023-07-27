@@ -34,6 +34,7 @@ namespace fl {
      */
     class FL_API Console {
     public:
+        virtual ~Console() = default;
 
         /**
           A command-line option given by key, value and description

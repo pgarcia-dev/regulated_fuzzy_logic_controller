@@ -147,7 +147,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   nav2_core::GoalChecker * /*goal_checker*/)
 {
     // Transform path to robot base frame
-  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//********5 aprox
+  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//=======5 aprox
   //global_path_pub_->publish(transformed_plan);
 
   // Find look ahead distance and point on path and publish
@@ -358,14 +358,14 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   cmd_vel.twist.linear.x = linear_velocity->getValue();
   cmd_vel.twist.angular.z = angular_velocity->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  RCLCPP_INFO(logger_, "*** input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  RCLCPP_INFO(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
  // Collision checking on this velocity heading
   const double & carrot_dist = hypot(carrot_pose.pose.position.x, carrot_pose.pose.position.y);
   if (/*params_->use_collision_detection &&*/ collision_checker_->isCollisionImminent(pose, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z, carrot_dist))
   {
     //throw nav2_core::NoValidControl("RegulatedPurePursuitController detected collision ahead!");
-    RCLCPP_INFO(logger_, "************** COLLISSION");
+    RCLCPP_INFO(logger_, "=== COLLISSION");
   }
   
 
