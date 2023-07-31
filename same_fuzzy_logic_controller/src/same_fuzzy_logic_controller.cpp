@@ -19,11 +19,11 @@
 #include <vector>
 #include <utility>
 
-#include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 #include "nav2_core/controller_exceptions.hpp"
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
+#include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 #include "fl/Headers.h"
 
 using std::hypot;
