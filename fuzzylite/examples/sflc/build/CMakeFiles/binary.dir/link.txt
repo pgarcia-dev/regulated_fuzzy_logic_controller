@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/binary.dir/src/main.cpp.o -o binary   -L/home/pgarcia/fuzzylite/fuzzylite/release/bin  -Wl,-rpath,/home/pgarcia/fuzzylite/fuzzylite/release/bin -lfuzzylite 

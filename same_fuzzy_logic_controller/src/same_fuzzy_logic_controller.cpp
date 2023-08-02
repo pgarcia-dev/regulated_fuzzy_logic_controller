@@ -31,7 +31,6 @@ using std::min;
 using std::max;
 using std::abs;
 using namespace nav2_costmap_2d;  // NOLINT
-using namespace fl;
 
 namespace same_fuzzy_logic_controller
 {
@@ -72,6 +71,8 @@ void SameFuzzyLogicController::configure(
 
   global_path_pub_ = node->create_publisher<nav_msgs::msg::Path>("received_global_plan", 1);
   carrot_pub_ = node->create_publisher<geometry_msgs::msg::PointStamped>("lookahead_point", 1);
+
+  configure_fuzzy_controller();
 }
 
 void SameFuzzyLogicController::cleanup()
@@ -141,6 +142,103 @@ void SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)  //====
   path_handler_->setPlan(path);
 }
 
+
+void
+SameFuzzyLogicController::configure_fuzzy_controller()
+{
+  engine_ = std::make_shared<fl::Engine>();
+  engine_->setName("SFLC");
+  engine_->setDescription("");
+
+  Uao_gtg_ = new fl::InputVariable;
+  Uao_gtg_->setName("Uao_gtg_");
+  Uao_gtg_->setDescription("");
+  Uao_gtg_->setEnabled(true);
+  Uao_gtg_->setRange(-3.8,3.8); 
+  Uao_gtg_->setLockValueInRange(false);
+  Uao_gtg_->addTerm(new fl::Triangle("NL", INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("N",  INPUT_N_MIN,  INPUT_N_MED,  INPUT_N_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("ZN", INPUT_ZN_MIN, INPUT_ZN_MED, INPUT_ZN_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("Z",  INPUT_Z_MIN,  INPUT_Z_MED,  INPUT_Z_MAX)); //----------
+  Uao_gtg_->addTerm(new fl::Triangle("ZP", INPUT_ZP_MIN, INPUT_ZP_MED, INPUT_ZP_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PS", INPUT_PS_MIN, INPUT_PS_MED, INPUT_PS_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("P",  INPUT_P_MIN,  INPUT_P_MED,  INPUT_P_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PM", INPUT_PM_MIN, INPUT_PM_MED, INPUT_PM_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PL", INPUT_PL_MIN, INPUT_PL_MED, INPUT_PL_MAX));
+  engine_->addInputVariable(Uao_gtg_);
+
+  linear_velocity_ = new fl::OutputVariable;
+  linear_velocity_->setName("linear_velocity_");
+  linear_velocity_->setDescription("");
+  linear_velocity_->setEnabled(true);
+  linear_velocity_->setRange(0, 0.7);
+  linear_velocity_->setLockValueInRange(false);
+  linear_velocity_->setAggregation(new fl::Maximum);
+  linear_velocity_->setDefuzzifier(new fl::LargestOfMaximum);
+  linear_velocity_->setDefaultValue(fl::nan);
+  linear_velocity_->setLockPreviousValue(false);
+  linear_velocity_->addTerm(new fl::Triangle("S",  OUTPUT_LIN_S_MIN, OUTPUT_LIN_S_MED, OUTPUT_LIN_S_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("M",  OUTPUT_LIN_M_MIN, OUTPUT_LIN_M_MED, OUTPUT_LIN_M_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("L",  OUTPUT_LIN_L_MIN, OUTPUT_LIN_L_MED, OUTPUT_LIN_L_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("VL", OUTPUT_LIN_VL_MIN, OUTPUT_LIN_VL_MED, OUTPUT_LIN_VL_MAX));
+  engine_->addOutputVariable(linear_velocity_);
+
+  angular_velocity_ = new fl::OutputVariable;
+  angular_velocity_->setName("angular_velocity_");
+  angular_velocity_->setDescription("");
+  angular_velocity_->setEnabled(true);
+  angular_velocity_->setRange(-1,1);
+  angular_velocity_->setLockValueInRange(false);
+  angular_velocity_->setAggregation(new fl::Maximum);
+  angular_velocity_->setDefuzzifier(new fl::LargestOfMaximum);
+  angular_velocity_->setDefaultValue(fl::nan);
+  angular_velocity_->setLockPreviousValue(false);
+  angular_velocity_->addTerm(new fl::Triangle("NL", OUTPUT_ANG_NL_MIN, OUTPUT_ANG_NL_MED, OUTPUT_ANG_NL_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("NM", OUTPUT_ANG_NM_MIN, OUTPUT_ANG_NM_MED, OUTPUT_ANG_NM_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("N",  OUTPUT_ANG_N_MIN,  OUTPUT_ANG_N_MED,  OUTPUT_ANG_N_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("NS", OUTPUT_ANG_NS_MIN, OUTPUT_ANG_NS_MED, OUTPUT_ANG_NS_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("ZN", OUTPUT_ANG_ZN_MIN, OUTPUT_ANG_ZN_MED, OUTPUT_ANG_ZN_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("Z",  OUTPUT_ANG_Z_MIN,  OUTPUT_ANG_Z_MED,  OUTPUT_ANG_Z_MAX)); //----------
+  angular_velocity_->addTerm(new fl::Triangle("ZP", OUTPUT_ANG_ZP_MIN, OUTPUT_ANG_ZP_MED, OUTPUT_ANG_ZP_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PS", OUTPUT_ANG_PS_MIN, OUTPUT_ANG_PS_MED, OUTPUT_ANG_PS_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("P",  OUTPUT_ANG_P_MIN,  OUTPUT_ANG_P_MED,  OUTPUT_ANG_P_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PM", OUTPUT_ANG_PM_MIN, OUTPUT_ANG_PM_MED, OUTPUT_ANG_PM_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PL", OUTPUT_ANG_PL_MIN, OUTPUT_ANG_PL_MED, OUTPUT_ANG_PL_MAX));
+  engine_->addOutputVariable(angular_velocity_);
+
+  fl::RuleBlock* ruleBlock = new fl::RuleBlock;
+  ruleBlock->setName("");
+  ruleBlock->setDescription("");
+  ruleBlock->setEnabled(true);
+  //ruleBlock->setConjunction(fl::null);
+  //ruleBlock->setDisjunction(fl::null);
+  ruleBlock->setEnabled(true);
+  ruleBlock->setConjunction(new fl::Minimum);
+  ruleBlock->setDisjunction(new fl::Maximum);
+  ruleBlock->setImplication(new fl::Minimum);
+  //  ruleBlock->setImplication(new AlgebraicProduct);
+  ruleBlock->setActivation(new fl::General);
+
+  
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is S and angular_velocity_ is NL", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is S and angular_velocity_ is NM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is S and angular_velocity_ is N", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NS then linear_velocity_ is M and angular_velocity_ is NS", engine_.get()));
+
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZN then linear_velocity_ is L and angular_velocity_ is ZN", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is Z then linear_velocity_ is VL and angular_velocity_ is Z", engine_.get()));/////////////
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZP then linear_velocity_ is L and angular_velocity_ is ZP", engine_.get()));
+
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PS then linear_velocity_ is M and angular_velocity_ is PS", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is P then linear_velocity_ is S and angular_velocity_ is P", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is S and angular_velocity_ is PM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is S and angular_velocity_ is PL", engine_.get()));
+
+  engine_->addRuleBlock(ruleBlock);
+}
+
 geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityCommands( //===========================================
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::Twist & /*speed*/,
@@ -160,203 +258,15 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   double dx2 = carrot_pose.pose.position.x;
   double dy2 = carrot_pose.pose.position.y;
   double angle_to_path = atan2(dy2, dx2); 
- // RCLCPP_INFO(logger_, "***2 heading: %f- next paths's position - x: %f , y: %f", angle_to_path, dx2, dy2);
-
-  static const float INPUT_NL_MIN = -3.15;
-  static const float INPUT_NL_MED = -3.0;
-  static const float INPUT_NL_MAX = -2.8;
-  static const float INPUT_NM_MIN = -2.8;
-  static const float INPUT_NM_MED = -1.9;
-  static const float INPUT_NM_MAX = -1.1;
-  static const float INPUT_N_MIN = -1.1;
-  static const float INPUT_N_MED = -0.9;
-  static const float INPUT_N_MAX = -0.6;
-  static const float INPUT_NS_MIN = -0.6;
-  static const float INPUT_NS_MED = -0.5;
-  static const float INPUT_NS_MAX = -0.4;
-  static const float INPUT_ZN_MIN = -0.4;
-  static const float INPUT_ZN_MED = -0.25;
-  static const float INPUT_ZN_MAX = -0.1;
-  static const float INPUT_Z_MIN = -0.1; 
-  static const float INPUT_Z_MED = 0; //-------------
-  static const float INPUT_Z_MAX = 0.1;
-  static const float INPUT_ZP_MIN = 0.1;
-  static const float INPUT_ZP_MED = 0.25;
-  static const float INPUT_ZP_MAX = 0.4;
-  static const float INPUT_PS_MIN = 0.4;
-  static const float INPUT_PS_MED = 0.5;
-  static const float INPUT_PS_MAX = 0.6;
-  static const float INPUT_P_MIN = 0.6;
-  static const float INPUT_P_MED = 0.9;
-  static const float INPUT_P_MAX = 1.1;
-  static const float INPUT_PM_MIN = 1.1;
-  static const float INPUT_PM_MED = 1.9;
-  static const float INPUT_PM_MAX = 2.8;
-  static const float INPUT_PL_MIN = 2.8;
-  static const float INPUT_PL_MED = 3.0;
-  static const float INPUT_PL_MAX = 3.15;
-
-  static const float OUTPUT_ANG_NL_MIN = -1;
-  static const float OUTPUT_ANG_NL_MED = -0.8;
-  static const float OUTPUT_ANG_NL_MAX = -0.6;
-  static const float OUTPUT_ANG_NM_MIN = -0.6;
-  static const float OUTPUT_ANG_NM_MED = -0.45;
-  static const float OUTPUT_ANG_NM_MAX = -0.31;
-  static const float OUTPUT_ANG_N_MIN = -0.31;
-  static const float OUTPUT_ANG_N_MED = -0.25;
-  static const float OUTPUT_ANG_N_MAX = -0.19;
-  static const float OUTPUT_ANG_NS_MIN = -0.19;
-  static const float OUTPUT_ANG_NS_MED = -0.15;
-  static const float OUTPUT_ANG_NS_MAX = -0.1;
-  static const float OUTPUT_ANG_ZN_MIN = -0.1;
-  static const float OUTPUT_ANG_ZN_MED = -0.05;
-  static const float OUTPUT_ANG_ZN_MAX = -0.025;
-  static const float OUTPUT_ANG_Z_MIN = -0.025; 
-  static const float OUTPUT_ANG_Z_MED = 0; //-------------
-  static const float OUTPUT_ANG_Z_MAX = 0.025;
-  static const float OUTPUT_ANG_ZP_MIN = 0.025;
-  static const float OUTPUT_ANG_ZP_MED = 0.05;
-  static const float OUTPUT_ANG_ZP_MAX = 0.1;
-  static const float OUTPUT_ANG_PS_MIN = 0.1;
-  static const float OUTPUT_ANG_PS_MED = 0.15;
-  static const float OUTPUT_ANG_PS_MAX = 0.19;
-  static const float OUTPUT_ANG_P_MIN = 0.19;
-  static const float OUTPUT_ANG_P_MED = 0.25;
-  static const float OUTPUT_ANG_P_MAX = 0.31;
-  static const float OUTPUT_ANG_PM_MIN = 0.31;
-  static const float OUTPUT_ANG_PM_MED = 0.45;
-  static const float OUTPUT_ANG_PM_MAX = 0.6;
-  static const float OUTPUT_ANG_PL_MIN = 0.6;
-  static const float OUTPUT_ANG_PL_MED = 0.8;
-  static const float OUTPUT_ANG_PL_MAX = 1;
-
-
-
-
-
-
-  static const float OUTPUT_LIN_S_MIN = 0;
-  static const float OUTPUT_LIN_S_MED = 0.035;//0.0025;//0.11///////////////////////////////////////
-  static const float OUTPUT_LIN_S_MAX = 0.07;//0.005;/////////////////////////////////////////////0.22;
-
-
-  float increment = 0.25; //TODO: as rosparam
-  static const float OUTPUT_LIN_M_MIN = 0.06;
-  static const float OUTPUT_LIN_M_MED = 0.095;
-  static const float OUTPUT_LIN_M_MAX = 0.15;
-
-
-
-  static const float OUTPUT_LIN_L_MIN = 0.1 + increment;
-  static const float OUTPUT_LIN_L_MED = 0.15 + increment;
-  static const float OUTPUT_LIN_L_MAX = 0.2 + increment;
-
-
-
-  static const float OUTPUT_LIN_VL_MIN = 0.019 + increment; 
-  static const float OUTPUT_LIN_VL_MED = 0.22 + increment; 
-  static const float OUTPUT_LIN_VL_MAX = 0.26 + increment;
-
-  Engine *engine = new Engine;
-  engine->setName("SFLC");
-  engine->setDescription("");
-
-  InputVariable* Uao_gtg = new InputVariable;
-  Uao_gtg->setName("Uao_gtg");
-  Uao_gtg->setDescription("");
-  Uao_gtg->setEnabled(true);
-  Uao_gtg->setRange(-3.8,3.8); 
-  Uao_gtg->setLockValueInRange(false);
-  Uao_gtg->addTerm(new Triangle("NL", INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
-  Uao_gtg->addTerm(new Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
-  Uao_gtg->addTerm(new Triangle("N",  INPUT_N_MIN,  INPUT_N_MED,  INPUT_N_MAX));
-  Uao_gtg->addTerm(new Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));
-  Uao_gtg->addTerm(new Triangle("ZN", INPUT_ZN_MIN, INPUT_ZN_MED, INPUT_ZN_MAX));
-  Uao_gtg->addTerm(new Triangle("Z",  INPUT_Z_MIN,  INPUT_Z_MED,  INPUT_Z_MAX)); //----------
-  Uao_gtg->addTerm(new Triangle("ZP", INPUT_ZP_MIN, INPUT_ZP_MED, INPUT_ZP_MAX));
-  Uao_gtg->addTerm(new Triangle("PS", INPUT_PS_MIN, INPUT_PS_MED, INPUT_PS_MAX));
-  Uao_gtg->addTerm(new Triangle("P",  INPUT_P_MIN,  INPUT_P_MED,  INPUT_P_MAX));
-  Uao_gtg->addTerm(new Triangle("PM", INPUT_PM_MIN, INPUT_PM_MED, INPUT_PM_MAX));
-  Uao_gtg->addTerm(new Triangle("PL", INPUT_PL_MIN, INPUT_PL_MED, INPUT_PL_MAX));
-  engine->addInputVariable(Uao_gtg);
-
-  OutputVariable* linear_velocity = new OutputVariable;
-  linear_velocity->setName("linear_velocity");
-  linear_velocity->setDescription("");
-  linear_velocity->setEnabled(true);
-  linear_velocity->setRange(0, 0.7);
-  linear_velocity->setLockValueInRange(false);
-  linear_velocity->setAggregation(new Maximum);
-  linear_velocity->setDefuzzifier(new LargestOfMaximum);
-  linear_velocity->setDefaultValue(fl::nan);
-  linear_velocity->setLockPreviousValue(false);
-  linear_velocity->addTerm(new Triangle("S",  OUTPUT_LIN_S_MIN, OUTPUT_LIN_S_MED, OUTPUT_LIN_S_MAX));
-  linear_velocity->addTerm(new Triangle("M",  OUTPUT_LIN_M_MIN, OUTPUT_LIN_M_MED, OUTPUT_LIN_M_MAX));
-  linear_velocity->addTerm(new Triangle("L",  OUTPUT_LIN_L_MIN, OUTPUT_LIN_L_MED, OUTPUT_LIN_L_MAX));
-  linear_velocity->addTerm(new Triangle("VL", OUTPUT_LIN_VL_MIN, OUTPUT_LIN_VL_MED, OUTPUT_LIN_VL_MAX));
-  engine->addOutputVariable(linear_velocity);
-
-  OutputVariable* angular_velocity = new OutputVariable;
-  angular_velocity->setName("angular_velocity");
-  angular_velocity->setDescription("");
-  angular_velocity->setEnabled(true);
-  angular_velocity->setRange(-1,1);
-  angular_velocity->setLockValueInRange(false);
-  angular_velocity->setAggregation(new Maximum);
-  angular_velocity->setDefuzzifier(new LargestOfMaximum);
-  angular_velocity->setDefaultValue(fl::nan);
-  angular_velocity->setLockPreviousValue(false);
-  angular_velocity->addTerm(new Triangle("NL", OUTPUT_ANG_NL_MIN, OUTPUT_ANG_NL_MED, OUTPUT_ANG_NL_MAX));
-  angular_velocity->addTerm(new Triangle("NM", OUTPUT_ANG_NM_MIN, OUTPUT_ANG_NM_MED, OUTPUT_ANG_NM_MAX));
-  angular_velocity->addTerm(new Triangle("N",  OUTPUT_ANG_N_MIN,  OUTPUT_ANG_N_MED,  OUTPUT_ANG_N_MAX));
-  angular_velocity->addTerm(new Triangle("NS", OUTPUT_ANG_NS_MIN, OUTPUT_ANG_NS_MED, OUTPUT_ANG_NS_MAX));
-  angular_velocity->addTerm(new Triangle("ZN", OUTPUT_ANG_ZN_MIN, OUTPUT_ANG_ZN_MED, OUTPUT_ANG_ZN_MAX));
-  angular_velocity->addTerm(new Triangle("Z",  OUTPUT_ANG_Z_MIN,  OUTPUT_ANG_Z_MED,  OUTPUT_ANG_Z_MAX)); //----------
-  angular_velocity->addTerm(new Triangle("ZP", OUTPUT_ANG_ZP_MIN, OUTPUT_ANG_ZP_MED, OUTPUT_ANG_ZP_MAX));
-  angular_velocity->addTerm(new Triangle("PS", OUTPUT_ANG_PS_MIN, OUTPUT_ANG_PS_MED, OUTPUT_ANG_PS_MAX));
-  angular_velocity->addTerm(new Triangle("P",  OUTPUT_ANG_P_MIN,  OUTPUT_ANG_P_MED,  OUTPUT_ANG_P_MAX));
-  angular_velocity->addTerm(new Triangle("PM", OUTPUT_ANG_PM_MIN, OUTPUT_ANG_PM_MED, OUTPUT_ANG_PM_MAX));
-  angular_velocity->addTerm(new Triangle("PL", OUTPUT_ANG_PL_MIN, OUTPUT_ANG_PL_MED, OUTPUT_ANG_PL_MAX));
-  engine->addOutputVariable(angular_velocity);
-
-  RuleBlock* ruleBlock = new RuleBlock;
-  ruleBlock->setName("");
-  ruleBlock->setDescription("");
-  ruleBlock->setEnabled(true);
-  //ruleBlock->setConjunction(fl::null);
-  //ruleBlock->setDisjunction(fl::null);
-  ruleBlock->setEnabled(true);
-  ruleBlock->setConjunction(new Minimum);
-  ruleBlock->setDisjunction(new Maximum);
-  ruleBlock->setImplication(new Minimum);
-  //  ruleBlock->setImplication(new AlgebraicProduct);
-  ruleBlock->setActivation(new General);
-
-  
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NL then linear_velocity is S and angular_velocity is NL", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NM then linear_velocity is S and angular_velocity is NM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is N then linear_velocity is S and angular_velocity is N", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is NS then linear_velocity is M and angular_velocity is NS", engine));
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZN then linear_velocity is L and angular_velocity is ZN", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is Z then linear_velocity is VL and angular_velocity is Z", engine));/////////////
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is ZP then linear_velocity is L and angular_velocity is ZP", engine));
-
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PS then linear_velocity is M and angular_velocity is PS", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is P then linear_velocity is S and angular_velocity is P", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PM then linear_velocity is S and angular_velocity is PM", engine));
-  ruleBlock->addRule(Rule::parse("if Uao_gtg is PL then linear_velocity is S and angular_velocity is PL", engine));
-
-  engine->addRuleBlock(ruleBlock);
-
-  engine->addRuleBlock(ruleBlock);
-  Uao_gtg->setValue(angle_to_path);
-  engine->process();
+ 
+  std::cerr << "computeVelocityCommands" << std::endl;
+  Uao_gtg_->setValue(angle_to_path);
+  engine_->process();
 
   geometry_msgs::msg::TwistStamped cmd_vel;
   cmd_vel.header = pose.header;  
-  cmd_vel.twist.linear.x = linear_velocity->getValue();
-  cmd_vel.twist.angular.z = angular_velocity->getValue();
+  cmd_vel.twist.linear.x = linear_velocity_->getValue();
+  cmd_vel.twist.angular.z = angular_velocity_->getValue();
  // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
   RCLCPP_INFO(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
@@ -370,100 +280,6 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   
 
   return cmd_vel;
-
-
-
-
-
-
-/*
-
-  std::lock_guard<std::mutex> lock_reinit(param_handler_->getMutex());
-
-  // Update for the current goal checker's state
-  geometry_msgs::msg::Pose pose_tolerance;
-  geometry_msgs::msg::Twist vel_tolerance;
-  if (!goal_checker->getTolerances(pose_tolerance, vel_tolerance)) {
-    RCLCPP_WARN(logger_, "Unable to retrieve goal checker's tolerances!");
-  } else {
-    goal_dist_tol_ = pose_tolerance.position.x;
-  }
-
-  // Transform path to robot base frame
-  auto transformed_plan = path_handler_->transformGlobalPlan(
-    pose, params_->max_robot_pose_search_dist);
-  global_path_pub_->publish(transformed_plan);
-
-  // Find look ahead distance and point on path and publish
-  double lookahead_dist = getLookAheadDistance(speed);
-
-  // Check for reverse driving
-  if (params_->allow_reversing) {
-    // Cusp check
-    const double dist_to_cusp = findVelocitySignChange(transformed_plan);
-
-    // if the lookahead distance is further than the cusp, use the cusp distance instead
-    if (dist_to_cusp < lookahead_dist) {
-      lookahead_dist = dist_to_cusp;
-    }
-  }
-
-  // Get the particular point on the path at the lookahead distance
-  auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
-  carrot_pub_->publish(createCarrotMsg(carrot_pose));
-
-  double linear_vel, angular_vel;
-
-  double lookahead_curvature = calculateCurvature(carrot_pose.pose.position);
-
-  double regulation_curvature = lookahead_curvature;
-  if (params_->use_fixed_curvature_lookahead) {
-    auto curvature_lookahead_pose = getLookAheadPoint(
-      params_->curvature_lookahead_dist,
-      transformed_plan);
-    regulation_curvature = calculateCurvature(curvature_lookahead_pose.pose.position);
-  }
-
-  // Setting the velocity direction
-  double sign = 1.0;
-  if (params_->allow_reversing) {
-    sign = carrot_pose.pose.position.x >= 0.0 ? 1.0 : -1.0;
-  }
-
-  linear_vel = params_->desired_linear_vel;
-
-  // Make sure we're in compliance with basic constraints
-  double angle_to_heading;
-  if (shouldRotateToGoalHeading(carrot_pose)) {
-    double angle_to_goal = tf2::getYaw(transformed_plan.poses.back().pose.orientation);
-    rotateToHeading(linear_vel, angular_vel, angle_to_goal, speed);
-  } else if (shouldRotateToPath(carrot_pose, angle_to_heading)) {
-    rotateToHeading(linear_vel, angular_vel, angle_to_heading, speed);
-  } else {
-    applyConstraints(
-      regulation_curvature, speed,
-      collision_checker_->costAtPose(pose.pose.position.x, pose.pose.position.y), transformed_plan,
-      linear_vel, sign);
-
-    // Apply curvature to angular velocity after constraining linear velocity
-    angular_vel = linear_vel * lookahead_curvature;
-  }
-
-  // Collision checking on this velocity heading
-  const double & carrot_dist = hypot(carrot_pose.pose.position.x, carrot_pose.pose.position.y);
-  if (params_->use_collision_detection &&
-    collision_checker_->isCollisionImminent(pose, linear_vel, angular_vel, carrot_dist))
-  {
-    throw nav2_core::NoValidControl("SameFuzzyLogicController detected collision ahead!");
-  }
-
-  // populate and return message
-  geometry_msgs::msg::TwistStamped cmd_vel;
-  cmd_vel.header = pose.header;
-  cmd_vel.twist.linear.x = linear_vel;
-  cmd_vel.twist.angular.z = angular_vel;
-  return cmd_vel;
-  */
 }
 
 bool SameFuzzyLogicController::shouldRotateToPath(
@@ -583,7 +399,7 @@ void SameFuzzyLogicController::applyConstraints(
     cost_vel = heuristics::costConstraint(linear_vel, pose_cost, costmap_ros_, params_);
   }
 
-  // Use the lowest of the 2 constraints, but above the minimum translational speed
+  // Use the lowest of the 2 constraints, but above the fl::Minimum translational speed
   linear_vel = std::min(cost_vel, curvature_vel);
   linear_vel = std::max(linear_vel, params_->regulated_linear_scaling_min_speed);
 
@@ -608,7 +424,7 @@ void SameFuzzyLogicController::setSpeedLimit(
     params_->desired_linear_vel = params_->base_desired_linear_vel;
   } else {
     if (percentage) {
-      // Speed limit is expressed in % from maximum speed of robot
+      // Speed limit is expressed in % from fl::Maximum speed of robot
       params_->desired_linear_vel = params_->base_desired_linear_vel * speed_limit / 100.0;
     } else {
       // Speed limit is expressed in absolute value

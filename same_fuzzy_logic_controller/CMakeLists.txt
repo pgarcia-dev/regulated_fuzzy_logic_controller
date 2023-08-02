@@ -14,10 +14,15 @@ find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(navigation2 REQUIRED)
 
+find_library(FUZZYLITE_LIBRARY
+  NAMES fuzzylite
+  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/lib/")
+
 nav2_package()
 
 include_directories(
   include
+  ${CMAKE_INSTALL_PREFIX}/../fuzzylite/include
 )
 
 set(dependencies
@@ -43,12 +48,6 @@ ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
-install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY maps DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY worlds DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY params DESTINATION share/${PROJECT_NAME})
-install(DIRECTORY urdf DESTINATION share/${PROJECT_NAME})
 install(TARGETS ${library_name}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
@@ -58,17 +57,15 @@ install(DIRECTORY include/
   DESTINATION include/
 )
 
+target_link_libraries(${library_name} ${FUZZYLITE_LIBRARY})
 
-target_link_directories(${library_name} PUBLIC "/home/pgarcia/fuzzylite/fuzzylite/release/bin") #TODO ---------
-target_link_libraries(${library_name} fuzzylite)
-
-#if(BUILD_TESTING)
-#  find_package(ament_lint_auto REQUIRED)
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
- # set(ament_cmake_copyright_FOUND TRUE)
- # ament_lint_auto_find_test_dependencies()
- # add_subdirectory(test)
-#endif()
+  set(ament_cmake_copyright_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+  # add_subdirectory(test)
+endif()
 
 ament_export_include_directories(include)
 ament_export_libraries(${library_name})
