@@ -31,6 +31,8 @@
 #include "same_fuzzy_logic_controller/parameter_handler.hpp"
 #include "same_fuzzy_logic_controller/regulation_functions.hpp"
 
+#include "fl/Headers.h"
+
 namespace same_fuzzy_logic_controller
 {
 
@@ -62,6 +64,8 @@ public:
     const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
     std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros) override;
+
+  void configure_fuzzy_controller();
 
   /**
    * @brief Cleanup controller state machine
@@ -213,6 +217,96 @@ protected:
   std::unique_ptr<same_fuzzy_logic_controller::PathHandler> path_handler_;
   std::unique_ptr<same_fuzzy_logic_controller::ParameterHandler> param_handler_;
   std::unique_ptr<same_fuzzy_logic_controller::CollisionChecker> collision_checker_;
+
+  const float INPUT_NL_MIN = -3.15;
+  const float INPUT_NL_MED = -3.0;
+  const float INPUT_NL_MAX = -2.8;
+  const float INPUT_NM_MIN = -2.8;
+  const float INPUT_NM_MED = -1.9;
+  const float INPUT_NM_MAX = -1.1;
+  const float INPUT_N_MIN = -1.1;
+  const float INPUT_N_MED = -0.9;
+  const float INPUT_N_MAX = -0.6;
+  const float INPUT_NS_MIN = -0.6;
+  const float INPUT_NS_MED = -0.5;
+  const float INPUT_NS_MAX = -0.4;
+  const float INPUT_ZN_MIN = -0.4;
+  const float INPUT_ZN_MED = -0.25;
+  const float INPUT_ZN_MAX = -0.1;
+  const float INPUT_Z_MIN = -0.1; 
+  const float INPUT_Z_MED = 0; //-------------
+  const float INPUT_Z_MAX = 0.1;
+  const float INPUT_ZP_MIN = 0.1;
+  const float INPUT_ZP_MED = 0.25;
+  const float INPUT_ZP_MAX = 0.4;
+  const float INPUT_PS_MIN = 0.4;
+  const float INPUT_PS_MED = 0.5;
+  const float INPUT_PS_MAX = 0.6;
+  const float INPUT_P_MIN = 0.6;
+  const float INPUT_P_MED = 0.9;
+  const float INPUT_P_MAX = 1.1;
+  const float INPUT_PM_MIN = 1.1;
+  const float INPUT_PM_MED = 1.9;
+  const float INPUT_PM_MAX = 2.8;
+  const float INPUT_PL_MIN = 2.8;
+  const float INPUT_PL_MED = 3.0;
+  const float INPUT_PL_MAX = 3.15;
+
+  const float OUTPUT_ANG_NL_MIN = -1;
+  const float OUTPUT_ANG_NL_MED = -0.8;
+  const float OUTPUT_ANG_NL_MAX = -0.6;
+  const float OUTPUT_ANG_NM_MIN = -0.6;
+  const float OUTPUT_ANG_NM_MED = -0.45;
+  const float OUTPUT_ANG_NM_MAX = -0.31;
+  const float OUTPUT_ANG_N_MIN = -0.31;
+  const float OUTPUT_ANG_N_MED = -0.25;
+  const float OUTPUT_ANG_N_MAX = -0.19;
+  const float OUTPUT_ANG_NS_MIN = -0.19;
+  const float OUTPUT_ANG_NS_MED = -0.15;
+  const float OUTPUT_ANG_NS_MAX = -0.1;
+  const float OUTPUT_ANG_ZN_MIN = -0.1;
+  const float OUTPUT_ANG_ZN_MED = -0.05;
+  const float OUTPUT_ANG_ZN_MAX = -0.025;
+  const float OUTPUT_ANG_Z_MIN = -0.025; 
+  const float OUTPUT_ANG_Z_MED = 0; //-------------
+  const float OUTPUT_ANG_Z_MAX = 0.025;
+  const float OUTPUT_ANG_ZP_MIN = 0.025;
+  const float OUTPUT_ANG_ZP_MED = 0.05;
+  const float OUTPUT_ANG_ZP_MAX = 0.1;
+  const float OUTPUT_ANG_PS_MIN = 0.1;
+  const float OUTPUT_ANG_PS_MED = 0.15;
+  const float OUTPUT_ANG_PS_MAX = 0.19;
+  const float OUTPUT_ANG_P_MIN = 0.19;
+  const float OUTPUT_ANG_P_MED = 0.25;
+  const float OUTPUT_ANG_P_MAX = 0.31;
+  const float OUTPUT_ANG_PM_MIN = 0.31;
+  const float OUTPUT_ANG_PM_MED = 0.45;
+  const float OUTPUT_ANG_PM_MAX = 0.6;
+  const float OUTPUT_ANG_PL_MIN = 0.6;
+  const float OUTPUT_ANG_PL_MED = 0.8;
+  const float OUTPUT_ANG_PL_MAX = 1;
+
+
+  const float OUTPUT_LIN_S_MIN = 0;
+  const float OUTPUT_LIN_S_MED = 0.035;//0.0025;//0.11///////////////////////////////////////
+  const float OUTPUT_LIN_S_MAX = 0.07;//0.005;/////////////////////////////////////////////0.22;
+
+  const float OUTPUT_LIN_M_MIN = 0.06;
+  const float OUTPUT_LIN_M_MED = 0.095;
+  const float OUTPUT_LIN_M_MAX = 0.15;
+
+  static constexpr float increment = 0.25; //TODO: as rosparam
+  static constexpr float OUTPUT_LIN_L_MIN = 0.1 + increment;
+  static constexpr float OUTPUT_LIN_L_MED = 0.15 + increment;
+  static constexpr float OUTPUT_LIN_L_MAX = 0.2 + increment;
+  static constexpr float OUTPUT_LIN_VL_MIN = 0.019 + increment; 
+  static constexpr float OUTPUT_LIN_VL_MED = 0.22 + increment; 
+  static constexpr float OUTPUT_LIN_VL_MAX = 0.26 + increment;
+
+  std::shared_ptr<fl::Engine> engine_;
+  fl::InputVariable * Uao_gtg_;
+  fl::OutputVariable * linear_velocity_;
+  fl::OutputVariable * angular_velocity_;
 };
 
 }  // namespace same_fuzzy_logic_controller

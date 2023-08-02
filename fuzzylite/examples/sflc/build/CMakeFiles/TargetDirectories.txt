@@ -1,3 +1,0 @@
-/home/pgarcia/fuzzylite/examples/sflc/build/CMakeFiles/binary.dir
-/home/pgarcia/fuzzylite/examples/sflc/build/CMakeFiles/edit_cache.dir
-/home/pgarcia/fuzzylite/examples/sflc/build/CMakeFiles/rebuild_cache.dir
