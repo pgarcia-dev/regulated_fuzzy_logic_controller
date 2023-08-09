@@ -16,7 +16,7 @@ find_package(navigation2 REQUIRED)
 
 find_library(FUZZYLITE_LIBRARY
   NAMES fuzzylite
-  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/lib/")
+  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/release/bin/")
 
 nav2_package()
 
@@ -39,10 +39,10 @@ set(dependencies
 set(library_name same_fuzzy_logic_controller)
 
 add_library(${library_name} SHARED
-        src/same_fuzzy_logic_controller.cpp
-        src/collision_checker.cpp
-        src/parameter_handler.cpp
-        src/path_handler.cpp)
+        src/same_fuzzy_logic_controller/same_fuzzy_logic_controller.cpp
+        src/same_fuzzy_logic_controller/collision_checker.cpp
+        src/same_fuzzy_logic_controller/parameter_handler.cpp
+        src/same_fuzzy_logic_controller/path_handler.cpp)
 
 ament_target_dependencies(${library_name}
   ${dependencies}
