@@ -14,15 +14,15 @@ find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(navigation2 REQUIRED)
 
-find_library(FUZZYLITE_LIBRARY
-  NAMES fuzzylite
-  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/release/bin/")
+#find_library(FUZZYLITE_LIBRARY
+#  NAMES fuzzylite
+#  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/release/bin/")
 
 nav2_package()
 
 include_directories(
-  include
-  ${CMAKE_INSTALL_PREFIX}/../fuzzylite/include
+  include #rm fl/ and use the above instead
+  ${CMAKE_INSTALL_PREFIX}/../fuzzylite/
 )
 
 set(dependencies
@@ -44,6 +44,12 @@ add_library(${library_name} SHARED
         src/same_fuzzy_logic_controller/parameter_handler.cpp
         src/same_fuzzy_logic_controller/path_handler.cpp)
 
+#dirty workaround until the above code is working
+target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/same_fuzzy_logic_controller/fuzzylite/release/bin") #TODO ---------
+target_link_libraries(${library_name} fuzzylite)
+
+
+
 ament_target_dependencies(${library_name}
   ${dependencies}
 )
@@ -57,7 +63,7 @@ install(DIRECTORY include/
   DESTINATION include/
 )
 
-target_link_libraries(${library_name} ${FUZZYLITE_LIBRARY})
+#target_link_libraries(${library_name} ${FUZZYLITE_LIBRARY})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
