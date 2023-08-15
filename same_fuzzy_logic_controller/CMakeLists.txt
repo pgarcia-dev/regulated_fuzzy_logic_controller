@@ -44,7 +44,7 @@ add_library(${library_name} SHARED
         src/same_fuzzy_logic_controller/parameter_handler.cpp
         src/same_fuzzy_logic_controller/path_handler.cpp)
 
-#dirty workaround until the above code is working
+#================= dirty workaround until the above code is working
 target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/same_fuzzy_logic_controller/fuzzylite/release/bin") #TODO ---------
 target_link_libraries(${library_name} fuzzylite)
 
@@ -54,10 +54,19 @@ ament_target_dependencies(${library_name}
   ${dependencies}
 )
 
-install(TARGETS ${library_name}
+add_executable(line_follower_tester
+  src/utils/line_follower_tester.cpp
+)
+
+ament_target_dependencies(line_follower_tester
+  ${dependencies}
+)
+
+install(TARGETS ${library_name} line_follower_tester
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+  #RUNTIME DESTINATION bin
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 install(DIRECTORY include/
   DESTINATION include/
