@@ -35,7 +35,8 @@ public:
   LineFollowerTester()
   : Node("line_follower_tester"),
     tf_buffer_(),
-    tf_listener_(tf_buffer_)
+    tf_listener_(tf_buffer_),
+    count_dist_(0)
   {
     path_sub_ = create_subscription<nav_msgs::msg::Path>(
       "/plan", 10, std::bind(&LineFollowerTester::path_callback, this, _1));
@@ -46,8 +47,10 @@ private:
   void path_callback(nav_msgs::msg::Path::UniquePtr msg)
   {
     current_path_ = std::move(msg);
-  }
 
+ //  if(len_path_ == 0)
+  //    len_path_ = current_path_->poses.size();
+  }
 
   geometry_msgs::msg::PoseStamped get_nearest_path_point(
     const geometry_msgs::msg::Vector3 & robot_pos,
@@ -97,7 +100,10 @@ private:
 
     double dist = sqrt(dist_x * dist_x + dist_y * dist_y);
 
-    RCLCPP_INFO(get_logger(), "Minimun: %lf", dist);
+    sum_dist_ += dist;
+    count_dist_++;
+
+    RCLCPP_INFO(get_logger(), "Minimun: %lf, Average: %lf, Points left: %ld", dist, sum_dist_/count_dist_, current_path_->poses.size() );
   }
 
   rclcpp::TimerBase::SharedPtr timer_;
@@ -107,6 +113,10 @@ private:
 
   tf2::BufferCore tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
+
+  int len_path_;
+  double sum_dist_;
+  int count_dist_;
 };
 
 

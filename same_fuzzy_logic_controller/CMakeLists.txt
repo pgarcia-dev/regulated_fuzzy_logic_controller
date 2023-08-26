@@ -44,6 +44,8 @@ add_library(${library_name} SHARED
         src/same_fuzzy_logic_controller/parameter_handler.cpp
         src/same_fuzzy_logic_controller/path_handler.cpp)
 
+        
+
 #================= dirty workaround until the above code is working
 target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/same_fuzzy_logic_controller/fuzzylite/release/bin") #TODO ---------
 target_link_libraries(${library_name} fuzzylite)
