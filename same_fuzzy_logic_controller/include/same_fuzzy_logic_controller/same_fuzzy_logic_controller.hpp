@@ -255,39 +255,39 @@ protected:
   const float INPUT_PL_MED = 3.0;
   const float INPUT_PL_MAX = 3.15;
 
-  const float OUTPUT_ANG_NL_MIN = -1;
-  const float OUTPUT_ANG_NL_MED = -0.8;
-  const float OUTPUT_ANG_NL_MAX = -0.6;
-  const float OUTPUT_ANG_NM_MIN = -0.6;
-  const float OUTPUT_ANG_NM_MED = -0.45;
-  const float OUTPUT_ANG_NM_MAX = -0.31;
-  const float OUTPUT_ANG_N_MIN = -0.31;
-  const float OUTPUT_ANG_N_MED = -0.25;
-  const float OUTPUT_ANG_N_MAX = -0.19;
-  const float OUTPUT_ANG_NS_MIN = -0.19;
-  const float OUTPUT_ANG_NS_MED = -0.15;
-  const float OUTPUT_ANG_NS_MAX = -0.1;
-  const float OUTPUT_ANG_ZN_MIN = -0.1;
-  const float OUTPUT_ANG_ZN_MED = -0.05;
-  const float OUTPUT_ANG_ZN_MAX = -0.025;
-  const float OUTPUT_ANG_Z_MIN = -0.025; 
+  const float OUTPUT_ANG_NL_MIN = -1.82;
+  const float OUTPUT_ANG_NL_MED = -1.5;
+  const float OUTPUT_ANG_NL_MAX = -1.1;
+  const float OUTPUT_ANG_NM_MIN = -1.1;
+  const float OUTPUT_ANG_NM_MED = -0.8;
+  const float OUTPUT_ANG_NM_MAX = -0.52;
+  const float OUTPUT_ANG_N_MIN = -0.52;
+  const float OUTPUT_ANG_N_MED = -0.39;
+  const float OUTPUT_ANG_N_MAX = -0.28;
+  const float OUTPUT_ANG_NS_MIN = -0.28;
+  const float OUTPUT_ANG_NS_MED = -0.21;
+  const float OUTPUT_ANG_NS_MAX = -0.13;
+  const float OUTPUT_ANG_ZN_MIN = -0.13;
+  const float OUTPUT_ANG_ZN_MED = -0.08;
+  const float OUTPUT_ANG_ZN_MAX = -0.017;
+  const float OUTPUT_ANG_Z_MIN = -0.017; 
   const float OUTPUT_ANG_Z_MED = 0; //-------------
-  const float OUTPUT_ANG_Z_MAX = 0.025;
-  const float OUTPUT_ANG_ZP_MIN = 0.025;
-  const float OUTPUT_ANG_ZP_MED = 0.05;
-  const float OUTPUT_ANG_ZP_MAX = 0.1;
-  const float OUTPUT_ANG_PS_MIN = 0.1;
-  const float OUTPUT_ANG_PS_MED = 0.15;
-  const float OUTPUT_ANG_PS_MAX = 0.19;
-  const float OUTPUT_ANG_P_MIN = 0.19;
-  const float OUTPUT_ANG_P_MED = 0.25;
-  const float OUTPUT_ANG_P_MAX = 0.31;
-  const float OUTPUT_ANG_PM_MIN = 0.31;
-  const float OUTPUT_ANG_PM_MED = 0.45;
-  const float OUTPUT_ANG_PM_MAX = 0.6;
-  const float OUTPUT_ANG_PL_MIN = 0.6;
-  const float OUTPUT_ANG_PL_MED = 0.8;
-  const float OUTPUT_ANG_PL_MAX = 1;
+  const float OUTPUT_ANG_Z_MAX = 0.017;
+  const float OUTPUT_ANG_ZP_MIN = 0.017;
+  const float OUTPUT_ANG_ZP_MED = 0.08;
+  const float OUTPUT_ANG_ZP_MAX = 0.13;
+  const float OUTPUT_ANG_PS_MIN = 0.13;
+  const float OUTPUT_ANG_PS_MED = 0.21;
+  const float OUTPUT_ANG_PS_MAX = 0.28;
+  const float OUTPUT_ANG_P_MIN = 0.28;
+  const float OUTPUT_ANG_P_MED = 0.39;
+  const float OUTPUT_ANG_P_MAX = 0.52;
+  const float OUTPUT_ANG_PM_MIN = 0.52;
+  const float OUTPUT_ANG_PM_MED = 0.8;
+  const float OUTPUT_ANG_PM_MAX = 1.1;
+  const float OUTPUT_ANG_PL_MIN = 1.1;
+  const float OUTPUT_ANG_PL_MED = 1.5;
+  const float OUTPUT_ANG_PL_MAX = 1.82;
 
 
   const float OUTPUT_LIN_S_MIN = 0;
@@ -298,13 +298,13 @@ protected:
   const float OUTPUT_LIN_M_MED = 0.095;
   const float OUTPUT_LIN_M_MAX = 0.15;
 
-  static constexpr float increment = 0.25; //TODO: as rosparam
-  static constexpr float OUTPUT_LIN_L_MIN = 0.1 + increment;
-  static constexpr float OUTPUT_LIN_L_MED = 0.15 + increment;
-  static constexpr float OUTPUT_LIN_L_MAX = 0.2 + increment;
-  static constexpr float OUTPUT_LIN_VL_MIN = 0.019 + increment; 
-  static constexpr float OUTPUT_LIN_VL_MED = 0.22 + increment; 
-  static constexpr float OUTPUT_LIN_VL_MAX = 0.26 + increment;
+ // static constexpr float increment = 0.25; //TODO: as rosparam
+  static constexpr float OUTPUT_LIN_L_MIN = 0.1;// + increment;
+  static constexpr float OUTPUT_LIN_L_MED = 0.15;// + increment;
+  static constexpr float OUTPUT_LIN_L_MAX = 0.2;// + increment;
+  static constexpr float OUTPUT_LIN_VL_MIN = 0.019;// + increment; 
+  static constexpr float OUTPUT_LIN_VL_MED = 0.22;// + increment; 
+  static constexpr float OUTPUT_LIN_VL_MAX = 0.26;// + increment;
 
   std::shared_ptr<fl::Engine> engine_;
   fl::InputVariable * Uao_gtg_;
