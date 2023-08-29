@@ -22,6 +22,7 @@
 #include <mutex>
 
 #include <rclcpp/rclcpp.hpp>
+#include <rclcpp/macros.hpp>
 #include <pluginlib/class_loader.hpp>
 #include <pluginlib/class_list_macros.hpp>
 #include <geometry_msgs/msg/pose2_d.hpp>
@@ -43,6 +44,8 @@ namespace same_fuzzy_logic_controller
 class SameFuzzyLogicController : public nav2_core::Controller
 {
 public:
+  RCLCPP_SMART_PTR_DEFINITIONS(SameFuzzyLogicController)
+
   /**
    * @brief Constructor for same_fuzzy_logic_controller::SameFuzzyLogicController
    */

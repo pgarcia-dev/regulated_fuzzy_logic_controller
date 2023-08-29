@@ -112,10 +112,11 @@ const geometry_msgs::msg::Twist & speed)
   // If using velocity-scaled look ahead distances, find and clamp the dist
   // Else, use the static look ahead distance
   double lookahead_dist = params_->lookahead_dist;
-  if (params_->use_velocity_scaled_lookahead_dist) {
+  if (true){//(params_->use_velocity_scaled_lookahead_dist) {
     lookahead_dist = fabs(speed.linear.x) * params_->lookahead_time;
     lookahead_dist = std::clamp(
       lookahead_dist, params_->min_lookahead_dist, params_->max_lookahead_dist);
+    //RCLCPP_INFO(logger_, "*** %lf",lookahead_dist);
   }
 
   return lookahead_dist;
