@@ -36,7 +36,8 @@ public:
   : Node("line_follower_tester"),
     tf_buffer_(),
     tf_listener_(tf_buffer_),
-    count_dist_(0)
+    count_dist_(0),
+    cycle_time_(0)
   {
     path_sub_ = create_subscription<nav_msgs::msg::Path>(
       "/plan", 10, std::bind(&LineFollowerTester::path_callback, this, _1));
@@ -93,6 +94,7 @@ private:
       return;
     }
 
+    cycle_time_ += 0.050;
     auto near_path_point = get_nearest_path_point(pathframe2robot_msg.transform.translation, current_path_->poses);
 
     double dist_x = near_path_point.pose.position.x - pathframe2robot_msg.transform.translation.x;
@@ -103,7 +105,7 @@ private:
     sum_dist_ += dist;
     count_dist_++;
 
-    RCLCPP_INFO(get_logger(), "Minimun: %lf, Average: %lf, Points left: %ld", dist, sum_dist_/count_dist_, current_path_->poses.size() );
+    RCLCPP_INFO(get_logger(), "Minimun: %lf Average: %lf cycle time: %lf Points left: %ld", dist, sum_dist_/count_dist_, cycle_time_, current_path_->poses.size() );
   }
 
   rclcpp::TimerBase::SharedPtr timer_;
@@ -117,6 +119,7 @@ private:
   int len_path_;
   double sum_dist_;
   int count_dist_;
+  double cycle_time_;
 };
 
 
