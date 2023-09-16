@@ -47,7 +47,7 @@ add_library(${library_name} SHARED
         
 
 #================= dirty workaround until the above code is working
-target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/same_fuzzy_logic_controller/fuzzylite/release/bin") #TODO ---------
+target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/regulated_fuzzy_logic_controller/fuzzylite/release/bin") #TODO ---------
 target_link_libraries(${library_name} fuzzylite)
 
 
