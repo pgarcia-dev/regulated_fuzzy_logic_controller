@@ -254,7 +254,7 @@ SameFuzzyLogicController::configure_fuzzy_controller()
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is S and angular_velocity_ is PM", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is S and angular_velocity_ is PL", engine_.get()));
 
-    //rule3 ***********
+    //rule3 
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is S and angular_velocity_ is NL", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is S and angular_velocity_ is NM", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is S and angular_velocity_ is N", engine_.get()));
@@ -285,7 +285,7 @@ SameFuzzyLogicController::configure_fuzzy_controller()
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is M and angular_velocity_ is PM", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is S and angular_velocity_ is PL", engine_.get()));
 
-      //rule5 
+      //rule5 ***********
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is M and angular_velocity_ is NL", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is L and angular_velocity_ is NM", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is L and angular_velocity_ is N", engine_.get()));
@@ -301,8 +301,8 @@ SameFuzzyLogicController::configure_fuzzy_controller()
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is M and angular_velocity_ is PL", engine_.get()));
 
       //rule6
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is VL and angular_velocity_ is NL", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is VL and angular_velocity_ is NM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is L and angular_velocity_ is NL", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is L and angular_velocity_ is NM", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is VL and angular_velocity_ is N", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NS then linear_velocity_ is VL and angular_velocity_ is NS", engine_.get()));
 
@@ -312,8 +312,8 @@ SameFuzzyLogicController::configure_fuzzy_controller()
 
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PS then linear_velocity_ is VL and angular_velocity_ is PS", engine_.get()));
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is P then linear_velocity_ is VL and angular_velocity_ is P", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is VL and angular_velocity_ is PM", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is VL and angular_velocity_ is PL", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is L and angular_velocity_ is PM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is L and angular_velocity_ is PL", engine_.get()));
 
     ==================
     //RULE 7 angular original
@@ -397,23 +397,21 @@ SameFuzzyLogicController::configure_fuzzy_controller()
 }
 */
 
-    //rule3 ***********
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is S and angular_velocity_ is NL", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is S and angular_velocity_ is NM", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is S and angular_velocity_ is N", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NS then linear_velocity_ is S and angular_velocity_ is NS", engine_.get()));
 
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZN then linear_velocity_ is M and angular_velocity_ is ZN", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is Z then linear_velocity_ is M and angular_velocity_ is Z", engine_.get()));/////////////
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZP then linear_velocity_ is M and angular_velocity_ is ZP", engine_.get()));
+      //rule5 ***********
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NL then linear_velocity_ is M and angular_velocity_ is NL", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NM then linear_velocity_ is L and angular_velocity_ is NM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is N then linear_velocity_ is L and angular_velocity_ is N", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NS then linear_velocity_ is VL and angular_velocity_ is NS", engine_.get()));
 
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PS then linear_velocity_ is S and angular_velocity_ is PS", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is P then linear_velocity_ is S and angular_velocity_ is P", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is S and angular_velocity_ is PM", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is S and angular_velocity_ is PL", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZN then linear_velocity_ is VL and angular_velocity_ is ZN", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is Z then linear_velocity_ is VL and angular_velocity_ is Z", engine_.get()));/////////////
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZP then linear_velocity_ is VL and angular_velocity_ is ZP", engine_.get()));
 
-
-
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PS then linear_velocity_ is VL and angular_velocity_ is PS", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is P then linear_velocity_ is L and angular_velocity_ is P", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PM then linear_velocity_ is L and angular_velocity_ is PM", engine_.get()));
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PL then linear_velocity_ is M and angular_velocity_ is PL", engine_.get()));
 
 
 
