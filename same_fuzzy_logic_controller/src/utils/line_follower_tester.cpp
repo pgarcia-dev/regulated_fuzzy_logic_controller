@@ -20,6 +20,7 @@
 
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
+#include "sensor_msgs/msg/laser_scan.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/macros.hpp"
@@ -41,7 +42,13 @@ public:
   {
     path_sub_ = create_subscription<nav_msgs::msg::Path>(
       "/plan", 10, std::bind(&LineFollowerTester::path_callback, this, _1));
+    
+    scan_sub_ = create_subscription<sensor_msgs::msg::LaserScan>(
+      "/scan", 10, std::bind(&LineFollowerTester::scan_callback, this, _1));//rclcpp::SensorDataQoS(), std::bind(&AvoidanceNode::scan_callback,
+      
     timer_ = create_wall_timer(50ms, std::bind(&LineFollowerTester::control_cycle, this));
+
+
   }
 
 private:
@@ -52,6 +59,11 @@ private:
  //  if(len_path_ == 0)
   //    len_path_ = current_path_->poses.size();
   }
+
+  void scan_callback(sensor_msgs::msg::LaserScan::UniquePtr msg)
+{
+  last_scan_ = std::move(msg);
+}
 
   geometry_msgs::msg::PoseStamped get_nearest_path_point(
     const geometry_msgs::msg::Vector3 & robot_pos,
@@ -106,12 +118,34 @@ private:
     count_dist_++;
 
     RCLCPP_INFO(get_logger(), "Minimun: %lf Average: %lf cycle time: %lf Points left: %ld", dist, sum_dist_/count_dist_, cycle_time_, current_path_->poses.size() );
+    
+
+    /*
+
+      // Skip cycle if no valid recent scan available
+    if (last_scan_ == nullptr) { // || (now() - last_scan_->header.stamp) > 1s) {
+      return;
+    }
+
+    // Get the index of nearest obstacle
+    int min_idx = std::min_element(last_scan_->ranges.begin(), last_scan_->ranges.end()) - last_scan_->ranges.begin();
+
+    // Get the distance to nearest obstacle
+    float distance_min = last_scan_->ranges[min_idx];
+
+    cycle_time_ += 0.050;
+    RCLCPP_INFO(get_logger(), "Minimun: %lf  cycle time: %lf", distance_min, cycle_time_);
+    */
+
   }
 
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr path_sub_;
+  rclcpp::Subscription<sensor_msgs::msg::LaserScan>::SharedPtr scan_sub_;
   
   nav_msgs::msg::Path::UniquePtr current_path_;
+  sensor_msgs::msg::LaserScan::UniquePtr last_scan_;
+
 
   tf2::BufferCore tf_buffer_;
   tf2_ros::TransformListener tf_listener_;
