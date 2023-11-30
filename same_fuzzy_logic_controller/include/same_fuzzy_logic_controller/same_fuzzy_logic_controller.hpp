@@ -221,6 +221,7 @@ protected:
   std::unique_ptr<same_fuzzy_logic_controller::ParameterHandler> param_handler_;
   std::unique_ptr<same_fuzzy_logic_controller::CollisionChecker> collision_checker_;
 
+//TODO: as rosparam =================================
   const float INPUT_NL_MIN = -3.15;
   const float INPUT_NL_MED = -3.0;
   const float INPUT_NL_MAX = -2.8;
@@ -289,22 +290,20 @@ protected:
   const float OUTPUT_ANG_PL_MED = 1.5;
   const float OUTPUT_ANG_PL_MAX = 1.82;
 
-
   const float OUTPUT_LIN_S_MIN = 0;
-  const float OUTPUT_LIN_S_MED = 0.035;//0.0025;//0.11///////////////////////////////////////
-  const float OUTPUT_LIN_S_MAX = 0.07;//0.005;/////////////////////////////////////////////0.22;
+  const float OUTPUT_LIN_S_MED = 0.035;
+  const float OUTPUT_LIN_S_MAX = 0.07;
 
   const float OUTPUT_LIN_M_MIN = 0.06;
   const float OUTPUT_LIN_M_MED = 0.095;
   const float OUTPUT_LIN_M_MAX = 0.15;
 
- // static constexpr float increment = 0.25; //TODO: as rosparam
-  static constexpr float OUTPUT_LIN_L_MIN = 0.1;// + increment;
-  static constexpr float OUTPUT_LIN_L_MED = 0.15;// + increment;
-  static constexpr float OUTPUT_LIN_L_MAX = 0.2;// + increment;
-  static constexpr float OUTPUT_LIN_VL_MIN = 0.019;// + increment; 
-  static constexpr float OUTPUT_LIN_VL_MED = 0.22;// + increment; 
-  static constexpr float OUTPUT_LIN_VL_MAX = 0.26;// + increment;
+  static constexpr float OUTPUT_LIN_L_MIN = 0.1;
+  static constexpr float OUTPUT_LIN_L_MED = 0.15;
+  static constexpr float OUTPUT_LIN_L_MAX = 0.2;
+  static constexpr float OUTPUT_LIN_VL_MIN = 0.19;
+  static constexpr float OUTPUT_LIN_VL_MED = 0.22;
+  static constexpr float OUTPUT_LIN_VL_MAX = 0.26;
 
   std::shared_ptr<fl::Engine> engine_;
   fl::InputVariable * Uao_gtg_;
