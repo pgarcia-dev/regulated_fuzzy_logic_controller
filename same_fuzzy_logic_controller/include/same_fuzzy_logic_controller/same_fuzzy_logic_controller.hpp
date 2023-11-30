@@ -134,46 +134,6 @@ protected:
     const geometry_msgs::msg::PoseStamped & carrot_pose);
 
   /**
-   * @brief Whether robot should rotate to rough path heading
-   * @param carrot_pose current lookahead point
-   * @param angle_to_path Angle of robot output relatie to carrot marker
-   * @return Whether should rotate to path heading
-   */
-  bool shouldRotateToPath(
-    const geometry_msgs::msg::PoseStamped & carrot_pose, double & angle_to_path);
-
-  /**
-   * @brief Whether robot should rotate to final goal orientation
-   * @param carrot_pose current lookahead point
-   * @return Whether should rotate to goal heading
-   */
-  bool shouldRotateToGoalHeading(const geometry_msgs::msg::PoseStamped & carrot_pose);
-
-  /**
-   * @brief Create a smooth and kinematically smoothed rotation command
-   * @param linear_vel linear velocity
-   * @param angular_vel angular velocity
-   * @param angle_to_path Angle of robot output relatie to carrot marker
-   * @param curr_speed the current robot speed
-   */
-  void rotateToHeading(
-    double & linear_vel, double & angular_vel,
-    const double & angle_to_path, const geometry_msgs::msg::Twist & curr_speed);
-
-  /**
-   * @brief apply regulation constraints to the system
-   * @param linear_vel robot command linear velocity input
-   * @param lookahead_dist optimal lookahead distance
-   * @param curvature curvature of path
-   * @param speed Speed of robot
-   * @param pose_cost cost at this pose
-   */
-  void applyConstraints(
-    const double & curvature, const geometry_msgs::msg::Twist & speed,
-    const double & pose_cost, const nav_msgs::msg::Path & path,
-    double & linear_vel, double & sign);
-
-  /**
    * @brief Find the intersection a circle and a line segment.
    * This assumes the circle is centered at the origin.
    * If no intersection is found, a floating point error will occur.
@@ -195,12 +155,6 @@ protected:
    */
   geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
 
-  /**
-   * @brief checks for the cusp position
-   * @param pose Pose input to determine the cusp position
-   * @return robot distance from the cusp
-   */
-  double findVelocitySignChange(const nav_msgs::msg::Path & transformed_plan);
 
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   std::shared_ptr<tf2_ros::Buffer> tf_;
