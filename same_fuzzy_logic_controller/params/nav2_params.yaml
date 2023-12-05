@@ -149,12 +149,12 @@ controller_server:
 
     # DWB parameters
     FollowPath:
-      #      plugin: "dwb_core::DWBLocalPlanner"
+      #plugin: "dwb_core::DWBLocalPlanner"
       plugin: "same_fuzzy_logic_controller::SameFuzzyLogicController"
-#      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      #plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
       
-      #      plugin: "nav2_mppi_controller::MPPIController" 
-#      plugin: "nav2_rotation_shim_controller::RotationShimController"
+      #plugin: "nav2_mppi_controller::MPPIController" 
+      #plugin: "nav2_rotation_shim_controller::RotationShimController"
       
       debug_trajectory_details: True
       min_vel_x: 0.0

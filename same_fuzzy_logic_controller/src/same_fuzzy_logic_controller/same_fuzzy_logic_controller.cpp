@@ -23,8 +23,8 @@
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
-#include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 #include "fl/Headers.h"
+#include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
 
 using std::hypot;
 using std::min;
