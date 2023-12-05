@@ -250,13 +250,12 @@ protected:
   const float OUTPUT_LIN_M_MIN = 0.06;
   const float OUTPUT_LIN_M_MED = 0.095;
   const float OUTPUT_LIN_M_MAX = 0.15;
-
-  static constexpr float OUTPUT_LIN_L_MIN = 0.1;
-  static constexpr float OUTPUT_LIN_L_MED = 0.15;
-  static constexpr float OUTPUT_LIN_L_MAX = 0.2;
-  static constexpr float OUTPUT_LIN_VL_MIN = 0.19;
-  static constexpr float OUTPUT_LIN_VL_MED = 0.22;
-  static constexpr float OUTPUT_LIN_VL_MAX = 0.26;
+  const float OUTPUT_LIN_L_MIN = 0.1;
+  const float OUTPUT_LIN_L_MED = 0.15;
+  const float OUTPUT_LIN_L_MAX = 0.2;
+  const float OUTPUT_LIN_VL_MIN = 0.19;
+  const float OUTPUT_LIN_VL_MED = 0.22;
+  const float OUTPUT_LIN_VL_MAX = 0.26;
 
   std::shared_ptr<fl::Engine> engine_;
   fl::InputVariable * Uao_gtg_;
