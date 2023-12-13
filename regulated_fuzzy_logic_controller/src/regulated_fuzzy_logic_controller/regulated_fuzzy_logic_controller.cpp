@@ -24,7 +24,7 @@
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
 #include "fl/Headers.h"
-#include "same_fuzzy_logic_controller/same_fuzzy_logic_controller.hpp"
+#include "regulated_fuzzy_logic_controller/regulated_fuzzy_logic_controller.hpp"
 
 using std::hypot;
 using std::min;
@@ -32,10 +32,10 @@ using std::max;
 using std::abs;
 using namespace nav2_costmap_2d;  // NOLINT
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
-void SameFuzzyLogicController::configure(
+void RegulatedFuzzyLogicController::configure(
   const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
   std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros)
@@ -75,28 +75,28 @@ void SameFuzzyLogicController::configure(
   configure_fuzzy_controller();
 }
 
-void SameFuzzyLogicController::cleanup()
+void RegulatedFuzzyLogicController::cleanup()
 {
-  RCLCPP_INFO(logger_,"Cleaning up controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Cleaning up controller: %s of type regulated_pure_pursuit_controller::RegulatedFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_.reset();
   carrot_pub_.reset();
 }
 
-void SameFuzzyLogicController::activate()
+void RegulatedFuzzyLogicController::activate()
 {
-  RCLCPP_INFO(logger_,"Activating controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Activating controller: %s of type regulated_pure_pursuit_controller::RegulatedFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_->on_activate();
   carrot_pub_->on_activate();
 }
 
-void SameFuzzyLogicController::deactivate()
+void RegulatedFuzzyLogicController::deactivate()
 {
-  RCLCPP_INFO(logger_,"Deactivating controller: %s of type regulated_pure_pursuit_controller::SameFuzzyLogicController",plugin_name_.c_str());
+  RCLCPP_INFO(logger_,"Deactivating controller: %s of type regulated_pure_pursuit_controller::RegulatedFuzzyLogicController",plugin_name_.c_str());
   global_path_pub_->on_deactivate();
   carrot_pub_->on_deactivate();
 }
 
-std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::createCarrotMsg(const geometry_msgs::msg::PoseStamped & carrot_pose)
+std::unique_ptr<geometry_msgs::msg::PointStamped> RegulatedFuzzyLogicController::createCarrotMsg(const geometry_msgs::msg::PoseStamped & carrot_pose)
 {
   auto carrot_msg = std::make_unique<geometry_msgs::msg::PointStamped>();
   carrot_msg->header = carrot_pose.header;
@@ -106,7 +106,7 @@ std::unique_ptr<geometry_msgs::msg::PointStamped> SameFuzzyLogicController::crea
   return carrot_msg;
 }
 
-double SameFuzzyLogicController::getLookAheadDistance(
+double RegulatedFuzzyLogicController::getLookAheadDistance(
 const geometry_msgs::msg::Twist & speed)
 {
   // If using velocity-scaled look ahead distances, find and clamp the dist
@@ -122,14 +122,13 @@ const geometry_msgs::msg::Twist & speed)
   return lookahead_dist;
 }
 
-void SameFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) 
+void RegulatedFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path) 
 {
   path_handler_->setPlan(path);
 }
 
 
-void
-SameFuzzyLogicController::configure_fuzzy_controller()
+void RegulatedFuzzyLogicController::configure_fuzzy_controller()
 {
   engine_ = std::make_shared<fl::Engine>();
   engine_->setName("SFLC");
@@ -225,7 +224,7 @@ SameFuzzyLogicController::configure_fuzzy_controller()
 }
 
 
-geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityCommands( 
+geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityCommands( 
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::Twist & speed,
   nav2_core::GoalChecker * /*goal_checker*/)
@@ -267,7 +266,7 @@ geometry_msgs::msg::TwistStamped SameFuzzyLogicController::computeVelocityComman
   return cmd_vel;
 }
 
-geometry_msgs::msg::Point SameFuzzyLogicController::circleSegmentIntersection(
+geometry_msgs::msg::Point RegulatedFuzzyLogicController::circleSegmentIntersection(
   const geometry_msgs::msg::Point & p1,
   const geometry_msgs::msg::Point & p2,
   double r)
@@ -302,7 +301,7 @@ geometry_msgs::msg::Point SameFuzzyLogicController::circleSegmentIntersection(
   return p;
 }
 
-geometry_msgs::msg::PoseStamped SameFuzzyLogicController::getLookAheadPoint(
+geometry_msgs::msg::PoseStamped RegulatedFuzzyLogicController::getLookAheadPoint(
   const double & lookahead_dist,
   const nav_msgs::msg::Path & transformed_plan)
 {
@@ -335,7 +334,7 @@ geometry_msgs::msg::PoseStamped SameFuzzyLogicController::getLookAheadPoint(
   return *goal_pose_it;
 }
 
-void SameFuzzyLogicController::setSpeedLimit(
+void RegulatedFuzzyLogicController::setSpeedLimit(
   const double & speed_limit,
   const bool & percentage)
 {
@@ -355,9 +354,9 @@ void SameFuzzyLogicController::setSpeedLimit(
   }
 }
 
-} // namespace same_fuzzy_logic_controller
+} // namespace regulated_fuzzy_logic_controller
 
 // Register this controller as a nav2_core plugin
 PLUGINLIB_EXPORT_CLASS(
-  same_fuzzy_logic_controller::SameFuzzyLogicController,
+  regulated_fuzzy_logic_controller::RegulatedFuzzyLogicController,
   nav2_core::Controller)

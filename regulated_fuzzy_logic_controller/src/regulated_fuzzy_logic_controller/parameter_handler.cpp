@@ -19,9 +19,9 @@
 #include <vector>
 #include <utility>
 
-#include "same_fuzzy_logic_controller/parameter_handler.hpp"
+#include "regulated_fuzzy_logic_controller/parameter_handler.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 using nav2_util::declare_parameter_if_not_declared;
@@ -279,5 +279,5 @@ ParameterHandler::dynamicParametersCallback(
   return result;
 }
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller
 

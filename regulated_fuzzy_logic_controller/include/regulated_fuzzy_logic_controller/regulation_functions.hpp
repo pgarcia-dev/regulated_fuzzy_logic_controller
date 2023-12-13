@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SAME_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_
-#define SAME_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_
+#ifndef REGULATED_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_
+#define REGULATED_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_
 
 #include <string>
 #include <vector>
@@ -24,9 +24,9 @@
 #include "rclcpp/rclcpp.hpp"
 #include "nav2_costmap_2d/costmap_2d_ros.hpp"
 #include "nav2_util/geometry_utils.hpp"
-#include "same_fuzzy_logic_controller/parameter_handler.hpp"
+#include "regulated_fuzzy_logic_controller/parameter_handler.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 namespace heuristics
@@ -135,6 +135,6 @@ inline double approachVelocityConstraint(
 
 }  // namespace heuristics
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller
 
-#endif  // SAME_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_
+#endif  // REGULATED_FUZZY_LOGIC_CONTROLLER__REGULATION_FUNCTIONS_HPP_

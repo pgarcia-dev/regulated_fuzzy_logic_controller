@@ -19,12 +19,12 @@
 #include <vector>
 #include <utility>
 
-#include "same_fuzzy_logic_controller/path_handler.hpp"
+#include "regulated_fuzzy_logic_controller/path_handler.hpp"
 #include "nav2_core/controller_exceptions.hpp"
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 using nav2_util::geometry_utils::euclidean_distance;
@@ -134,4 +134,4 @@ bool PathHandler::transformPose(
   return false;
 }
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller

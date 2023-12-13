@@ -150,7 +150,7 @@ controller_server:
     # DWB parameters
     FollowPath:
       #plugin: "dwb_core::DWBLocalPlanner"
-      plugin: "same_fuzzy_logic_controller::SameFuzzyLogicController"
+      plugin: "regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl"
       #plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
       
       #plugin: "nav2_mppi_controller::MPPIController" 

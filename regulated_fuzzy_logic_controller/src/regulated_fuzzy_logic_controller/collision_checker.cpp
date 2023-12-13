@@ -19,9 +19,9 @@
 #include <vector>
 #include <utility>
 
-#include "same_fuzzy_logic_controller/collision_checker.hpp"
+#include "regulated_fuzzy_logic_controller/collision_checker.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 using namespace nav2_costmap_2d;  // NOLINT
@@ -171,4 +171,4 @@ double CollisionChecker::costAtPose(const double & x, const double & y)
   return static_cast<double>(cost);
 }
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller

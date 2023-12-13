@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(same_fuzzy_logic_controller)
+project(regulated_fuzzy_logic_controller)
 
 find_package(ament_cmake REQUIRED)
 find_package(nav2_common REQUIRED)
@@ -36,13 +36,13 @@ set(dependencies
   tf2
   tf2_geometry_msgs
 )
-set(library_name same_fuzzy_logic_controller)
+set(library_name regulated_fuzzy_logic_controller)
 
 add_library(${library_name} SHARED
-        src/same_fuzzy_logic_controller/same_fuzzy_logic_controller.cpp
-        src/same_fuzzy_logic_controller/collision_checker.cpp
-        src/same_fuzzy_logic_controller/parameter_handler.cpp
-        src/same_fuzzy_logic_controller/path_handler.cpp)
+        src/regulated_fuzzy_logic_controller/regulated_fuzzy_logic_controller.cpp
+        src/regulated_fuzzy_logic_controller/collision_checker.cpp
+        src/regulated_fuzzy_logic_controller/parameter_handler.cpp
+        src/regulated_fuzzy_logic_controller/path_handler.cpp)
 
         
 
@@ -88,6 +88,6 @@ ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
 
-pluginlib_export_plugin_description_file(nav2_core same_fuzzy_logic_controller_plugin.xml)
+pluginlib_export_plugin_description_file(nav2_core regulated_fuzzy_logic_controller_plugin.xml)
 
 ament_package()

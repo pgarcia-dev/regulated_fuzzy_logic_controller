@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SAME_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_
-#define SAME_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_
+#ifndef REGULATED_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_
+#define REGULATED_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_
 
 #include <string>
 #include <vector>
@@ -29,18 +29,18 @@
 #include "nav2_core/controller_exceptions.hpp"
 #include "geometry_msgs/msg/pose2_d.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 /**
- * @class same_fuzzy_logic_controller::PathHandler
+ * @class regulated_fuzzy_logic_controller::PathHandler
  * @brief Handles input paths to transform them to local frames required
  */
 class PathHandler
 {
 public:
   /**
-   * @brief Constructor for same_fuzzy_logic_controller::PathHandler
+   * @brief Constructor for regulated_fuzzy_logic_controller::PathHandler
    */
   PathHandler(
     tf2::Duration transform_tolerance,
@@ -48,12 +48,12 @@ public:
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros);
 
   /**
-   * @brief Destrructor for same_fuzzy_logic_controller::PathHandler
+   * @brief Destrructor for regulated_fuzzy_logic_controller::PathHandler
    */
   ~PathHandler() = default;
 
   /**
-   * @brief Transforms global plan into same frame as pose and clips poses ineligible for lookaheadPoint
+   * @brief Transforms global plan into regulated frame as pose and clips poses ineligible for lookaheadPoint
    * Points ineligible to be selected as a lookahead point if they are any of the following:
    * - Outside the local_costmap (collision avoidance cannot be assured)
    * @param pose pose to transform
@@ -94,6 +94,6 @@ protected:
   nav_msgs::msg::Path global_plan_;
 };
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller
 
-#endif  // SAME_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_
+#endif  // REGULATED_FUZZY_LOGIC_CONTROLLER__PATH_HANDLER_HPP_

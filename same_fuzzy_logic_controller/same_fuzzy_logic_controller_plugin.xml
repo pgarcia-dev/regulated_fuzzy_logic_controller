@@ -1,9 +1,0 @@
-class_libraries>
-    <library path="same_fuzzy_logic_controller">
-        <class type="same_fuzzy_logic_controller::SameFuzzyLogicController" base_class_type="nav2_core::Controller">
-            <description>
-                same_fuzzy_logic_controller
-            </description>
-        </class>
-    </library>
-</class_libraries>

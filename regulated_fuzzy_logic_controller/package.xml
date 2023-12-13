@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>same_fuzzy_logic_controller</name>
+  <name>regulated_fuzzy_logic_controller</name>
   <version>1.0.0</version>
-  <description>Same Fuzzy Logic Controller</description>
+  <description>Regulated Fuzzy Logic Controller</description>
   <maintainer email="pgarcia.developer@gmail.com">Pablo Garcia</maintainer>
   <license>Apache-2.0</license>
 
@@ -34,7 +34,7 @@
 
   <export>
     <build_type>ament_cmake</build_type>
-    <nav2_core plugin="${prefix}/same_fuzzy_logic_controller_plugin.xml" />
+    <nav2_core plugin="${prefix}/regulated_fuzzy_logic_controller_plugin.xml" />
   </export>
 
 </package>

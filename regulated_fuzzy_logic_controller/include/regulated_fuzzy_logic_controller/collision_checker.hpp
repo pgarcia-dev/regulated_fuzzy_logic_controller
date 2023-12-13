@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SAME_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_
-#define SAME_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_
+#ifndef REGULATED_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_
+#define REGULATED_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_
 
 #include <string>
 #include <vector>
@@ -26,32 +26,32 @@
 #include "nav2_costmap_2d/footprint_collision_checker.hpp"
 #include "nav2_util/odometry_utils.hpp"
 #include "geometry_msgs/msg/pose2_d.hpp"
-#include "same_fuzzy_logic_controller/parameter_handler.hpp"
+#include "regulated_fuzzy_logic_controller/parameter_handler.hpp"
 
 #include "nav2_core/controller_exceptions.hpp"
 #include "nav2_util/node_utils.hpp"
 #include "nav2_util/geometry_utils.hpp"
 #include "nav2_costmap_2d/costmap_filters/filter_values.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 /**
- * @class same_fuzzy_logic_controller::CollisionChecker
+ * @class regulated_fuzzy_logic_controller::CollisionChecker
  * @brief Checks for collision based on a RPP control command
  */
 class CollisionChecker
 {
 public:
   /**
-   * @brief Constructor for same_fuzzy_logic_controller::CollisionChecker
+   * @brief Constructor for regulated_fuzzy_logic_controller::CollisionChecker
    */
   CollisionChecker(
     rclcpp_lifecycle::LifecycleNode::SharedPtr node,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros, Parameters * params);
 
   /**
-   * @brief Destrructor for same_fuzzy_logic_controller::CollisionChecker
+   * @brief Destrructor for regulated_fuzzy_logic_controller::CollisionChecker
    */
   ~CollisionChecker() = default;
 
@@ -100,6 +100,6 @@ protected:
   rclcpp::Clock::SharedPtr clock_;
 };
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller
 
-#endif  // SAME_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_
+#endif  // REGULATED_FUZZY_LOGIC_CONTROLLER__COLLISION_CHECKER_HPP_

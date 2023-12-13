@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SAME_FUZZY_LOGIC_CONTROLLER
-#define SAME_FUZZY_LOGIC_CONTROLLER
+#ifndef REGULATED_FUZZY_LOGIC_CONTROLLER
+#define REGULATED_FUZZY_LOGIC_CONTROLLER
 
 #include <string>
 #include <vector>
@@ -28,32 +28,32 @@
 #include "geometry_msgs/msg/pose2_d.hpp"
 #include "nav2_core/controller.hpp"
 #include "fl/Headers.h"
-#include "same_fuzzy_logic_controller/path_handler.hpp"
-#include "same_fuzzy_logic_controller/collision_checker.hpp"
-#include "same_fuzzy_logic_controller/parameter_handler.hpp"
-#include "same_fuzzy_logic_controller/regulation_functions.hpp"
+#include "regulated_fuzzy_logic_controller/path_handler.hpp"
+#include "regulated_fuzzy_logic_controller/collision_checker.hpp"
+#include "regulated_fuzzy_logic_controller/parameter_handler.hpp"
+#include "regulated_fuzzy_logic_controller/regulation_functions.hpp"
 
-namespace same_fuzzy_logic_controller
+namespace regulated_fuzzy_logic_controller
 {
 
 /**
- * @class same_fuzzy_logic_controller::SameFuzzyLogicController
+ * @class regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
  * @brief Regulated pure pursuit controller plugin
  */
-class SameFuzzyLogicController : public nav2_core::Controller
+class RegulatedFuzzyLogicControlerl : public nav2_core::Controller
 {
 public:
-  RCLCPP_SMART_PTR_DEFINITIONS(SameFuzzyLogicController)
+  RCLCPP_SMART_PTR_DEFINITIONS(RegulatedFuzzyLogicControlerl)
 
   /**
-   * @brief Constructor for same_fuzzy_logic_controller::SameFuzzyLogicController
+   * @brief Constructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
    */
-  SameFuzzyLogicController() = default;
+  RegulatedFuzzyLogicControlerl() = default;
 
   /**
-   * @brief Destrructor for same_fuzzy_logic_controller::SameFuzzyLogicController
+   * @brief Destrructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
    */
-  ~SameFuzzyLogicController() override = default;
+  ~RegulatedFuzzyLogicControlerl() override = default;
 
   /**
    * @brief Configure controller state machine
@@ -87,7 +87,7 @@ public:
   /**
    * @brief Compute the best command given the current pose and velocity, with possible debug information
    *
-   * Same as above computeVelocityCommands, but with debug results.
+   * Regulated as above computeVelocityCommands, but with debug results.
    * If the results pointer is not null, additional information about the twists
    * evaluated will be in results after the call.
    *
@@ -160,7 +160,7 @@ protected:
   std::string plugin_name_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
   nav2_costmap_2d::Costmap2D * costmap_;
-  rclcpp::Logger logger_ {rclcpp::get_logger("SameFuzzyLogicController")};
+  rclcpp::Logger logger_ {rclcpp::get_logger("RegulatedFuzzyLogicControlerl")};
 
   Parameters * params_;
   double goal_dist_tol_;
@@ -170,9 +170,9 @@ protected:
   std::shared_ptr<rclcpp_lifecycle::LifecyclePublisher<geometry_msgs::msg::PointStamped>>
   carrot_pub_;
   std::shared_ptr<rclcpp_lifecycle::LifecyclePublisher<nav_msgs::msg::Path>> carrot_arc_pub_;
-  std::unique_ptr<same_fuzzy_logic_controller::PathHandler> path_handler_;
-  std::unique_ptr<same_fuzzy_logic_controller::ParameterHandler> param_handler_;
-  std::unique_ptr<same_fuzzy_logic_controller::CollisionChecker> collision_checker_;
+  std::unique_ptr<regulated_fuzzy_logic_controller::PathHandler> path_handler_;
+  std::unique_ptr<regulated_fuzzy_logic_controller::ParameterHandler> param_handler_;
+  std::unique_ptr<regulated_fuzzy_logic_controller::CollisionChecker> collision_checker_;
 
 //TODO: as rosparam =================================
   const float INPUT_NL_MIN = -3.15;
@@ -263,6 +263,6 @@ protected:
   fl::OutputVariable * angular_velocity_;
 };
 
-}  // namespace same_fuzzy_logic_controller
+}  // namespace regulated_fuzzy_logic_controller
 
-#endif  // SAME_FUZZY_LOGIC_CONTROLLER
+#endif  // REGULATED_FUZZY_LOGIC_CONTROLLER
