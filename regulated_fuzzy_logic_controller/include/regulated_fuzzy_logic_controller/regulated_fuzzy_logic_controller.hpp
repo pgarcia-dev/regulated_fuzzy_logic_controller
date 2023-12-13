@@ -37,23 +37,23 @@ namespace regulated_fuzzy_logic_controller
 {
 
 /**
- * @class regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
+ * @class regulated_fuzzy_logic_controller::RegulatedFuzzyLogicController
  * @brief Regulated pure pursuit controller plugin
  */
-class RegulatedFuzzyLogicControlerl : public nav2_core::Controller
+class RegulatedFuzzyLogicController : public nav2_core::Controller
 {
 public:
-  RCLCPP_SMART_PTR_DEFINITIONS(RegulatedFuzzyLogicControlerl)
+  RCLCPP_SMART_PTR_DEFINITIONS(RegulatedFuzzyLogicController)
 
   /**
-   * @brief Constructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
+   * @brief Constructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicController
    */
-  RegulatedFuzzyLogicControlerl() = default;
+  RegulatedFuzzyLogicController() = default;
 
   /**
-   * @brief Destrructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicControlerl
+   * @brief Destrructor for regulated_fuzzy_logic_controller::RegulatedFuzzyLogicController
    */
-  ~RegulatedFuzzyLogicControlerl() override = default;
+  ~RegulatedFuzzyLogicController() override = default;
 
   /**
    * @brief Configure controller state machine
@@ -160,7 +160,7 @@ protected:
   std::string plugin_name_;
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros_;
   nav2_costmap_2d::Costmap2D * costmap_;
-  rclcpp::Logger logger_ {rclcpp::get_logger("RegulatedFuzzyLogicControlerl")};
+  rclcpp::Logger logger_ {rclcpp::get_logger("RegulatedFuzzyLogicController")};
 
   Parameters * params_;
   double goal_dist_tol_;
