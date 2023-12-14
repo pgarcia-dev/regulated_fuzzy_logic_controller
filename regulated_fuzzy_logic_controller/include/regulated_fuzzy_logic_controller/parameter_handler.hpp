@@ -32,12 +32,16 @@ namespace regulated_fuzzy_logic_controller
 
 struct Parameters
 {
-  double desired_linear_vel, base_desired_linear_vel;
-  double lookahead_dist;
-  double rotate_to_heading_angular_vel;
+  double desired_linear_vel; 
+  double base_desired_linear_vel; 
+  double lookahead_dist; 
   double max_lookahead_dist;
   double min_lookahead_dist;
-  double lookahead_time;
+  double lookahead_time; 
+  bool use_interpolation; 
+
+  //--- the below ones are not used but kept to avoid breaking other parts of the code
+  double rotate_to_heading_angular_vel;
   bool use_velocity_scaled_lookahead_dist;
   double min_approach_linear_velocity;
   double approach_velocity_scaling_dist;
@@ -56,7 +60,6 @@ struct Parameters
   double rotate_to_heading_min_angle;
   bool allow_reversing;
   double max_robot_pose_search_dist;
-  bool use_interpolation;
   bool use_collision_detection;
   double transform_tolerance;
 };
