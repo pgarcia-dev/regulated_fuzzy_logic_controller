@@ -48,6 +48,9 @@ ParameterHandler::ParameterHandler(
   declare_parameter_if_not_declared(
     node, plugin_name_ + ".use_interpolation", rclcpp::ParameterValue(true));
 
+  declare_parameter_if_not_declared(
+    node, plugin_name_ + ".INPUT_NL_MIN", rclcpp::ParameterValue(-3.15));
+
   node->get_parameter(plugin_name_ + ".desired_linear_vel", params_.desired_linear_vel);
   params_.base_desired_linear_vel = params_.desired_linear_vel;
   node->get_parameter(plugin_name_ + ".lookahead_dist", params_.lookahead_dist);
@@ -55,6 +58,8 @@ ParameterHandler::ParameterHandler(
   node->get_parameter(plugin_name_ + ".max_lookahead_dist", params_.max_lookahead_dist);
   node->get_parameter(plugin_name_ + ".lookahead_time", params_.lookahead_time);
   node->get_parameter(plugin_name_ + ".use_interpolation", params_.use_interpolation);
+
+  node->get_parameter(plugin_name_ + ".INPUT_NL_MIN", params_.INPUT_NL_MIN);
 }
 
 rcl_interfaces::msg::SetParametersResult
@@ -78,6 +83,9 @@ ParameterHandler::dynamicParametersCallback(
         params_.max_lookahead_dist = parameter.as_double();
       } else if (name == plugin_name_ + ".lookahead_time") {
       params_.lookahead_time = parameter.as_double();
+
+      } else if (name == plugin_name_ + ".INPUT_NL_MIN") {
+      params_.INPUT_NL_MIN = parameter.as_double();
       }
     } else if (type == ParameterType::PARAMETER_BOOL) {
       continue;

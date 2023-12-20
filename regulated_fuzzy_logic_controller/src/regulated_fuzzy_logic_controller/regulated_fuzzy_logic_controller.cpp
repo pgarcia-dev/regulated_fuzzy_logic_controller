@@ -140,7 +140,7 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   Uao_gtg_->setEnabled(true);
   Uao_gtg_->setRange(-3.8,3.8); 
   Uao_gtg_->setLockValueInRange(false);
-  Uao_gtg_->addTerm(new fl::Triangle("NL", INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NL", params_->INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
   Uao_gtg_->addTerm(new fl::Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
   Uao_gtg_->addTerm(new fl::Triangle("N",  INPUT_N_MIN,  INPUT_N_MED,  INPUT_N_MAX));
   Uao_gtg_->addTerm(new fl::Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));

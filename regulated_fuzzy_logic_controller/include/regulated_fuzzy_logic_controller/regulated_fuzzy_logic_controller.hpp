@@ -175,7 +175,7 @@ protected:
   std::unique_ptr<regulated_fuzzy_logic_controller::CollisionChecker> collision_checker_;
 
 //TODO: as rosparam =================================
-  const float INPUT_NL_MIN = -3.15;
+ // const float INPUT_NL_MIN;
   const float INPUT_NL_MED = -3.0;
   const float INPUT_NL_MAX = -2.8;
   const float INPUT_NM_MIN = -2.8;

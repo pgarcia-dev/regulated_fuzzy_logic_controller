@@ -40,6 +40,88 @@ struct Parameters
   double lookahead_time; 
   bool use_interpolation; 
 
+  double INPUT_NL_MIN; //********
+  double INPUT_NL_MED = -3.0;
+  double INPUT_NL_MAX = -2.8;
+  double INPUT_NM_MIN = -2.8;
+  double INPUT_NM_MED = -1.9;
+  double INPUT_NM_MAX = -1.1;
+  double INPUT_N_MIN = -1.1;
+  double INPUT_N_MED = -0.9;
+  double INPUT_N_MAX = -0.6;
+  double INPUT_NS_MIN = -0.6;
+  double INPUT_NS_MED = -0.5;
+  double INPUT_NS_MAX = -0.4;
+  double INPUT_ZN_MIN = -0.4;
+  double INPUT_ZN_MED = -0.25;
+  double INPUT_ZN_MAX = -0.1;
+  double INPUT_Z_MIN = -0.1; 
+  double INPUT_Z_MED = 0; //-------------
+  double INPUT_Z_MAX = 0.1;
+  double INPUT_ZP_MIN = 0.1;
+  double INPUT_ZP_MED = 0.25;
+  double INPUT_ZP_MAX = 0.4;
+  double INPUT_PS_MIN = 0.4;
+  double INPUT_PS_MED = 0.5;
+  double INPUT_PS_MAX = 0.6;
+  double INPUT_P_MIN = 0.6;
+  double INPUT_P_MED = 0.9;
+  double INPUT_P_MAX = 1.1;
+  double INPUT_PM_MIN = 1.1;
+  double INPUT_PM_MED = 1.9;
+  double INPUT_PM_MAX = 2.8;
+  double INPUT_PL_MIN = 2.8;
+  double INPUT_PL_MED = 3.0;
+  double INPUT_PL_MAX = 3.15;
+
+  double OUTPUT_ANG_NL_MIN = -1.82;
+  double OUTPUT_ANG_NL_MED = -1.5;
+  double OUTPUT_ANG_NL_MAX = -1.1;
+  double OUTPUT_ANG_NM_MIN = -1.1;
+  double OUTPUT_ANG_NM_MED = -0.8;
+  double OUTPUT_ANG_NM_MAX = -0.52;
+  double OUTPUT_ANG_N_MIN = -0.52;
+  double OUTPUT_ANG_N_MED = -0.39;
+  double OUTPUT_ANG_N_MAX = -0.28;
+  double OUTPUT_ANG_NS_MIN = -0.28;
+  double OUTPUT_ANG_NS_MED = -0.21;
+  double OUTPUT_ANG_NS_MAX = -0.13;
+  double OUTPUT_ANG_ZN_MIN = -0.13;
+  double OUTPUT_ANG_ZN_MED = -0.08;
+  double OUTPUT_ANG_ZN_MAX = -0.017;
+  double OUTPUT_ANG_Z_MIN = -0.017; 
+  double OUTPUT_ANG_Z_MED = 0; //-------------
+  double OUTPUT_ANG_Z_MAX = 0.017;
+  double OUTPUT_ANG_ZP_MIN = 0.017;
+  double OUTPUT_ANG_ZP_MED = 0.08;
+  double OUTPUT_ANG_ZP_MAX = 0.13;
+  double OUTPUT_ANG_PS_MIN = 0.13;
+  double OUTPUT_ANG_PS_MED = 0.21;
+  double OUTPUT_ANG_PS_MAX = 0.28;
+  double OUTPUT_ANG_P_MIN = 0.28;
+  double OUTPUT_ANG_P_MED = 0.39;
+  double OUTPUT_ANG_P_MAX = 0.52;
+  double OUTPUT_ANG_PM_MIN = 0.52;
+  double OUTPUT_ANG_PM_MED = 0.8;
+  double OUTPUT_ANG_PM_MAX = 1.1;
+  double OUTPUT_ANG_PL_MIN = 1.1;
+  double OUTPUT_ANG_PL_MED = 1.5;
+  double OUTPUT_ANG_PL_MAX = 1.82;
+
+  double OUTPUT_LIN_S_MIN = 0;
+  double OUTPUT_LIN_S_MED = 0.035;
+  double OUTPUT_LIN_S_MAX = 0.07;
+
+  double OUTPUT_LIN_M_MIN = 0.06;
+  double OUTPUT_LIN_M_MED = 0.095;
+  double OUTPUT_LIN_M_MAX = 0.15;
+  double OUTPUT_LIN_L_MIN = 0.1;
+  double OUTPUT_LIN_L_MED = 0.15;
+  double OUTPUT_LIN_L_MAX = 0.2;
+  double OUTPUT_LIN_VL_MIN = 0.19;
+  double OUTPUT_LIN_VL_MED = 0.22;
+  double OUTPUT_LIN_VL_MAX = 0.26;
+
   //--- the below ones are not used but kept to avoid breaking other parts of the code
   double rotate_to_heading_angular_vel;
   bool use_velocity_scaled_lookahead_dist;
