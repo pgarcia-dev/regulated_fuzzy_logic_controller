@@ -111,7 +111,6 @@ struct Parameters
   double OUTPUT_LIN_S_MIN = 0;
   double OUTPUT_LIN_S_MED = 0.035;
   double OUTPUT_LIN_S_MAX = 0.07;
-
   double OUTPUT_LIN_M_MIN = 0.06;
   double OUTPUT_LIN_M_MED = 0.095;
   double OUTPUT_LIN_M_MAX = 0.15;
