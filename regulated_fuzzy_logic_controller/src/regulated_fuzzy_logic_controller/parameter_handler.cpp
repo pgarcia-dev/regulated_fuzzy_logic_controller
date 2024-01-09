@@ -97,7 +97,7 @@ ParameterHandler::ParameterHandler(
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_ZN_MED", rclcpp::ParameterValue(-0.25));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_ZN_MAX", rclcpp::ParameterValue(-0.1));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_Z_MIN", rclcpp::ParameterValue(-0.1));
-  declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_Z_MED", rclcpp::ParameterValue(0)); //----------------------
+  declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_Z_MED", rclcpp::ParameterValue(0.0)); //----------------------
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_Z_MAX", rclcpp::ParameterValue(0.1));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_ZP_MIN", rclcpp::ParameterValue(0.1));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_ZP_MED", rclcpp::ParameterValue(0.25));
@@ -124,44 +124,39 @@ ParameterHandler::ParameterHandler(
   node->get_parameter(plugin_name_ + ".use_interpolation", params_.use_interpolation);
 
   node->get_parameter(plugin_name_ + ".INPUT_NL_MIN", params_.INPUT_NL_MIN);
-  declare_parameter_if_not_declared(
-    node, plugin_name_ + ".INPUT_NL_MIN", rclcpp::ParameterValue(-3.15));
- //   declare_parameter_if_not_declared(
-  //  node, plugin_name_ + ".INPUT_NL_MIN", rclcpp::ParameterValue(-3.15));
-/*
-    const float INPUT_NL_MED = -3.0;
-  const float INPUT_NL_MAX = -2.8;
-  const float INPUT_NM_MIN = -2.8;
-  const float INPUT_NM_MED = -1.9;
-  const float INPUT_NM_MAX = -1.1;
-  const float INPUT_N_MIN = -1.1;
-  const float INPUT_N_MED = -0.9;
-  const float INPUT_N_MAX = -0.6;
-  const float INPUT_NS_MIN = -0.6;
-  const float INPUT_NS_MED = -0.5;
-  const float INPUT_NS_MAX = -0.4;
-  const float INPUT_ZN_MIN = -0.4;
-  const float INPUT_ZN_MED = -0.25;
-  const float INPUT_ZN_MAX = -0.1;
-  const float INPUT_Z_MIN = -0.1; 
-  const float INPUT_Z_MED = 0; //-------------
-  const float INPUT_Z_MAX = 0.1;
-  const float INPUT_ZP_MIN = 0.1;
-  const float INPUT_ZP_MED = 0.25;
-  const float INPUT_ZP_MAX = 0.4;
-  const float INPUT_PS_MIN = 0.4;
-  const float INPUT_PS_MED = 0.5;
-  const float INPUT_PS_MAX = 0.6;
-  const float INPUT_P_MIN = 0.6;
-  const float INPUT_P_MED = 0.9;
-  const float INPUT_P_MAX = 1.1;
-  const float INPUT_PM_MIN = 1.1;
-  const float INPUT_PM_MED = 1.9;
-  const float INPUT_PM_MAX = 2.8;
-  const float INPUT_PL_MIN = 2.8;
-  const float INPUT_PL_MED = 3.0;
-  const float INPUT_PL_MAX = 3.15;
-  */
+  node->get_parameter(plugin_name_ + ".INPUT_NL_MED", params_.INPUT_NL_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_NL_MAX", params_.INPUT_NL_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_NM_MIN", params_.INPUT_NM_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_NM_MED", params_.INPUT_NM_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_NM_MAX", params_.INPUT_NM_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_N_MIN", params_.INPUT_N_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_N_MED", params_.INPUT_N_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_N_MAX", params_.INPUT_N_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_NS_MIN", params_.INPUT_NS_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_NS_MED", params_.INPUT_NS_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_NS_MAX", params_.INPUT_NS_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_ZN_MIN", params_.INPUT_ZN_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_ZN_MED", params_.INPUT_ZN_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_ZN_MAX", params_.INPUT_ZN_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_Z_MIN", params_.INPUT_Z_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_Z_MED", params_.INPUT_Z_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_Z_MAX", params_.INPUT_Z_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_ZP_MIN", params_.INPUT_ZP_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_ZP_MED", params_.INPUT_ZP_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_ZP_MAX", params_.INPUT_ZP_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_PS_MIN", params_.INPUT_PS_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_PS_MED", params_.INPUT_PS_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_PS_MAX", params_.INPUT_PS_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_P_MIN", params_.INPUT_P_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_P_MED", params_.INPUT_P_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_P_MAX", params_.INPUT_P_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_PM_MIN", params_.INPUT_PM_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_PM_MED", params_.INPUT_PM_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_PM_MAX", params_.INPUT_PM_MAX);
+  node->get_parameter(plugin_name_ + ".INPUT_PL_MIN", params_.INPUT_PL_MIN);
+  node->get_parameter(plugin_name_ + ".INPUT_PL_MED", params_.INPUT_PL_MED);
+  node->get_parameter(plugin_name_ + ".INPUT_PL_MAX", params_.INPUT_PL_MAX);
+
 }
 
 rcl_interfaces::msg::SetParametersResult

@@ -140,17 +140,17 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   Uao_gtg_->setEnabled(true);
   Uao_gtg_->setRange(-3.8,3.8); 
   Uao_gtg_->setLockValueInRange(false);
-  Uao_gtg_->addTerm(new fl::Triangle("NL", params_->INPUT_NL_MIN, INPUT_NL_MED, INPUT_NL_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("NM", INPUT_NM_MIN, INPUT_NM_MED, INPUT_NM_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("N",  INPUT_N_MIN,  INPUT_N_MED,  INPUT_N_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("NS", INPUT_NS_MIN, INPUT_NS_MED, INPUT_NS_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("ZN", INPUT_ZN_MIN, INPUT_ZN_MED, INPUT_ZN_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("Z",  INPUT_Z_MIN,  INPUT_Z_MED,  INPUT_Z_MAX)); //----------
-  Uao_gtg_->addTerm(new fl::Triangle("ZP", INPUT_ZP_MIN, INPUT_ZP_MED, INPUT_ZP_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("PS", INPUT_PS_MIN, INPUT_PS_MED, INPUT_PS_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("P",  INPUT_P_MIN,  INPUT_P_MED,  INPUT_P_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("PM", INPUT_PM_MIN, INPUT_PM_MED, INPUT_PM_MAX));
-  Uao_gtg_->addTerm(new fl::Triangle("PL", INPUT_PL_MIN, INPUT_PL_MED, INPUT_PL_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NL", params_->INPUT_NL_MIN, params_->INPUT_NL_MED, params_->INPUT_NL_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NM", params_->INPUT_NM_MIN, params_->INPUT_NM_MED, params_->INPUT_NM_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("N",  params_->INPUT_N_MIN,  params_->INPUT_N_MED,  params_->INPUT_N_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("NS", params_->INPUT_NS_MIN, params_->INPUT_NS_MED, params_->INPUT_NS_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("ZN", params_->INPUT_ZN_MIN, params_->INPUT_ZN_MED, params_->INPUT_ZN_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("Z",  params_->INPUT_Z_MIN,  params_->INPUT_Z_MED,  params_->INPUT_Z_MAX)); //----------
+  Uao_gtg_->addTerm(new fl::Triangle("ZP", params_->INPUT_ZP_MIN, params_->INPUT_ZP_MED, params_->INPUT_ZP_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PS", params_->INPUT_PS_MIN, params_->INPUT_PS_MED, params_->INPUT_PS_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("P",  params_->INPUT_P_MIN,  params_->INPUT_P_MED,  params_->INPUT_P_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PM", params_->INPUT_PM_MIN, params_->INPUT_PM_MED, params_->INPUT_PM_MAX));
+  Uao_gtg_->addTerm(new fl::Triangle("PL", params_->INPUT_PL_MIN, params_->INPUT_PL_MED, params_->INPUT_PL_MAX));
   engine_->addInputVariable(Uao_gtg_);
 
   linear_velocity_ = new fl::OutputVariable;
