@@ -179,17 +179,17 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   angular_velocity_->setDefuzzifier(new fl::LargestOfMaximum);
   angular_velocity_->setDefaultValue(fl::nan);
   angular_velocity_->setLockPreviousValue(false);
-  angular_velocity_->addTerm(new fl::Triangle("NL", OUTPUT_ANG_NL_MIN, OUTPUT_ANG_NL_MED, OUTPUT_ANG_NL_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("NM", OUTPUT_ANG_NM_MIN, OUTPUT_ANG_NM_MED, OUTPUT_ANG_NM_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("N",  OUTPUT_ANG_N_MIN,  OUTPUT_ANG_N_MED,  OUTPUT_ANG_N_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("NS", OUTPUT_ANG_NS_MIN, OUTPUT_ANG_NS_MED, OUTPUT_ANG_NS_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("ZN", OUTPUT_ANG_ZN_MIN, OUTPUT_ANG_ZN_MED, OUTPUT_ANG_ZN_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("Z",  OUTPUT_ANG_Z_MIN,  OUTPUT_ANG_Z_MED,  OUTPUT_ANG_Z_MAX)); //----------
-  angular_velocity_->addTerm(new fl::Triangle("ZP", OUTPUT_ANG_ZP_MIN, OUTPUT_ANG_ZP_MED, OUTPUT_ANG_ZP_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("PS", OUTPUT_ANG_PS_MIN, OUTPUT_ANG_PS_MED, OUTPUT_ANG_PS_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("P",  OUTPUT_ANG_P_MIN,  OUTPUT_ANG_P_MED,  OUTPUT_ANG_P_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("PM", OUTPUT_ANG_PM_MIN, OUTPUT_ANG_PM_MED, OUTPUT_ANG_PM_MAX));
-  angular_velocity_->addTerm(new fl::Triangle("PL", OUTPUT_ANG_PL_MIN, OUTPUT_ANG_PL_MED, OUTPUT_ANG_PL_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("NL", params_->OUTPUT_ANG_NL_MIN, params_->OUTPUT_ANG_NL_MED, params_->OUTPUT_ANG_NL_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("NM", params_->OUTPUT_ANG_NM_MIN, params_->OUTPUT_ANG_NM_MED, params_->OUTPUT_ANG_NM_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("N",  params_->OUTPUT_ANG_N_MIN,  params_->OUTPUT_ANG_N_MED,  params_->OUTPUT_ANG_N_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("NS", params_->OUTPUT_ANG_NS_MIN, params_->OUTPUT_ANG_NS_MED, params_->OUTPUT_ANG_NS_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("ZN", params_->OUTPUT_ANG_ZN_MIN, params_->OUTPUT_ANG_ZN_MED, params_->OUTPUT_ANG_ZN_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("Z",  params_->OUTPUT_ANG_Z_MIN,  params_->OUTPUT_ANG_Z_MED,  params_->OUTPUT_ANG_Z_MAX)); //----------
+  angular_velocity_->addTerm(new fl::Triangle("ZP", params_->OUTPUT_ANG_ZP_MIN, params_->OUTPUT_ANG_ZP_MED, params_->OUTPUT_ANG_ZP_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PS", params_->OUTPUT_ANG_PS_MIN, params_->OUTPUT_ANG_PS_MED, params_->OUTPUT_ANG_PS_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("P",  params_->OUTPUT_ANG_P_MIN,  params_->OUTPUT_ANG_P_MED,  params_->OUTPUT_ANG_P_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PM", params_->OUTPUT_ANG_PM_MIN, params_->OUTPUT_ANG_PM_MED, params_->OUTPUT_ANG_PM_MAX));
+  angular_velocity_->addTerm(new fl::Triangle("PL", params_->OUTPUT_ANG_PL_MIN, params_->OUTPUT_ANG_PL_MED, params_->OUTPUT_ANG_PL_MAX));
   engine_->addOutputVariable(angular_velocity_);
 
   fl::RuleBlock* ruleBlock = new fl::RuleBlock;
