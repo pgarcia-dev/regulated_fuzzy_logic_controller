@@ -163,10 +163,10 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   linear_velocity_->setDefuzzifier(new fl::LargestOfMaximum);
   linear_velocity_->setDefaultValue(fl::nan);
   linear_velocity_->setLockPreviousValue(false);
-  linear_velocity_->addTerm(new fl::Triangle("S",  OUTPUT_LIN_S_MIN, OUTPUT_LIN_S_MED, OUTPUT_LIN_S_MAX));
-  linear_velocity_->addTerm(new fl::Triangle("M",  OUTPUT_LIN_M_MIN, OUTPUT_LIN_M_MED, OUTPUT_LIN_M_MAX));
-  linear_velocity_->addTerm(new fl::Triangle("L",  OUTPUT_LIN_L_MIN, OUTPUT_LIN_L_MED, OUTPUT_LIN_L_MAX));
-  linear_velocity_->addTerm(new fl::Triangle("VL", OUTPUT_LIN_VL_MIN, OUTPUT_LIN_VL_MED, OUTPUT_LIN_VL_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("S",  params_->OUTPUT_LIN_S_MIN, params_->OUTPUT_LIN_S_MED, params_->OUTPUT_LIN_S_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("M",  params_->OUTPUT_LIN_M_MIN, params_->OUTPUT_LIN_M_MED, params_->OUTPUT_LIN_M_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("L",  params_->OUTPUT_LIN_L_MIN, params_->OUTPUT_LIN_L_MED, params_->OUTPUT_LIN_L_MAX));
+  linear_velocity_->addTerm(new fl::Triangle("VL", params_->OUTPUT_LIN_VL_MIN, params_->OUTPUT_LIN_VL_MED, params_->OUTPUT_LIN_VL_MAX));
   engine_->addOutputVariable(linear_velocity_);
 
   angular_velocity_ = new fl::OutputVariable;

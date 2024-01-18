@@ -41,41 +41,7 @@ ParameterHandler::ParameterHandler(
   declare_parameter_if_not_declared(node, plugin_name_ + ".max_lookahead_dist", rclcpp::ParameterValue(0.9));
   declare_parameter_if_not_declared(node, plugin_name_ + ".lookahead_time", rclcpp::ParameterValue(1.5));
   declare_parameter_if_not_declared(node, plugin_name_ + ".use_interpolation", rclcpp::ParameterValue(true));
-/*
-  double OUTPUT_ANG_NL_MIN = -1.82;
-  double OUTPUT_ANG_NL_MED = -1.5;
-  double OUTPUT_ANG_NL_MAX = -1.1;
-  double OUTPUT_ANG_NM_MIN = -1.1;
-  double OUTPUT_ANG_NM_MED = -0.8;
-  double OUTPUT_ANG_NM_MAX = -0.52;
-  double OUTPUT_ANG_N_MIN = -0.52;
-  double OUTPUT_ANG_N_MED = -0.39;
-  double OUTPUT_ANG_N_MAX = -0.28;
-  double OUTPUT_ANG_NS_MIN = -0.28;
-  double OUTPUT_ANG_NS_MED = -0.21;
-  double OUTPUT_ANG_NS_MAX = -0.13;
-  double OUTPUT_ANG_ZN_MIN = -0.13;
-  double OUTPUT_ANG_ZN_MED = -0.08;
-  double OUTPUT_ANG_ZN_MAX = -0.017;
-  double OUTPUT_ANG_Z_MIN = -0.017; 
-  double OUTPUT_ANG_Z_MED = 0; //-------------
-  double OUTPUT_ANG_Z_MAX = 0.017;
-  double OUTPUT_ANG_ZP_MIN = 0.017;
-  double OUTPUT_ANG_ZP_MED = 0.08;
-  double OUTPUT_ANG_ZP_MAX = 0.13;
-  double OUTPUT_ANG_PS_MIN = 0.13;
-  double OUTPUT_ANG_PS_MED = 0.21;
-  double OUTPUT_ANG_PS_MAX = 0.28;
-  double OUTPUT_ANG_P_MIN = 0.28;
-  double OUTPUT_ANG_P_MED = 0.39;
-  double OUTPUT_ANG_P_MAX = 0.52;
-  double OUTPUT_ANG_PM_MIN = 0.52;
-  double OUTPUT_ANG_PM_MED = 0.8;
-  double OUTPUT_ANG_PM_MAX = 1.1;
-  double OUTPUT_ANG_PL_MIN = 1.1;
-  double OUTPUT_ANG_PL_MED = 1.5;
-  double OUTPUT_ANG_PL_MAX = 1.82;
-*/
+
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_NL_MIN", rclcpp::ParameterValue(-3.15));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_NL_MED", rclcpp::ParameterValue(-3.0));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_NL_MAX", rclcpp::ParameterValue(-2.8));
@@ -109,6 +75,33 @@ ParameterHandler::ParameterHandler(
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_PL_MIN", rclcpp::ParameterValue(2.8));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_PL_MED", rclcpp::ParameterValue(3.0));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_PL_MAX", rclcpp::ParameterValue(3.15));
+
+/*
+  const float OUTPUT_LIN_S_MIN = 0;
+  const float OUTPUT_LIN_S_MED = 0.035;
+  const float OUTPUT_LIN_S_MAX = 0.07;
+  const float OUTPUT_LIN_M_MIN = 0.06;
+  const float OUTPUT_LIN_M_MED = 0.095;
+  const float OUTPUT_LIN_M_MAX = 0.15;
+  const float OUTPUT_LIN_L_MIN = 0.1;
+  const float OUTPUT_LIN_L_MED = 0.15;
+  const float OUTPUT_LIN_L_MAX = 0.2;
+  const float OUTPUT_LIN_VL_MIN = 0.19;
+  const float OUTPUT_LIN_VL_MED = 0.22;
+  const float OUTPUT_LIN_VL_MAX = 0.26;
+*/
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MIN", rclcpp::ParameterValue(0.0));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MED", rclcpp::ParameterValue(0.035));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MAX", rclcpp::ParameterValue(0.07));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_M_MIN", rclcpp::ParameterValue(0.06));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_M_MED", rclcpp::ParameterValue(0.095));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_M_MAX", rclcpp::ParameterValue(0.15));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_L_MIN", rclcpp::ParameterValue(0.1));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_L_MED", rclcpp::ParameterValue(0.15));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_L_MAX", rclcpp::ParameterValue(0.2));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_VL_MIN", rclcpp::ParameterValue(0.19));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_VL_MED", rclcpp::ParameterValue(0.22));
+  declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_VL_MAX", rclcpp::ParameterValue(0.26));
 
   declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_ANG_NL_MIN", rclcpp::ParameterValue(-1.82));
   declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_ANG_NL_MED", rclcpp::ParameterValue(-1.5));
@@ -185,6 +178,19 @@ ParameterHandler::ParameterHandler(
   node->get_parameter(plugin_name_ + ".INPUT_PL_MIN", params_.INPUT_PL_MIN);
   node->get_parameter(plugin_name_ + ".INPUT_PL_MED", params_.INPUT_PL_MED);
   node->get_parameter(plugin_name_ + ".INPUT_PL_MAX", params_.INPUT_PL_MAX);
+
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_S_MIN", params_.OUTPUT_LIN_S_MIN);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_S_MED", params_.OUTPUT_LIN_S_MED);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_S_MAX", params_.OUTPUT_LIN_S_MAX);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_M_MIN", params_.OUTPUT_LIN_M_MIN);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_M_MED", params_.OUTPUT_LIN_M_MED);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_M_MAX", params_.OUTPUT_LIN_M_MAX);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_L_MIN", params_.OUTPUT_LIN_L_MIN);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_L_MED", params_.OUTPUT_LIN_L_MED);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_L_MAX", params_.OUTPUT_LIN_L_MAX);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_VL_MIN", params_.OUTPUT_LIN_VL_MIN);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_VL_MED", params_.OUTPUT_LIN_VL_MED);
+  node->get_parameter(plugin_name_ + ".OUTPUT_LIN_VL_MAX", params_.OUTPUT_LIN_VL_MAX);
 
   node->get_parameter(plugin_name_ + ".OUTPUT_ANG_NL_MIN", params_.OUTPUT_ANG_NL_MIN);
   node->get_parameter(plugin_name_ + ".OUTPUT_ANG_NL_MED", params_.OUTPUT_ANG_NL_MED);
@@ -309,6 +315,32 @@ ParameterHandler::dynamicParametersCallback(
         params_.INPUT_PL_MED = parameter.as_double();
       } else if (name == plugin_name_ + ".INPUT_PL_MAX") {
         params_.INPUT_PL_MAX = parameter.as_double();
+      }
+
+      else if (name == plugin_name_ + ".OUTPUT_LIN_S_MIN") {
+        params_.OUTPUT_LIN_S_MIN = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_S_MED") {
+        params_.OUTPUT_LIN_S_MED = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_S_MAX") {
+        params_.OUTPUT_LIN_S_MAX = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_M_MIN") {
+        params_.OUTPUT_LIN_M_MIN = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_M_MED") {
+        params_.OUTPUT_LIN_M_MED = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_M_MAX") {
+        params_.OUTPUT_LIN_M_MAX = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_L_MIN") {
+        params_.OUTPUT_LIN_L_MIN = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_L_MED") {
+        params_.OUTPUT_LIN_L_MED = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_L_MAX") {
+        params_.OUTPUT_LIN_L_MAX = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_VL_MIN") {
+        params_.OUTPUT_LIN_VL_MIN = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_VL_MED") {
+        params_.OUTPUT_LIN_VL_MED = parameter.as_double();
+      } else if (name == plugin_name_ + ".OUTPUT_LIN_VL_MAX") {
+        params_.OUTPUT_LIN_VL_MAX = parameter.as_double();
       }
      
       else if (name == plugin_name_ + ".OUTPUT_ANG_NL_MIN") {
