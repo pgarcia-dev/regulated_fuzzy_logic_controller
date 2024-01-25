@@ -125,6 +125,14 @@ controller_server:
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
     failure_tolerance: 0.3
+
+    # code from chatGPT
+    controller_velocity: 0.26
+    max_vel_x: 0.26
+    min_vel_x: 0
+    max_vel_theta: 1.82
+    min_vel_theta: -1.82
+
     progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
     controller_plugins: ["FollowPath"]
