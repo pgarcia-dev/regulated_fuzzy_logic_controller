@@ -157,12 +157,79 @@ controller_server:
 
     # regulated_fuzzy_logic_controller parameters
     FollowPath:
-      #plugin: "dwb_core::DWBLocalPlanner"
       plugin: "regulated_fuzzy_logic_controller::RegulatedFuzzyLogicController"
+
       #plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      
+      #plugin: "dwb_core::DWBLocalPlanner"
       #plugin: "nav2_mppi_controller::MPPIController" 
       #plugin: "nav2_rotation_shim_controller::RotationShimController"
+
+      INPUT_NL_MED: -3.0
+      INPUT_NL_MAX: -2.8
+      INPUT_NM_MIN: -2.8
+      INPUT_NM_MED: -1.9
+      INPUT_NM_MAX: -1.1
+      INPUT_N_MIN: -1.1
+      INPUT_N_MED: -0.9
+      INPUT_N_MAX: -0.6
+      INPUT_NS_MIN: -0.6
+      INPUT_NS_MED: -0.5
+      INPUT_NS_MAX: -0.4
+      INPUT_ZN_MIN: -0.4
+      INPUT_ZN_MED: -0.25
+      INPUT_ZN_MAX: -0.1
+      INPUT_Z_MIN: -0.1 
+      INPUT_Z_MED: 0.0 #-------------
+      INPUT_Z_MAX: 0.1
+      INPUT_ZP_MIN: 0.1
+      INPUT_ZP_MED: 0.25
+      INPUT_ZP_MAX: 0.4
+      INPUT_PS_MIN: 0.4
+      INPUT_PS_MED: 0.5
+      INPUT_PS_MAX: 0.6
+      INPUT_P_MIN: 0.6
+      INPUT_P_MED: 0.9
+      INPUT_P_MAX: 1.1
+      INPUT_PM_MIN: 1.1
+      INPUT_PM_MED: 1.9
+      INPUT_PM_MAX: 2.8
+      INPUT_PL_MIN: 2.8
+      INPUT_PL_MED: 3.0
+      INPUT_PL_MAX: 3.15
+
+      OUTPUT_ANG_NL_MIN: -1.82
+      OUTPUT_ANG_NL_MED: -1.5
+      OUTPUT_ANG_NL_MAX: -1.1
+      OUTPUT_ANG_NM_MIN: -1.1
+      OUTPUT_ANG_NM_MED: -0.8
+      OUTPUT_ANG_NM_MAX: -0.52
+      OUTPUT_ANG_N_MIN: -0.52
+      OUTPUT_ANG_N_MED: -0.39
+      OUTPUT_ANG_N_MAX: -0.28
+      OUTPUT_ANG_NS_MIN: -0.28
+      OUTPUT_ANG_NS_MED: -0.21
+      OUTPUT_ANG_NS_MAX: -0.13
+      OUTPUT_ANG_ZN_MIN: -0.13
+      OUTPUT_ANG_ZN_MED: -0.08
+      OUTPUT_ANG_ZN_MAX: -0.017
+      OUTPUT_ANG_Z_MIN: -0.017 
+      OUTPUT_ANG_Z_MED: 0.0 #-------------
+      OUTPUT_ANG_Z_MAX: 0.017
+      OUTPUT_ANG_ZP_MIN: 0.017
+      OUTPUT_ANG_ZP_MED: 0.08
+      OUTPUT_ANG_ZP_MAX: 0.13
+      OUTPUT_ANG_PS_MIN: 0.13
+      OUTPUT_ANG_PS_MED: 0.21
+      OUTPUT_ANG_PS_MAX: 0.28
+      OUTPUT_ANG_P_MIN: 0.28
+      OUTPUT_ANG_P_MED: 0.39
+      OUTPUT_ANG_P_MAX: 0.52
+      OUTPUT_ANG_PM_MIN: 0.52
+      OUTPUT_ANG_PM_MED: 0.8
+      OUTPUT_ANG_PM_MAX: 1.1
+      OUTPUT_ANG_PL_MIN: 1.10
+      OUTPUT_ANG_PL_MED: 1.5
+      OUTPUT_ANG_PL_MAX: 1.82
 
       OUTPUT_LIN_S_MIN: 0.001
       OUTPUT_LIN_S_MED: 0.035
