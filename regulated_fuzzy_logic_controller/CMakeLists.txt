@@ -14,9 +14,12 @@ find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(navigation2 REQUIRED)
 
-#find_library(FUZZYLITE_LIBRARY
-#  NAMES fuzzylite
-#  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/release/bin/")
+#message(WARNING ${PROJECT_SOURCE_DIR}/../3rd_party/fuzzylite/build/bin/)
+find_library(FUZZYLITE_LIBRARY
+  NAMES fuzzylite
+  HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/lib/") 
+#message(WARNING ${CMAKE_INSTALL_PREFIX}/../fuzzylite/bin/)
+#message(WARNING ${FUZZYLITE_LIBRARY})
 
 nav2_package()
 
@@ -44,13 +47,7 @@ add_library(${library_name} SHARED
         src/regulated_fuzzy_logic_controller/parameter_handler.cpp
         src/regulated_fuzzy_logic_controller/path_handler.cpp)
 
-        
-
-#================= dirty workaround until the above code is working
-target_link_directories(${library_name} PUBLIC "/home/pgarcia/Dropbox/GitHub/regulated_fuzzy_logic_controller/3rd_party/fuzzylite/release/bin") #TODO ---------
-target_link_libraries(${library_name} fuzzylite)
-
-
+target_link_libraries(${library_name} ${FUZZYLITE_LIBRARY})
 
 ament_target_dependencies(${library_name}
   ${dependencies}
