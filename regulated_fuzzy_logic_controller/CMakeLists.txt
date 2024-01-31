@@ -25,7 +25,7 @@ nav2_package()
 
 include_directories(
   include #rm fl/ and use the above instead
-  ${CMAKE_INSTALL_PREFIX}/../fuzzylite/
+  ${CMAKE_INSTALL_PREFIX}/../fuzzylite/include/
 )
 
 set(dependencies
