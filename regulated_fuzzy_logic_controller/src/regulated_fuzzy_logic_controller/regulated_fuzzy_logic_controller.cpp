@@ -60,11 +60,7 @@ void RegulatedFuzzyLogicController::configure(
   // Handles global path transformations
   path_handler_ = std::make_unique<PathHandler>( tf2::durationFromSec(params_->transform_tolerance), tf_, costmap_ros_);
 
-  // Checks for imminent collisions
-  collision_checker_ = std::make_unique<CollisionChecker>(node, costmap_ros_, params_);
-
   double control_frequency = 20.0;
-  goal_dist_tol_ = 0.25;  // reasonable default before first update
 
   node->get_parameter("controller_frequency", control_frequency);
   control_duration_ = 1.0 / control_frequency;
@@ -116,7 +112,6 @@ const geometry_msgs::msg::Twist & speed)
     lookahead_dist = fabs(speed.linear.x) * params_->lookahead_time;
     lookahead_dist = std::clamp(
       lookahead_dist, params_->min_lookahead_dist, params_->max_lookahead_dist);
-    //RCLCPP_INFO(logger_, "*** %lf",lookahead_dist);
   }
 
   return lookahead_dist;
@@ -223,15 +218,13 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   engine_->addRuleBlock(ruleBlock);
 }
 
-
 geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityCommands( 
   const geometry_msgs::msg::PoseStamped & pose,
   const geometry_msgs::msg::Twist & speed,
   nav2_core::GoalChecker * /*goal_checker*/)
 {
-    // Transform path to robot base frame
-  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);//=======5 aprox
-  //global_path_pub_->publish(transformed_plan);
+  // Transform path to robot base frame
+  auto transformed_plan = path_handler_->transformGlobalPlan(pose, 5);
 
   // Find look ahead distance and point on path and publish
   double lookahead_dist = getLookAheadDistance(speed); 
@@ -244,7 +237,6 @@ geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityC
   double dy2 = carrot_pose.pose.position.y;
   double angle_to_path = atan2(dy2, dx2); 
  
-  std::cerr << "computeVelocityCommands" << std::endl;
   Uao_gtg_->setValue(angle_to_path);
   engine_->process();
 
@@ -252,17 +244,8 @@ geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityC
   cmd_vel.header = pose.header;  
   cmd_vel.twist.linear.x = linear_velocity_->getValue();
   cmd_vel.twist.angular.z = angular_velocity_->getValue();
- // RCLCPP_INFO(logger_, "*** robot's position - x: %f , y: %f", pose.pose.position.x, pose.pose.position.y);
-  RCLCPP_INFO(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  RCLCPP_DEBUG(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
- // Collision checking on this velocity heading
-  const double & carrot_dist = hypot(carrot_pose.pose.position.x, carrot_pose.pose.position.y);
-  if (/*params_->use_collision_detection &&*/ collision_checker_->isCollisionImminent(pose, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z, carrot_dist))
-  {
-    //throw nav2_core::NoValidControl("RegulatedPurePursuitController detected collision ahead!");
-    RCLCPP_INFO(logger_, "=== COLLISSION");
-  }
-  
   return cmd_vel;
 }
 
