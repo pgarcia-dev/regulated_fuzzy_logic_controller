@@ -76,20 +76,6 @@ ParameterHandler::ParameterHandler(
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_PL_MED", rclcpp::ParameterValue(3.0));
   declare_parameter_if_not_declared(node, plugin_name_ + ".INPUT_PL_MAX", rclcpp::ParameterValue(3.15));
 
-/*
-  const float OUTPUT_LIN_S_MIN = 0;
-  const float OUTPUT_LIN_S_MED = 0.035;
-  const float OUTPUT_LIN_S_MAX = 0.07;
-  const float OUTPUT_LIN_M_MIN = 0.06;
-  const float OUTPUT_LIN_M_MED = 0.095;
-  const float OUTPUT_LIN_M_MAX = 0.15;
-  const float OUTPUT_LIN_L_MIN = 0.1;
-  const float OUTPUT_LIN_L_MED = 0.15;
-  const float OUTPUT_LIN_L_MAX = 0.2;
-  const float OUTPUT_LIN_VL_MIN = 0.19;
-  const float OUTPUT_LIN_VL_MED = 0.22;
-  const float OUTPUT_LIN_VL_MAX = 0.26;
-*/
   declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MIN", rclcpp::ParameterValue(0.0));
   declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MED", rclcpp::ParameterValue(0.035));
   declare_parameter_if_not_declared(node, plugin_name_ + ".OUTPUT_LIN_S_MAX", rclcpp::ParameterValue(0.07));

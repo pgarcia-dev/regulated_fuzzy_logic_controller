@@ -122,7 +122,6 @@ void RegulatedFuzzyLogicController::setPlan(const nav_msgs::msg::Path & path)
   path_handler_->setPlan(path);
 }
 
-
 void RegulatedFuzzyLogicController::configure_fuzzy_controller()
 {
   engine_ = std::make_shared<fl::Engine>();
