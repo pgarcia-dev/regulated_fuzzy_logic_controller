@@ -1,16 +1,19 @@
 # Regulated Fuzzy Logic Controller
 ![](media/demo.gif)
 
-## overview
+## Overview
 Autonomous robots require dependable navigation for effec- tive environmental traversal. This study presents initial findings on the utilization of fuzzy logic within a Nav2 controller, a dominant navigation system in the current ROS landscape. Our devised algorithm, employ- ing a straightforward fuzzy rule set, accurately follows the paths from trajectory planners. Seamlessly integrated with Nav2 and fulfilling all integration criteria, our approach’s simulation outcomes parallel those of controllers like the predictive MPC and Regulated Pure Pursuit.
 
 ## Regulated Fuzzy Logic Controller description
-In this work, we introduce an approach for developing a controller employing a fuzzy logic algorithm to determine the linear and angular velocities necessary for guiding a robot to its specified destination within a given map. This controller will be implemented within the ROS 2 framework, utilizing *the Same Fuzzy Logic methodology*. 
+In this work, we introduce an approach for developing a controller employing a fuzzy logic algorithm to determine the linear and angular velocities necessary for guiding a robot to its specified destination within a given map. This controller will be implemented within the ROS 2 framework, utilizing the *Same Fuzzy Logic* methodology. 
+
+A video showing the behavior of the controller can be watched in the following link: [video](https://youtu.be/QVHCyqxuTs8?si=HRiVA8J1UEas_JlU)
 
 ## Features
 - In this study, we have demonstrated the efficacy of the *Regulated Fuzzy Logic Controller* as a reliable, safe, and reasonably efficient solution for performing navigation tasks within the ROS 2 framework. While it performs capably, it is important to note that it does not outperform other state-of-the-art controllers commonly utilized in ROS 2. Consequently, further refinement and enhancement of this approach are warranted.
 - We posit that our research can pave the way for an adaptive algorithm where the underlying fuzzy rules can be made accessible for user-specific customization. Fuzzy logic offers the advantage of defining intuitive rules, such as ”intensify turns during sharp curves” or ”halt when in close proximity.” This feature holds the potential to simplify controller configurations, making it more user-friendly, especially for those with limited expertise.
 - The third party library [Fuzzy Lite](https://www.fuzzylite.com/) has been used in this work. 
+- The implementation and testing of this work were done on a computer using Ubuntu 22.04.2 LTS and ROS 2 rolling.
 
 ## Configuration
 Some fuzzy logic parameters can be tuned to modify the performance of the controller. 
@@ -128,18 +131,18 @@ controller_server:
 ```
 
 ## Compile from source
-To compile the project, go to the src/ of your ROS 2 workspace and execute
+To compile the project, go to the src/ of your ROS 2 workspace folder and execute:
 ```
 git clone https://github.com/pgarcia-dev/regulated_fuzzy_logic_controller
 ```
-and from your workspace path compile all package using colcon:
+and from your workspace path, compile all packages using colcon:
 ```
 colcon build --symlink-install
 ```
 Note that by executing this command, both the ROS 2 package and the *Fuzzy Lite* library will be compiled. 
 
 ## Execution 
-Execute the controller running:
+After modifying the configuration file you are using execute the controller running:
 ```
 ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False
 ```
