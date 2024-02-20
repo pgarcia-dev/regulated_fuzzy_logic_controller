@@ -231,11 +231,13 @@ geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityC
   // Get the particular point on the path at the lookahead distance
   auto carrot_pose = getLookAheadPoint(lookahead_dist, transformed_plan);
   carrot_pub_->publish(createCarrotMsg(carrot_pose));
+  
+  return calculateCmdVel(pose, carrot_pose);
+}
 
-  double dx2 = carrot_pose.pose.position.x;
-  double dy2 = carrot_pose.pose.position.y;
-  double angle_to_path = atan2(dy2, dx2); 
- 
+geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::calculateCmdVel(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::PoseStamped carrot_pose)
+{
+  double angle_to_path = atan2(carrot_pose.pose.position.y, carrot_pose.pose.position.x);
   Uao_gtg_->setValue(angle_to_path);
   engine_->process();
 
@@ -243,7 +245,7 @@ geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityC
   cmd_vel.header = pose.header;  
   cmd_vel.twist.linear.x = linear_velocity_->getValue();
   cmd_vel.twist.angular.z = angular_velocity_->getValue();
-  RCLCPP_DEBUG(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
+  RCLCPP_INFO(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;
 }

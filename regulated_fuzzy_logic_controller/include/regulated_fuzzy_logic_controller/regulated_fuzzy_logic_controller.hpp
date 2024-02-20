@@ -154,6 +154,7 @@ protected:
    */
   geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
 
+  geometry_msgs::msg::TwistStamped calculateCmdVel(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::PoseStamped carrot_pose);
 
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
   std::shared_ptr<tf2_ros::Buffer> tf_;
