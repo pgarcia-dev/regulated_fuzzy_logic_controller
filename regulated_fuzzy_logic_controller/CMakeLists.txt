@@ -18,13 +18,11 @@ find_package(navigation2 REQUIRED)
 find_library(FUZZYLITE_LIBRARY
   NAMES fuzzylite
   HINTS "${CMAKE_INSTALL_PREFIX}/../fuzzylite/lib/") 
-#message(WARNING ${CMAKE_INSTALL_PREFIX}/../fuzzylite/bin/)
-#message(WARNING ${FUZZYLITE_LIBRARY})
 
 nav2_package()
 
 include_directories(
-  include #rm fl/ and use the above instead
+  include
   ${CMAKE_INSTALL_PREFIX}/../fuzzylite/include/
 )
 
@@ -70,8 +68,6 @@ install(TARGETS ${library_name} line_follower_tester
 install(DIRECTORY include/
   DESTINATION include/
 )
-
-#target_link_libraries(${library_name} ${FUZZYLITE_LIBRARY})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
