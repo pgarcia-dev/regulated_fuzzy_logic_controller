@@ -1,5 +1,5 @@
 # Regulated Fuzzy Logic Controller
-![](media/demo.gif)
+![](doc/demo.gif)
 
 ## Overview
 Autonomous robots require dependable navigation for effec- tive environmental traversal. This study presents initial findings on the utilization of fuzzy logic within a Nav2 controller, a dominant navigation system in the current ROS landscape. Our devised algorithm, employ- ing a straightforward fuzzy rule set, accurately follows the paths from trajectory planners. Seamlessly integrated with Nav2 and fulfilling all integration criteria, our approach’s simulation outcomes parallel those of controllers like the predictive MPC and Regulated Pure Pursuit.
