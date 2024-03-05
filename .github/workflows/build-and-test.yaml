@@ -23,10 +23,12 @@ jobs:
         uses: ros-tooling/setup-ros@0.7.0
         with:
           required-ros-distributions: rolling
+          target-ros2-distro: foxy
       - name: build and test
         uses: ros-tooling/action-ros-ci@0.3.3
         with:
           package-name: regulated_fuzzy_logic_controller
+          target-ros2-distro: foxy
           colcon-defaults: |
             {
               "test": {
