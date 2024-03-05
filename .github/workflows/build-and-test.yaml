@@ -1,12 +1,12 @@
-name: rolling
+name: build-and-test
 
 on:
   pull_request:
     branches:
-      - rolling
+      - main
   push:
     branches:
-      - rolling
+      - main
 #  schedule:
 #      - cron: '0 0 * * 6'     
 jobs:
