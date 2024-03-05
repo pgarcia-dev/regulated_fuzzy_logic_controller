@@ -5,6 +5,6 @@ ament_add_gtest(test_regulated_fuzzy_logic
 ament_target_dependencies(test_regulated_fuzzy_logic
   ${dependencies}
 )
-target_link_libraries(test_regulated_fuzzy_logic
+target_link_libraries(test_regulated_fuzzy_logic 
   ${library_name}
 )
