@@ -206,7 +206,7 @@ void RegulatedFuzzyLogicController::configure_fuzzy_controller()
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is NS then linear_velocity_ is VL and angular_velocity_ is NS", engine_.get()));
 
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZN then linear_velocity_ is VL and angular_velocity_ is ZN", engine_.get()));
-  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is Z then linear_velocity_ is VL and angular_velocity_ is Z", engine_.get()));/////////////
+  ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is Z then linear_velocity_ is VL and angular_velocity_ is Z", engine_.get()));//--------------
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is ZP then linear_velocity_ is VL and angular_velocity_ is ZP", engine_.get()));
 
   ruleBlock->addRule(fl::Rule::parse("if Uao_gtg_ is PS then linear_velocity_ is VL and angular_velocity_ is PS", engine_.get()));
@@ -237,14 +237,24 @@ geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::computeVelocityC
 
 geometry_msgs::msg::TwistStamped RegulatedFuzzyLogicController::calculateCmdVel(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::PoseStamped carrot_pose)
 {
+  // Calculate the angle to the path using the target carrot_pose's position
   double angle_to_path = atan2(carrot_pose.pose.position.y, carrot_pose.pose.position.x);
+
+  // Set the angle value in the fuzzy logic controller for goal-to-goal (gtg) orientation
   Uao_gtg_->setValue(angle_to_path);
+
+  // Process the fuzzy logic engine to compute the linear and angular velocities
   engine_->process();
 
   geometry_msgs::msg::TwistStamped cmd_vel;
   cmd_vel.header = pose.header;  
+
+  // Retrieve the calculated linear velocity from the fuzzy logic controller and set it
   cmd_vel.twist.linear.x = linear_velocity_->getValue();
+
+  // Retrieve the calculated angular velocity from the fuzzy logic controller and set it
   cmd_vel.twist.angular.z = angular_velocity_->getValue();
+
   RCLCPP_INFO(logger_, "=== input angle_to_path:%f, output linear:%f, output angular: %f  ",angle_to_path, cmd_vel.twist.linear.x, cmd_vel.twist.angular.z);
 
   return cmd_vel;

@@ -67,6 +67,11 @@ public:
     std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
     std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros) override;
 
+  /** 
+   * @brief Configures the fuzzy logic controller used for regulating the robot's movement.
+   * This method sets up the fuzzy logic engine and defines the input and output variables
+   * along with their respective fuzzy sets and terms. It is essential for initializing the fuzzy logic controller with the appropriate parameters for the robot's navigation.
+  **/
   void configure_fuzzy_controller();
 
   /**
@@ -154,6 +159,12 @@ protected:
    */
   geometry_msgs::msg::PoseStamped getLookAheadPoint(const double &, const nav_msgs::msg::Path &);
 
+  /** 
+   * @brief Calculate the command velocity for the robot based on its current pose and a target pose.
+   * @param pose The current pose of the robot.
+   * @param carrot_pose The target pose towards which the robot should move. 
+   * @return geometry_msgs::msg::TwistStamped The calculated command velocities for linear and angular movement.
+  **/
   geometry_msgs::msg::TwistStamped calculateCmdVel(const geometry_msgs::msg::PoseStamped & pose, const geometry_msgs::msg::PoseStamped carrot_pose);
 
   rclcpp_lifecycle::LifecycleNode::WeakPtr node_;
