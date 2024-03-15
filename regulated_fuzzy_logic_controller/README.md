@@ -146,3 +146,15 @@ After modifying the configuration file you are using execute the controller runn
 ```
 ros2 launch nav2_bringup tb3_simulation_launch.py headless:=False
 ```
+
+Please, cite us if you use Fuzzy Controller for Nav2 in your reseach:
+
+```
+@INPROCEEDINGS
+ {FuzzyController,
+    author    = "Pablo Garc{\'{\i}}a and Francisco Mart{\'{\i}}n",
+    title     = "A Fuzzy Controller for Nav2",
+    booktitle = "{WAF 2023: Workshop de Agentes Fisicos, Aranjuez, Madrid, Spain",
+    year      = "2023"
+}
+```
